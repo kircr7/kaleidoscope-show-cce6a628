@@ -239,10 +239,10 @@ const OrderSection = () => {
               boxShadow: '0px -16px 24px 0px rgba(255,255,255,0.1) inset, 0 8px 32px rgba(0,0,0,0.2)',
             }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 lg:items-start">
 
               {/* ЛЕВАЯ ПАНЕЛЬ */}
-              <div className="relative p-5 sm:p-8 md:p-12 flex flex-col justify-between overflow-hidden lg:self-start lg:sticky lg:top-24">
+              <div className="relative p-5 sm:p-8 md:p-12 flex flex-col justify-between overflow-hidden">
                 <div className="absolute inset-0 lg:border-r" style={{ borderColor: 'hsl(240,9%,17%)' }} />
 
                 <div className="relative z-10">
