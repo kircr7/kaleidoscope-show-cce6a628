@@ -41,21 +41,21 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section id="services" className="relative py-16 sm:py-24 bg-black font-sans overflow-hidden">
+    <section id="services" className="relative py-16 sm:py-24 bg-white font-sans overflow-hidden">
       {/* Subtle glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-500/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-amber-400 text-xs font-black uppercase tracking-widest mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 border border-black/10 text-amber-600 text-xs font-black uppercase tracking-widest mb-6">
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
             Наши возможности
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black tracking-tight mb-6">
             С чем мы можем вам помочь?
           </h2>
-          <p className="text-base sm:text-lg text-gray-400 font-light leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-500 font-light leading-relaxed">
             Выполняем полный цикл постпечатной обработки. От вывода первого листа из плоттера до сшитого тома проектной документации.
           </p>
         </div>
