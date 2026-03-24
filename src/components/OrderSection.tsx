@@ -548,7 +548,7 @@ const OrderSection = () => {
 
                   <div className="flex gap-2 sm:gap-3 mb-4">
                     <div
-                      className="flex items-center rounded-lg px-2"
+                      className="flex items-center rounded-lg px-2 transition-all duration-200 hover:border-[hsl(240,9%,25%)]"
                       style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                     >
                       <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-xl font-light p-2 transition-colors" style={{ color: 'hsl(0,0%,60%)' }}>−</button>
