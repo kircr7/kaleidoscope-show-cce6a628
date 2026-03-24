@@ -233,7 +233,7 @@ const OrderSection = () => {
 
                 <div className="relative z-10">
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-white">
-                    Отправьте файлы <br className="hidden sm:block" /> в Telegram.
+                    Отправьте файлы <br className="hidden sm:block" /> удобным вам способом.
                   </h2>
                   <p className="mt-3 sm:mt-4 text-sm md:text-base leading-relaxed max-w-sm" style={{ color: 'hsl(0,0%,83%)' }}>
                     Не тратьте время на расчеты. Наш менеджер сам проверит файлы и назовет точную цену.
@@ -258,10 +258,7 @@ const OrderSection = () => {
 
                 {/* File upload form */}
                 <div className="relative z-10 mt-8">
-                  <div className="h-px w-full mb-6" style={{ backgroundColor: 'hsl(240,9%,20%)' }} />
-                  <h3 className="text-base font-black uppercase tracking-tight text-white mb-4">
-                    Или отправьте файлы здесь
-                  </h3>
+                   <div className="h-px w-full mb-6" style={{ backgroundColor: 'hsl(240,9%,20%)' }} />
                   {fileStatus === 'success' ? (
                     <div className="text-center py-6">
                       <CheckCircle className="w-10 h-10 mx-auto mb-3" style={{ color: 'hsl(120,60%,60%)' }} />
@@ -353,34 +350,38 @@ const OrderSection = () => {
                       <input type="hidden" name="order_details" value="Клиент отправил файлы через форму" />
                       <input type="hidden" name="total_price" value="—" />
 
-                      <label className="flex items-start gap-2.5 cursor-pointer select-none">
-                        <input
-                          type="checkbox"
-                          checked={fileConsent}
-                          onChange={e => setFileConsent(e.target.checked)}
-                          className="mt-1 w-4 h-4 rounded cursor-pointer bg-transparent"
-                          style={{ accentColor: 'hsl(266,92%,58%)' }}
-                          required
-                        />
-                        <span className="text-[11px] leading-relaxed" style={{ color: 'hsl(0,0%,50%)' }}>
-                          Даю согласие на обработку персональных данных согласно{' '}
-                          <Link to="/privacy" className="underline" style={{ color: 'hsl(266,92%,68%)' }}>
-                            Политике конфиденциальности
-                          </Link>.
-                        </span>
-                      </label>
+                      {(fileLink || uploadedFile) && (
+                        <>
+                          <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                            <input
+                              type="checkbox"
+                              checked={fileConsent}
+                              onChange={e => setFileConsent(e.target.checked)}
+                              className="mt-1 w-4 h-4 rounded cursor-pointer bg-transparent"
+                              style={{ accentColor: 'hsl(266,92%,58%)' }}
+                              required
+                            />
+                            <span className="text-[11px] leading-relaxed" style={{ color: 'hsl(0,0%,50%)' }}>
+                              Даю согласие на обработку персональных данных согласно{' '}
+                              <Link to="/privacy" className="underline" style={{ color: 'hsl(266,92%,68%)' }}>
+                                Политике конфиденциальности
+                              </Link>.
+                            </span>
+                          </label>
 
-                      <button
-                        type="submit"
-                        disabled={fileStatus === 'sending' || (!fileLink && !uploadedFile)}
-                        className="w-full text-white py-3.5 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97] disabled:opacity-50 flex items-center justify-center gap-2"
-                        style={{
-                          backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
-                          boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
-                        }}
-                      >
-                        {fileStatus === 'sending' ? 'Отправка...' : <><Send className="w-4 h-4" /> Отправить файл</>}
-                      </button>
+                          <button
+                            type="submit"
+                            disabled={fileStatus === 'sending'}
+                            className="w-full text-white py-3.5 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97] disabled:opacity-50 flex items-center justify-center gap-2"
+                            style={{
+                              backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
+                              boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
+                            }}
+                          >
+                            {fileStatus === 'sending' ? 'Отправка...' : <><Send className="w-4 h-4" /> Отправить файл</>}
+                          </button>
+                        </>
+                      )}
                     </form>
                   )}
                 </div>
