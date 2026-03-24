@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 12%;
+    --foreground: 0 0% 96%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 96%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 0 0% 96%;
+    --primary-foreground: 0 0% 4%;
+
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 96%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;
+
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 96%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 96%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 0 0% 40%;
+
+    --radius: 0.75rem;
+
+    --hero-gradient-1: 340 80% 55%;
+    --hero-gradient-2: 260 70% 50%;
+    --hero-gradient-3: 220 80% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* Contact reveal hover effect */
+.contact-reveal {
+  position: relative;
+  text-decoration: none;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  display: inline-block;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.contact-reveal .actual-text {
+  position: relative;
+}
+
+.contact-reveal .hover-text {
+  position: absolute;
+  box-sizing: border-box;
+  color: #37FF8B;
+  width: 0%;
+  inset: 0;
+  border-right: 4px solid #37FF8B;
+  overflow: hidden;
+  transition: 0.5s;
+  -webkit-text-stroke: 1px #37FF8B;
+  white-space: nowrap;
+}
+
+.contact-reveal:hover .hover-text {
+  width: 100%;
+  filter: drop-shadow(0 0 23px #37FF8B);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Rotating text animation */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Gradient morph animation */
+@keyframes gradient-morph {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 100% 0%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-up {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Small icons: move to the right (toward center) */
+@keyframes carousel-to-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+/* Large icons: emerge from center moving right */
+@keyframes carousel-from-center {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-carousel-to-right {
+  animation: carousel-to-right 120s linear infinite;
+}
+
+.animate-carousel-from-center {
+  animation: carousel-from-center 95s linear infinite;
+}
+
+@keyframes blob-move-1 {
+  0%, 100% { transform: translate(0%, 0%); }
+  33% { transform: translate(20%, -15%); }
+  66% { transform: translate(-15%, 20%); }
+}
+
+@keyframes blob-move-2 {
+  0%, 100% { transform: translate(0%, 0%); }
+  33% { transform: translate(-20%, 20%); }
+  66% { transform: translate(15%, -10%); }
+}
+
+@keyframes blob-move-3 {
+  0%, 100% { transform: translate(0%, 0%); }
+  33% { transform: translate(15%, 15%); }
+  66% { transform: translate(-20%, -15%); }
+}
+
+@keyframes sparkle {
+  0%, 90%, 100% { opacity: 1; filter: brightness(1); }
+  95% { opacity: 1; filter: brightness(3) drop-shadow(0 0 6px hsl(210, 85%, 65%)); }
+}
+
+@keyframes blob-bounce {
+  0% { transform: translate(-100%, -100%) translate3d(0, 0, 0); }
+  25% { transform: translate(-100%, -100%) translate3d(100%, 0, 0); }
+  50% { transform: translate(-100%, -100%) translate3d(100%, 100%, 0); }
+  75% { transform: translate(-100%, -100%) translate3d(0, 100%, 0); }
+  100% { transform: translate(-100%, -100%) translate3d(0, 0, 0); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(42,171,238,0.3); }
+  50% { box-shadow: 0 0 22px rgba(42,171,238,0.55); }
+}
+
+@keyframes text-glow-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.6) drop-shadow(0 0 4px hsl(42, 90%, 50%)); }
+}

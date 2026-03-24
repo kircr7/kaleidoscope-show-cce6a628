@@ -1,0 +1,456 @@
+import React, { useState, useMemo } from 'react';
+import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Ruler, ShieldCheck, Truck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
+
+interface CartItem {
+  id: number;
+  label: string;
+  options: string[];
+  quantity: number;
+  itemTotal: number;
+}
+
+const PRICES: Record<string, { bw: number; color: number; label: string }> = {
+  A4: { bw: 5, color: 10, label: 'A4 (210х297 мм)' },
+  A3: { bw: 19, color: 29, label: 'A3 (с фальцовкой)' },
+  A2: { bw: 38, color: 48, label: 'A2 (с фальцовкой)' },
+  A1: { bw: 64, color: 84, label: 'A1 (с фальцовкой)' },
+  A0: { bw: 118, color: 128, label: 'A0 (с фальцовкой)' },
+};
+
+const OPTIONS: Record<string, { label: string; price: number }> = {
+  bindingA4: { label: 'Брошюровка в А4', price: 100 },
+  bindingA3: { label: 'Брошюровка в А3', price: 200 },
+  hardcover: { label: 'Твердый переплет', price: 600 },
+  lamination: { label: 'Ламинация', price: 100 },
+};
+
+const OrderSection = () => {
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [format, setFormat] = useState('A1');
+  const [isColor, setIsColor] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [customer, setCustomer] = useState({ name: '', phone: '' });
+  const [consent, setConsent] = useState(true);
+  const [status, setStatus] = useState('');
+
+  const addToCart = () => {
+    const basePrice = isColor ? PRICES[format].color : PRICES[format].bw;
+    const optionsSum = selectedOptions.reduce((acc, id) => acc + OPTIONS[id].price, 0);
+
+    const newItem: CartItem = {
+      id: Date.now(),
+      label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
+      options: selectedOptions.map(id => OPTIONS[id].label),
+      quantity,
+      itemTotal: (basePrice * quantity) + optionsSum,
+    };
+
+    setCart([...cart, newItem]);
+    setSelectedOptions([]);
+    setQuantity(1);
+  };
+
+  const removeItem = (id: number) => setCart(cart.filter(item => item.id !== id));
+
+  const stats = useMemo(() => {
+    const subtotal = cart.reduce((acc, item) => acc + item.itemTotal, 0);
+    const discount = subtotal * 0.20;
+    return { subtotal, discount, total: subtotal - discount };
+  }, [cart]);
+
+  const sendOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!consent) {
+      alert('Необходимо согласие на обработку персональных данных');
+      return;
+    }
+    if (customer.phone.replace(/\D/g, '').length < 11) {
+      alert('Пожалуйста, введите полный номер телефона');
+      return;
+    }
+
+    setStatus('sending');
+
+    const orderDetailsText = cart.map((item, index) =>
+      `${index + 1}. ${item.label} — ${item.quantity} шт.\n   Доп. услуги: ${item.options.length > 0 ? item.options.join(', ') : 'Нет'}\n   Сумма: ${item.itemTotal} руб.`
+    ).join('\n\n');
+
+    const templateParams = {
+      customer_name: customer.name,
+      customer_phone: customer.phone,
+      order_details: orderDetailsText,
+      total_price: Math.round(stats.total),
+    };
+
+    try {
+      await emailjs.send('service_5lojlb2', 'template_86or1it', templateParams, 'ShGXdndtWKIL7zvcD');
+      setStatus('success');
+    } catch (error) {
+      console.error('Ошибка отправки:', error);
+      alert('Упс! Произошла ошибка. Пожалуйста, напишите нам на printprro@gmail.com или в Telegram.');
+      setStatus('');
+    }
+  };
+
+  return (
+    <section id="calculator" className="relative py-12 sm:py-20 md:py-32 px-3 sm:px-4 bg-white overflow-hidden">
+      <div className="relative z-10 container max-w-7xl mx-auto overflow-hidden">
+        {/* Card with rotating border */}
+        <div
+          className="relative rounded-2xl opacity-0"
+          style={{ animation: 'reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 100ms forwards' }}
+        >
+          {/* Rotating border effect */}
+          <div
+            className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl pointer-events-none"
+            style={{ width: 'calc(100% + 2px)', height: 'calc(100% + 2px)' }}
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: 'linear-gradient(0deg, hsl(0,0%,100%) -50%, hsl(0,0%,40%) 100%)',
+              }}
+            />
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-border-rotate pointer-events-none"
+              style={{
+                width: '200%',
+                height: '10rem',
+                transformOrigin: 'center',
+                backgroundImage: 'linear-gradient(0deg, hsla(0,0%,100%,0) 0%, hsl(277,95%,60%) 40%, hsl(277,95%,60%) 60%, hsla(0,0%,40%,0) 100%)',
+              }}
+            />
+          </div>
+
+          {/* Main card body */}
+          <div
+            className="relative overflow-hidden rounded-2xl border border-white/20"
+            style={{
+              backgroundColor: 'hsla(240,15%,9%,0.55)',
+              backdropFilter: 'blur(24px)',
+              WebkitBackdropFilter: 'blur(24px)',
+              backgroundImage: `
+                radial-gradient(at 0% 64%, hsla(263,93%,56%,0.15) 0px, transparent 85%),
+                radial-gradient(at 41% 94%, hsla(284,100%,84%,0.1) 0px, transparent 85%),
+                radial-gradient(at 100% 99%, hsla(306,100%,57%,0.1) 0px, transparent 85%)
+              `,
+              boxShadow: '0px -16px 24px 0px rgba(255,255,255,0.1) inset, 0 8px 32px rgba(0,0,0,0.2)',
+            }}
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+
+              {/* ЛЕВАЯ ПАНЕЛЬ */}
+              <div className="relative p-5 sm:p-8 md:p-12 flex flex-col justify-between overflow-hidden">
+                <div className="absolute inset-0 lg:border-r" style={{ borderColor: 'hsl(240,9%,17%)' }} />
+
+                <div className="relative z-10">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-white">
+                    Скидывайте файлы <br className="hidden sm:block" /> в Telegram.
+                  </h2>
+                  <p className="mt-3 sm:mt-4 text-sm md:text-base leading-relaxed max-w-sm" style={{ color: 'hsl(0,0%,83%)' }}>
+                    Не тратьте время на расчеты. Наш менеджер сам проверит файлы и назовет точную цену.
+                  </p>
+
+                  <a
+                    href="https://t.me/printprro"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 sm:mt-6 inline-flex items-center gap-3 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all active:scale-[0.97]"
+                    style={{
+                      backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
+                      boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
+                    }}
+                  >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.665 4.70898L17.702 18.718C17.481 19.721 16.883 19.974 16.036 19.497L11.431 16.104L9.213 18.232C8.968 18.477 8.761 18.684 8.271 18.684L8.599 13.992L17.133 6.29098C17.504 5.96098 17.052 5.77998 16.559 6.10898L6.02 12.738L1.474 11.315C0.485 11.008 0.468 10.323 1.681 9.85198L19.431 3.01198C20.252 2.70498 20.971 3.18998 20.665 4.70898Z" />
+                    </svg>
+                    Написать в Telegram
+                  </a>
+                </div>
+
+                <div className="relative z-10 mt-10 space-y-4">
+                  {[
+                    { icon: <Ruler className="w-5 h-5 text-blue-400" />, title: 'Строго по ГОСТ', desc: 'Идеальное соблюдение масштабов 1:1 и фальцовка под подшивку.', gradient: 'from-blue-500/20 to-blue-600/5' },
+                    { icon: <ShieldCheck className="w-5 h-5 text-emerald-400" />, title: 'Конфиденциально (NDA)', desc: 'Ваши чертежи и сметы надежно защищены от третьих лиц.', gradient: 'from-emerald-500/20 to-emerald-600/5' },
+                    { icon: <Truck className="w-5 h-5 text-amber-400" />, title: 'Доставка по Москве', desc: 'Аккуратно упакуем и привезем документацию в офис или на стройплощадку.', gradient: 'from-amber-500/20 to-amber-600/5' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-4">
+                      <div
+                        className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.gradient} border border-white/10 flex items-center justify-center shrink-0`}
+                        style={{ backgroundColor: 'hsla(240,15%,15%,0.6)' }}
+                      >
+                        {item.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-white">{item.title}</h4>
+                        <p className="text-xs mt-0.5" style={{ color: 'hsl(0,0%,83%)' }}>{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* ПРАВАЯ ПАНЕЛЬ: Калькулятор */}
+              <div className="text-white">
+                <div className="p-4 sm:p-5" style={{ borderBottom: '1px solid hsl(240,9%,17%)' }}>
+                  <h3 className="text-base font-black mb-4 flex items-center gap-2 uppercase tracking-tight" style={{ color: 'hsl(0,0%,83%)' }}>
+                    <Printer className="w-4 h-4" /> Или рассчитайте сами
+                  </h3>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-[1.4fr_1fr] gap-3 mb-3">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold uppercase ml-1" style={{ color: 'hsl(0,0%,60%)' }}>Формат чертежа</label>
+                      <select
+                        value={format}
+                        onChange={(e) => setFormat(e.target.value)}
+                        className="w-full p-2.5 text-sm rounded-xl outline-none font-medium"
+                        style={{
+                          backgroundColor: 'hsla(240,15%,15%,0.8)',
+                          border: '1px solid hsl(240,9%,17%)',
+                          color: 'hsl(0,0%,83%)',
+                        }}
+                      >
+                        {Object.keys(PRICES).map(k => (
+                          <option key={k} value={k} style={{ backgroundColor: 'hsl(240,15%,9%)' }}>
+                            {PRICES[k].label} · {isColor ? PRICES[k].color : PRICES[k].bw} ₽
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold uppercase ml-1" style={{ color: 'hsl(0,0%,60%)' }}>Цветность</label>
+                      <div className="flex p-1 rounded-lg" style={{ backgroundColor: 'hsla(240,15%,15%,0.6)', border: '1px solid hsl(240,9%,17%)' }}>
+                        <button
+                          onClick={() => setIsColor(false)}
+                          className="flex-1 py-2 rounded-lg text-xs font-bold transition-all"
+                          style={{
+                            backgroundColor: !isColor ? 'hsla(266,92%,58%,0.2)' : 'transparent',
+                            color: !isColor ? 'hsl(266,92%,58%)' : 'hsl(0,0%,60%)',
+                          }}
+                        >ЧБ</button>
+                        <button
+                          onClick={() => setIsColor(true)}
+                          className="flex-1 py-2 rounded-lg text-xs font-bold transition-all"
+                          style={{
+                            backgroundColor: isColor ? 'hsla(266,92%,58%,0.2)' : 'transparent',
+                            color: isColor ? 'hsl(266,92%,58%)' : 'hsl(0,0%,60%)',
+                          }}
+                        >Цвет</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mb-4">
+                    {Object.entries(OPTIONS).map(([id, opt]) => (
+                      <button
+                        key={id}
+                        onClick={() => setSelectedOptions(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id])}
+                        className="text-left p-2.5 sm:p-3 rounded-xl text-[11px] sm:text-xs font-semibold transition-all active:scale-[0.97]"
+                        style={{
+                          backgroundColor: selectedOptions.includes(id) ? 'hsla(266,92%,58%,0.25)' : 'hsla(240,15%,15%,0.5)',
+                          border: `1px solid ${selectedOptions.includes(id) ? 'hsl(266,92%,58%)' : 'hsl(240,9%,17%)'}`,
+                          color: selectedOptions.includes(id) ? 'hsl(266,92%,78%)' : 'hsl(0,0%,83%)',
+                        }}
+                      >
+                        {opt.label} <span className="block opacity-60">+{opt.price} ₽</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="flex gap-2 sm:gap-3">
+                    <div
+                      className="flex items-center rounded-lg px-2"
+                      style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                    >
+                      <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-xl font-light p-2 transition-colors" style={{ color: 'hsl(0,0%,60%)' }}>−</button>
+                      <input
+                        type="number"
+                        min={1}
+                        max={9999}
+                        value={quantity}
+                        onChange={(e) => {
+                          const val = parseInt(e.target.value, 10);
+                          if (!isNaN(val) && val >= 1 && val <= 9999) setQuantity(val);
+                          else if (e.target.value === '') setQuantity(1);
+                        }}
+                        className="w-12 text-center font-bold text-sm outline-none bg-transparent text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      />
+                      <button onClick={() => setQuantity(quantity + 1)} className="text-xl font-light p-2 transition-colors" style={{ color: 'hsl(0,0%,60%)' }}>+</button>
+                    </div>
+                    <button
+                      onClick={addToCart}
+                      className="flex-1 text-white py-3 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97]"
+                      style={{
+                        backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
+                        boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
+                      }}
+                    >
+                      В корзину
+                    </button>
+                  </div>
+                </div>
+
+                {/* Корзина и форма */}
+                <div className="p-4 sm:p-6">
+                  {status !== 'success' ? (
+                    <>
+                      <h3 className="font-bold mb-4 flex items-center gap-2 text-sm uppercase tracking-widest text-white/70">
+                        <ShoppingCart className="w-4 h-4" /> Ваш заказ
+                      </h3>
+
+                      <div className="space-y-3 mb-8">
+                        {cart.map(item => (
+                          <div
+                            key={item.id}
+                            className="flex justify-between items-center p-3 rounded-xl group"
+                            style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
+                          >
+                            <div>
+                              <div className="text-sm font-semibold text-white">{item.label} <span style={{ color: 'hsl(0,0%,50%)' }}>x{item.quantity}</span></div>
+                              <div className="text-[9px] uppercase font-bold mt-0.5 tracking-tighter" style={{ color: 'hsl(0,0%,50%)' }}>
+                                {item.options.length > 0 ? item.options.join(' • ') : 'Без доп. услуг'}
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="text-sm font-bold text-white">{item.itemTotal} ₽</span>
+                              <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-500/10 rounded-full transition-colors">
+                                <Trash2 className="w-3.5 h-3.5 text-red-400/70" />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        {cart.length === 0 && (
+                          <p className="text-center py-10 italic rounded-3xl text-white/50" style={{ border: '2px dashed hsla(0,0%,100%,0.15)' }}>
+                            Смета пуста. Добавьте чертежи для расчета.
+                          </p>
+                        )}
+                      </div>
+
+                      {cart.length > 0 && (
+                        <form onSubmit={sendOrder} className="space-y-3 pt-6" style={{ borderTop: '1px solid hsl(240,9%,17%)' }}>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="relative">
+                              <User className="absolute left-4 top-4 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                              <input
+                                required
+                                placeholder="Ваше имя"
+                                value={customer.name}
+                                onChange={e => setCustomer({ ...customer, name: e.target.value })}
+                                className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                              />
+                            </div>
+                            <div className="relative">
+                              <Phone className="absolute left-4 top-4 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                              <input
+                                required
+                                type="tel"
+                                placeholder="+7 (___) ___-__-__"
+                                value={customer.phone}
+                                onChange={e => {
+                                  let digits = e.target.value.replace(/\D/g, '');
+                                  if (digits.startsWith('8')) digits = '7' + digits.slice(1);
+                                  if (!digits.startsWith('7') && digits.length > 0) digits = '7' + digits;
+                                  digits = digits.slice(0, 11);
+                                  let formatted = '';
+                                  if (digits.length > 0) formatted = '+' + digits[0];
+                                  if (digits.length > 1) formatted += ' (' + digits.slice(1, 4);
+                                  if (digits.length > 4) formatted += ') ' + digits.slice(4, 7);
+                                  if (digits.length > 7) formatted += '-' + digits.slice(7, 9);
+                                  if (digits.length > 9) formatted += '-' + digits.slice(9, 11);
+                                  setCustomer({ ...customer, phone: formatted });
+                                }}
+                                maxLength={18}
+                                className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                              />
+                              {customer.phone.length > 0 && customer.phone.replace(/\D/g, '').length < 11 && (
+                                <span className="text-[10px] text-red-400/80 mt-1 ml-1 block">Введите 11 цифр номера</span>
+                              )}
+                            </div>
+                          </div>
+
+                          <label className="flex items-start gap-2.5 cursor-pointer select-none mt-1">
+                            <input
+                              type="checkbox"
+                              checked={consent}
+                              onChange={e => setConsent(e.target.checked)}
+                              className="mt-1 w-4 h-4 rounded cursor-pointer bg-transparent"
+                              style={{ accentColor: 'hsl(266,92%,58%)' }}
+                              required
+                            />
+                            <span className="text-[11px] leading-relaxed" style={{ color: 'hsl(0,0%,50%)' }}>
+                              Отправляя заявку, я даю согласие на обработку моих персональных данных согласно{' '}
+                              <Link to="/privacy" className="underline transition-colors" style={{ color: 'hsl(266,92%,68%)' }}>
+                                Политике конфиденциальности
+                              </Link>{' '}
+                              и принимаю{' '}
+                              <Link to="/terms" className="underline transition-colors" style={{ color: 'hsl(266,92%,68%)' }}>
+                                Условия обслуживания
+                              </Link>.
+                            </span>
+                          </label>
+
+                          <div
+                            className="text-white p-4 sm:p-5 rounded-2xl mt-4 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4"
+                            style={{
+                              backgroundImage: 'linear-gradient(135deg, rgba(94,58,238,0.9) 0%, rgba(197,107,240,0.8) 100%)',
+                              boxShadow: 'inset 0 -2px 25px -4px rgba(255,255,255,0.15), 0 8px 32px rgba(94,58,238,0.3)',
+                            }}
+                          >
+                            <div>
+                              <div className="flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase mb-2 w-fit tracking-wider">
+                                Скидка 20% применена
+                              </div>
+                              <div className="flex items-baseline gap-2">
+                                <span className="text-2xl font-black">{Math.round(stats.total)} ₽</span>
+                                <span className="text-white/40 line-through font-semibold text-sm">{Math.round(stats.subtotal)} ₽</span>
+                              </div>
+                            </div>
+                            <button
+                              type="submit"
+                              disabled={status === 'sending'}
+                              className="w-full sm:w-auto bg-white px-8 py-3.5 rounded-full font-bold uppercase text-sm tracking-wider flex items-center justify-center gap-2 transition-all active:scale-[0.97] disabled:opacity-50"
+                              style={{ color: 'hsl(266,92%,40%)' }}
+                            >
+                              {status === 'sending' ? 'Отправка...' : <><Send className="w-4 h-4" /> Оформить заказ</>}
+                            </button>
+                          </div>
+                        </form>
+                      )}
+                    </>
+                  ) : (
+                    <div className="py-12 px-6 text-center">
+                      <div
+                        className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
+                        style={{ backgroundColor: 'hsla(266,92%,58%,0.15)', border: '1px solid hsla(266,92%,58%,0.3)' }}
+                      >
+                        <CheckCircle className="w-12 h-12" style={{ color: 'hsl(266,92%,68%)' }} />
+                      </div>
+                      <h3 className="text-2xl font-black mb-3 uppercase tracking-tight text-white">Заявка принята!</h3>
+                      <p className="leading-relaxed max-w-sm mx-auto font-medium" style={{ color: 'hsl(0,0%,83%)' }}>
+                        Спасибо, <strong className="text-white">{customer.name}</strong>. Мы свяжемся с вами в течение 5 минут по номеру <strong className="text-white">{customer.phone}</strong>.
+                      </p>
+                      <button
+                        onClick={() => { setStatus(''); setCart([]); setCustomer({ name: '', phone: '' }); }}
+                        className="inline-block mt-8 text-sm font-bold transition-colors"
+                        style={{ color: 'hsl(266,92%,68%)' }}
+                      >
+                        Сделать новый расчет →
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default OrderSection;
