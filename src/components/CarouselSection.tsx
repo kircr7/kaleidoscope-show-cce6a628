@@ -67,7 +67,7 @@ const CarouselSection = () => {
           <span className="text-[11px] sm:text-sm text-white flex-1 text-center font-bold">
             <span className="inline-block" style={{ color: "hsl(210, 85%, 55%)", animation: "sparkle 5s ease-in-out infinite" }}>✦</span> <span className="hidden sm:inline">Типография</span> ПринтПРО <span className="inline-block" style={{ color: "hsl(210, 85%, 55%)", animation: "sparkle 5s ease-in-out 2.5s infinite" }}>✦</span>
           </span>
-          <span className="text-[11px] sm:text-sm text-white flex-1 text-center">Готовая продукция</span>
+          <span className="text-[11px] sm:text-sm text-white flex-1 text-center">Наша работа</span>
         </div>
       </div>
     </section>
