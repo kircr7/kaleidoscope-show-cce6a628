@@ -90,7 +90,7 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
 
   return (
     <div
-      className="group relative rounded-2xl border border-border/30 bg-card/40 backdrop-blur-sm p-3 sm:p-4 transition-all duration-300 hover:border-border/60 hover:bg-card/70 hover:-translate-y-1"
+      className="group relative rounded-2xl border border-border/30 bg-card/40 backdrop-blur-sm p-3 sm:p-4 transition-all duration-300 hover:border-border/60 hover:bg-card/70 hover:-translate-y-1 h-full flex flex-col justify-between"
     >
       <span className="text-lg sm:text-xl font-bold text-foreground tracking-tight">{item.name}</span>
       <div className="pt-2 border-t border-border/20 mt-2 space-y-1">
