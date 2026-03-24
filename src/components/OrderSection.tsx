@@ -155,6 +155,34 @@ const OrderSection = () => {
     }
   };
 
+  const sendFiles = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!fileConsent) {
+      alert('Необходимо согласие на обработку персональных данных');
+      return;
+    }
+    if (!fileLink && !uploadedFile) {
+      alert('Прикрепите файл или укажите ссылку');
+      return;
+    }
+    if (!fileFormRef.current) return;
+
+    setFileStatus('sending');
+    try {
+      await emailjs.sendForm(
+        'service_5lojlb2',
+        'template_86or1it',
+        fileFormRef.current,
+        'ShGXdndtWKIL7zvcD',
+      );
+      setFileStatus('success');
+    } catch (error) {
+      console.error('Ошибка отправки файла:', error);
+      alert('Ошибка отправки. Попробуйте через Telegram.');
+      setFileStatus('');
+    }
+  };
+
   return (
     <section id="calculator" className="relative py-12 sm:py-20 md:py-32 px-3 sm:px-4 bg-white overflow-hidden">
       <div className="relative z-10 container max-w-7xl mx-auto overflow-hidden">
