@@ -197,7 +197,7 @@ const OrderSection = () => {
               <div className="text-white">
                 <div className="p-4 sm:p-5" style={{ borderBottom: '1px solid hsl(240,9%,17%)' }}>
                   <h3 className="text-base font-black mb-4 flex items-center gap-2 uppercase tracking-tight" style={{ color: 'hsl(0,0%,83%)' }}>
-                    <Printer className="w-4 h-4" /> Или рассчитайте сами
+                    <Printer className="w-4 h-4" /> Калькулятор цены
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-[1.4fr_1fr] gap-3 mb-3">
