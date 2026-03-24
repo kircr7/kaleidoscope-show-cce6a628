@@ -16,9 +16,9 @@ const CarouselSection = () => {
           background: "radial-gradient(ellipse 50% 50% at 50% 50%, hsl(0 0% 22% / 0.6) 0%, hsl(0 0% 16% / 0.25) 35%, hsl(0 0% 12% / 0.1) 55%, transparent 85%)",
         }}
       />
-      <div className="relative h-52 md:h-64 flex items-center justify-center">
+      <div className="relative h-72 md:h-96 flex items-center justify-center py-10">
         {/* Left half - small icons flowing INTO center */}
-        <div className="absolute left-0 top-0 bottom-0 w-1/2 flex items-center overflow-hidden">
+        <div className="absolute left-0 top-0 bottom-0 w-1/2 flex items-center overflow-hidden overflow-y-visible">
           {/* Fade mask: visible on left, fades out on right (behind center icon) */}
           <div
             className="w-full h-full flex items-center"
@@ -32,7 +32,7 @@ const CarouselSection = () => {
         </div>
 
         {/* Right half - large icons flowing OUT of center */}
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 flex items-center overflow-hidden">
+        <div className="absolute right-0 top-0 bottom-0 w-1/2 flex items-center overflow-hidden overflow-y-visible">
           <div
             className="w-full h-full flex items-center"
             style={{
