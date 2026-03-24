@@ -708,7 +708,7 @@ const OrderSection = () => {
                                 placeholder="Ваше имя"
                                 value={customer.name}
                                 onChange={e => setCustomer({ ...customer, name: e.target.value })}
-                                className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
                                 style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                               />
                             </div>
