@@ -246,10 +246,10 @@ const OrderSection = () => {
                 <div className="absolute inset-0 lg:border-r" style={{ borderColor: 'hsl(240,9%,17%)' }} />
 
                 <div className="relative z-10">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-white">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-black leading-tight tracking-tight text-white">
                     Отправьте файлы <br className="hidden sm:block" /> удобным вам способом.
                   </h2>
-                  <p className="mt-3 sm:mt-4 text-sm md:text-base leading-relaxed max-w-sm" style={{ color: 'hsl(0,0%,83%)' }}>
+                  <p className="mt-2 sm:mt-3 text-xs md:text-sm leading-relaxed max-w-sm" style={{ color: 'hsl(0,0%,83%)' }}>
                     Не тратьте время на расчеты. Наш менеджер сам проверит файлы и назовет точную цену.
                   </p>
 
@@ -257,14 +257,14 @@ const OrderSection = () => {
                     href="https://t.me/printprro"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-5 sm:mt-6 inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 active:scale-[0.97] hover:bg-[hsla(266,92%,58%,0.15)] hover:shadow-[0_0_20px_hsla(266,92%,58%,0.3)]"
+                    className="mt-3 sm:mt-4 inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-[10px] sm:text-xs uppercase tracking-wider transition-all duration-200 active:scale-[0.97] hover:bg-[hsla(266,92%,58%,0.15)] hover:shadow-[0_0_20px_hsla(266,92%,58%,0.3)]"
                     style={{
                       border: '2px solid hsl(266,92%,58%)',
                       color: 'hsl(266,92%,78%)',
                       backgroundColor: 'transparent',
                     }}
                   >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M20.665 4.70898L17.702 18.718C17.481 19.721 16.883 19.974 16.036 19.497L11.431 16.104L9.213 18.232C8.968 18.477 8.761 18.684 8.271 18.684L8.599 13.992L17.133 6.29098C17.504 5.96098 17.052 5.77998 16.559 6.10898L6.02 12.738L1.474 11.315C0.485 11.008 0.468 10.323 1.681 9.85198L19.431 3.01198C20.252 2.70498 20.971 3.18998 20.665 4.70898Z" />
                     </svg>
                     Написать в Telegram
