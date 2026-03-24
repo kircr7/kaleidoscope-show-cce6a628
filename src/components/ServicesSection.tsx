@@ -88,7 +88,7 @@ const ServicesSection = () => {
         <div className="mt-12 sm:mt-16 text-center">
           <a
             href="#calculator"
-            className="inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-amber-500 text-black rounded-full font-black uppercase tracking-widest text-xs sm:text-sm hover:scale-105 hover:bg-amber-400 transition-all duration-300 shadow-[0_0_40px_rgba(245,158,11,0.2)] active:scale-95"
+            className="inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-black text-white rounded-full font-black uppercase tracking-widest text-xs sm:text-sm hover:scale-105 hover:bg-slate-800 transition-all duration-300 shadow-[0_0_40px_rgba(0,0,0,0.15)] active:scale-95"
           >
             Рассчитать стоимость
           </a>
