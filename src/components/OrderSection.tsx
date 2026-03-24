@@ -406,18 +406,12 @@ const OrderSection = () => {
                           <span className="text-[10px] font-bold uppercase text-white">
                             Фальцовка по ГОСТ
                           </span>
-                          <div className="switch-wrap">
-                            <input
-                              type="checkbox"
-                              id="switch-folding"
-                              className="switch-input"
-                              checked={foldingEnabled}
-                              onChange={(e) => setFoldingEnabled(e.target.checked)}
-                            />
-                            <label htmlFor="switch-folding" className="switch-label">
-                              <span className="switch-marbles" />
-                            </label>
-                          </div>
+                          <input
+                            type="checkbox"
+                            className="switch"
+                            checked={foldingEnabled}
+                            onChange={(e) => setFoldingEnabled(e.target.checked)}
+                          />
                         </div>
                       </div>
 
