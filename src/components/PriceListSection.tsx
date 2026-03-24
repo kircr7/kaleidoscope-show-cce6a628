@@ -131,7 +131,7 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
             </div>
           </div>
         ) : (
-          <p className="text-lg font-semibold text-foreground">{item.price}</p>
+          <p className="text-lg font-semibold text-emerald-400">{item.price}</p>
         )}
       </div>
     </div>
