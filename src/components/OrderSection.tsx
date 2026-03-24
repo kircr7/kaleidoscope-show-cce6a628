@@ -42,6 +42,9 @@ const OrderSection = () => {
   const [isColor, setIsColor] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [customer, setCustomer] = useState({ name: '', phone: '' });
+  const [fileLink, setFileLink] = useState('');
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
