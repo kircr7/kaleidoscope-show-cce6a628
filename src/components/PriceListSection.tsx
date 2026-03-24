@@ -27,12 +27,12 @@ const PriceCard = ({
   item,
   variant,
   expandedFormat,
-  onToggle,
+  onExpand,
 }: {
   item: typeof bwPrices[0];
   variant: "bw" | "color";
   expandedFormat: string | null;
-  onToggle: (format: string) => void;
+  onExpand: (format: string | null) => void;
 }) => {
   const isOpen = expandedFormat === item.format;
   const isBw = variant === "bw";
@@ -54,7 +54,8 @@ const PriceCard = ({
             }
           : undefined
       }
-      onClick={() => onToggle(item.format)}
+      onMouseEnter={() => onExpand(item.format)}
+      onMouseLeave={() => onExpand(null)}
     >
       <div className="flex items-baseline justify-between mb-1">
         <span
@@ -157,8 +158,7 @@ const PriceListSection = () => {
   const [expandedBw, setExpandedBw] = useState<string | null>(null);
   const [expandedColor, setExpandedColor] = useState<string | null>(null);
 
-  const toggleBw = (format: string) => setExpandedBw((prev) => (prev === format ? null : format));
-  const toggleColor = (format: string) => setExpandedColor((prev) => (prev === format ? null : format));
+
 
   return (
     <section id="pricelist" className="py-16 sm:py-24 px-3 sm:px-4">
@@ -201,7 +201,7 @@ const PriceListSection = () => {
             <TabsContent value="bw" className="mt-0">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
                 {bwPrices.map((item) => (
-                  <PriceCard key={item.format} item={item} variant="bw" expandedFormat={expandedBw} onToggle={toggleBw} />
+                  <PriceCard key={item.format} item={item} variant="bw" expandedFormat={expandedBw} onExpand={setExpandedBw} />
                 ))}
               </div>
             </TabsContent>
@@ -209,7 +209,7 @@ const PriceListSection = () => {
             <TabsContent value="color" className="mt-0">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
                 {colorPrices.map((item) => (
-                  <PriceCard key={item.format} item={item} variant="color" expandedFormat={expandedColor} onToggle={toggleColor} />
+                  <PriceCard key={item.format} item={item} variant="color" expandedFormat={expandedColor} onExpand={setExpandedColor} />
                 ))}
               </div>
             </TabsContent>
