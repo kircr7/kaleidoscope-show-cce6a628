@@ -74,10 +74,10 @@ const ServicesSection = () => {
                 <div className="absolute inset-0 rounded-xl bg-amber-400/10 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
 
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 tracking-tight">
+              <h3 className="text-lg sm:text-xl font-bold text-black mb-3 tracking-tight">
                 {service.title}
               </h3>
-              <p className="text-sm text-gray-400 leading-relaxed font-light">
+              <p className="text-sm text-slate-600 leading-relaxed font-light">
                 {service.description}
               </p>
             </div>
