@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle } from 'lucide-react';
+import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 
-const PRICES: Record<string, { bw: number; color: number; label: string }> = {
+const PRINT_PRICES: Record<string, { bw: number; color: number; label: string }> = {
   A4: { bw: 5, color: 10, label: 'A4 (210х297 мм)' },
   A3: { bw: 19, color: 29, label: 'A3 (с фальцовкой)' },
   A2: { bw: 38, color: 48, label: 'A2 (с фальцовкой)' },
@@ -11,19 +11,18 @@ const PRICES: Record<string, { bw: number; color: number; label: string }> = {
   A0: { bw: 118, color: 128, label: 'A0 (с фальцовкой)' },
 };
 
-const OPTIONS: Record<string, { label: string; price: number }> = {
-  bindingA4: { label: 'Брошюровка в А4', price: 100 },
-  bindingA3: { label: 'Брошюровка в А3', price: 200 },
-  hardcover: { label: 'Твердый переплет', price: 600 },
-  lamination: { label: 'Ламинация', price: 100 },
-};
+const SERVICE_PRICES: { id: string; label: string; price: number }[] = [
+  { id: 'bindingA4', label: 'Брошюровка в А4', price: 100 },
+  { id: 'bindingA3', label: 'Брошюровка в А3', price: 200 },
+  { id: 'hardcover', label: 'Твердый переплет', price: 600 },
+  { id: 'lamination', label: 'Ламинация', price: 100 },
+];
 
 interface CartItem {
   id: number;
   label: string;
-  options: string[];
+  unitPrice: number;
   quantity: number;
-  itemTotal: number;
 }
 
 const PriceCalculator = () => {
@@ -31,32 +30,43 @@ const PriceCalculator = () => {
   const [format, setFormat] = useState('A1');
   const [isColor, setIsColor] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [customer, setCustomer] = useState({ name: '', phone: '' });
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
 
-  const addToCart = () => {
-    const basePrice = isColor ? PRICES[format].color : PRICES[format].bw;
-    const optionsSum = selectedOptions.reduce((acc, id) => acc + OPTIONS[id].price, 0);
-
+  const addPrintToCart = () => {
+    const unitPrice = isColor ? PRINT_PRICES[format].color : PRINT_PRICES[format].bw;
     const newItem: CartItem = {
       id: Date.now(),
-      label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
-      options: selectedOptions.map(id => OPTIONS[id].label),
+      label: `${PRINT_PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
+      unitPrice,
       quantity,
-      itemTotal: (basePrice * quantity) + optionsSum,
     };
-
-    setCart([...cart, newItem]);
-    setSelectedOptions([]);
+    setCart(prev => [...prev, newItem]);
     setQuantity(1);
+  };
+
+  const addServiceToCart = (service: typeof SERVICE_PRICES[0]) => {
+    setCart(prev => [...prev, {
+      id: Date.now() + Math.random(),
+      label: service.label,
+      unitPrice: service.price,
+      quantity: 1,
+    }]);
   };
 
   const removeItem = (id: number) => setCart(cart.filter(item => item.id !== id));
 
+  const updateQuantity = (id: number, delta: number) => {
+    setCart(prev => prev.map(item => {
+      if (item.id !== id) return item;
+      const newQty = Math.max(1, item.quantity + delta);
+      return { ...item, quantity: newQty };
+    }));
+  };
+
   const stats = useMemo(() => {
-    const subtotal = cart.reduce((acc, item) => acc + item.itemTotal, 0);
+    const subtotal = cart.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
     const discount = subtotal * 0.20;
     return { subtotal, discount, total: subtotal - discount };
   }, [cart]);
@@ -71,8 +81,8 @@ const PriceCalculator = () => {
     setStatus('sending');
 
     const orderDetailsText = cart.map((item, index) =>
-      `${index + 1}. ${item.label} — ${item.quantity} шт.\n   Доп. услуги: ${item.options.length > 0 ? item.options.join(', ') : 'Нет'}\n   Сумма за позицию: ${item.itemTotal} руб.`
-    ).join('\n\n');
+      `${index + 1}. ${item.label} — ${item.quantity} шт. × ${item.unitPrice} ₽ = ${item.unitPrice * item.quantity} руб.`
+    ).join('\n');
 
     const templateParams = {
       customer_name: customer.name,
@@ -82,12 +92,7 @@ const PriceCalculator = () => {
     };
 
     try {
-      await emailjs.send(
-        'service_5lojlb2',
-        'template_86or1it',
-        templateParams,
-        'ShGXdndtWKIL7zvcD'
-      );
+      await emailjs.send('service_5lojlb2', 'template_86or1it', templateParams, 'ShGXdndtWKIL7zvcD');
       setStatus('success');
     } catch (error) {
       console.error('Ошибка отправки:', error);
@@ -109,6 +114,7 @@ const PriceCalculator = () => {
               <Printer className="w-6 h-6" /> Конфигуратор заказа
             </h2>
 
+            {/* Print format selection */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-400 uppercase ml-1">Размер чертежа</label>
@@ -117,9 +123,9 @@ const PriceCalculator = () => {
                   onChange={(e) => setFormat(e.target.value)}
                   className="w-full p-3 border border-slate-200 rounded-xl bg-white shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                 >
-                  {Object.keys(PRICES).map(k => (
+                  {Object.keys(PRINT_PRICES).map(k => (
                     <option key={k} value={k}>
-                      {PRICES[k].label} — {isColor ? PRICES[k].color : PRICES[k].bw} ₽/лист
+                      {PRINT_PRICES[k].label} — {isColor ? PRINT_PRICES[k].color : PRINT_PRICES[k].bw} ₽/лист
                     </option>
                   ))}
                 </select>
@@ -139,34 +145,38 @@ const PriceCalculator = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 mb-6">
-              {Object.entries(OPTIONS).map(([id, opt]) => (
-                <button
-                  key={id}
-                  onClick={() => setSelectedOptions(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id])}
-                  className={`text-left p-3 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
-                    selectedOptions.includes(id)
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-md'
-                      : 'bg-white text-slate-600 border-slate-200 hover:border-blue-300'
-                  }`}
-                >
-                  {opt.label} <span className="block opacity-70">+{opt.price} ₽</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="flex gap-3">
+            <div className="flex gap-3 mb-6">
               <div className="flex items-center bg-white border border-slate-200 rounded-xl px-3 shadow-sm">
                 <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-2xl font-light p-2 active:scale-95 transition-transform">−</button>
                 <span className="mx-3 font-bold text-sm w-5 text-center">{quantity}</span>
                 <button onClick={() => setQuantity(quantity + 1)} className="text-2xl font-light p-2 active:scale-95 transition-transform">+</button>
               </div>
               <button
-                onClick={addToCart}
+                onClick={addPrintToCart}
                 className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold uppercase text-sm tracking-wider transition-all active:scale-95 shadow-lg"
               >
                 Добавить в список
               </button>
+            </div>
+
+            {/* Services as separate items */}
+            <div>
+              <label className="text-[10px] font-bold text-slate-400 uppercase ml-1 mb-2 block">Дополнительные услуги</label>
+              <div className="grid grid-cols-2 gap-2">
+                {SERVICE_PRICES.map(service => (
+                  <button
+                    key={service.id}
+                    onClick={() => addServiceToCart(service)}
+                    className="text-left p-3 rounded-xl text-xs font-semibold border bg-white text-slate-600 border-slate-200 hover:border-blue-300 transition-all active:scale-95 flex justify-between items-center"
+                  >
+                    <div>
+                      {service.label}
+                      <span className="block text-slate-400">{service.price} ₽</span>
+                    </div>
+                    <Plus className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -181,14 +191,21 @@ const PriceCalculator = () => {
                 <div className="space-y-3 mb-8">
                   {cart.map(item => (
                     <div key={item.id} className="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100 group">
-                      <div>
-                        <div className="text-sm font-semibold text-slate-800">{item.label} <span className="text-slate-400">x{item.quantity}</span></div>
-                        <div className="text-[9px] text-slate-400 uppercase font-bold mt-0.5 tracking-tighter">
-                          {item.options.length > 0 ? item.options.join(' • ') : 'Без доп. услуг'}
-                        </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-semibold text-slate-800">{item.label}</div>
+                        <div className="text-[10px] text-slate-400 font-medium mt-0.5">{item.unitPrice} ₽ за шт.</div>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-sm font-bold">{item.itemTotal} ₽</span>
+                        <div className="flex items-center bg-white border border-slate-200 rounded-lg">
+                          <button onClick={() => updateQuantity(item.id, -1)} className="p-1.5 hover:bg-slate-50 rounded-l-lg transition-colors">
+                            <Minus className="w-3 h-3 text-slate-500" />
+                          </button>
+                          <span className="px-2.5 text-sm font-bold min-w-[28px] text-center">{item.quantity}</span>
+                          <button onClick={() => updateQuantity(item.id, 1)} className="p-1.5 hover:bg-slate-50 rounded-r-lg transition-colors">
+                            <Plus className="w-3 h-3 text-slate-500" />
+                          </button>
+                        </div>
+                        <span className="text-sm font-bold w-16 text-right">{item.unitPrice * item.quantity} ₽</span>
                         <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-50 rounded-full transition-colors">
                           <Trash2 className="w-3.5 h-3.5 text-red-400" />
                         </button>
@@ -197,7 +214,7 @@ const PriceCalculator = () => {
                   ))}
                   {cart.length === 0 && (
                     <p className="text-slate-300 text-center py-10 italic border-2 border-dashed border-slate-200 rounded-3xl">
-                      Список пуст. Добавьте чертежи выше.
+                      Список пуст. Добавьте чертежи или услуги выше.
                     </p>
                   )}
                 </div>
@@ -252,7 +269,7 @@ const PriceCalculator = () => {
                       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                         <div>
                           <div className="flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase mb-2 w-fit tracking-wider">
-                            Скидка 20% учтена
+                            Скидка 20% на первый заказ
                           </div>
                           <div className="flex items-baseline gap-2">
                             <span className="text-2xl font-black">{Math.round(stats.total)} ₽</span>
