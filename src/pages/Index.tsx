@@ -79,7 +79,6 @@ const Index = () => {
       <AnimatedHeroWorks />
 
       <OrderSection />
-      <PriceCalculator />
       <PriceListSection />
       <Footer />
       
