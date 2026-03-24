@@ -29,7 +29,7 @@ const Index = () => {
             чертежей и документации
           </h1>
           <p
-            className="mt-2 sm:mt-3 text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto opacity-0 px-2 mb-0"
+            className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto opacity-0 px-2"
             style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 150ms forwards" }}
           >
             Печать проектной, рабочей и исполнительной документации любого формата — от A4 до A0
