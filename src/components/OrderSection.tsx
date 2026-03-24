@@ -130,25 +130,20 @@ const OrderSection = () => {
       return;
     }
 
+    if (!orderFormRef.current) {
+      alert('Форма не готова к отправке. Обновите страницу и попробуйте снова.');
+      return;
+    }
+
     setStatus('sending');
 
-    const orderDetailsText = cart.map((item, index) => {
-      const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
-      const perUnit = item.unitPrice + folding;
-      const foldingNote = folding > 0 ? ` (вкл. фальцовку ${folding} ₽)` : '';
-      return `${index + 1}. ${item.label}${foldingNote} — ${item.quantity} шт. × ${perUnit} ₽ = ${perUnit * item.quantity} руб.`;
-    }).join('\n');
-
-    const templateParams = {
-      customer_name: customer.name,
-      customer_phone: customer.phone,
-      order_details: orderDetailsText,
-      total_price: Math.round(stats.total),
-      file_link: fileLink || (uploadedFile ? `Файл: ${uploadedFile.name}` : 'Не указано'),
-    };
-
     try {
-      await emailjs.send('service_5lojlb2', 'template_86or1it', templateParams, 'ShGXdndtWKIL7zvcD');
+      await emailjs.sendForm(
+        'service_5lojlb2',
+        'template_86or1it',
+        orderFormRef.current,
+        'ShGXdndtWKIL7zvcD',
+      );
       setStatus('success');
     } catch (error) {
       console.error('Ошибка отправки:', error);
