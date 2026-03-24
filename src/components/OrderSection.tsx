@@ -46,6 +46,7 @@ const OrderSection = () => {
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [foldingEnabled, setFoldingEnabled] = useState(false);
+  const [showFoldingReminder, setShowFoldingReminder] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
