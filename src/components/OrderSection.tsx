@@ -441,9 +441,9 @@ const OrderSection = () => {
                     { icon: <ShieldCheck className="w-5 h-5 text-emerald-400" />, title: 'Конфиденциально (NDA)', desc: 'Ваши чертежи и сметы надежно защищены от третьих лиц.', gradient: 'from-emerald-500/20 to-emerald-600/5' },
                     { icon: <Truck className="w-5 h-5 text-amber-400" />, title: 'Доставка по Москве', desc: 'Аккуратно упакуем и привезем документацию в офис или на стройплощадку.', gradient: 'from-amber-500/20 to-amber-600/5' },
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-4">
+                   <div key={i} className="flex items-start gap-4 p-3 -mx-3 rounded-2xl transition-all duration-200 hover:bg-white/[0.04] cursor-default group/feature">
                       <div
-                        className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.gradient} border border-white/10 flex items-center justify-center shrink-0`}
+                        className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.gradient} border border-white/10 flex items-center justify-center shrink-0 transition-all duration-200 group-hover/feature:scale-110 group-hover/feature:border-white/20`}
                         style={{ backgroundColor: 'hsla(240,15%,15%,0.6)' }}
                       >
                         {item.icon}
