@@ -32,7 +32,7 @@ const PriceCard = ({
   item: typeof bwPrices[0];
   variant: "bw" | "color";
   expandedFormat: string | null;
-  onToggle: (format: string) => void;
+  onExpand: (format: string | null) => void;
 }) => {
   const isOpen = expandedFormat === item.format;
   const isBw = variant === "bw";
