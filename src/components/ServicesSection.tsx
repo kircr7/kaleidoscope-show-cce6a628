@@ -7,49 +7,53 @@ const ServicesSection = () => {
       title: 'Широкоформатная печать',
       description: 'Печать чертежей, схем и графиков от А4 до А0+. Точная цветопередача и идеальное соблюдение масштабов (1:1) строго по ГОСТ.',
       icon: Printer,
+      gradient: 'linear-gradient(to right, hsl(210, 80%, 55%) 0%, hsl(230, 70%, 60%) 100%)',
     },
     {
       id: 2,
       title: 'Сканирование',
       description: 'Оцифровка проектной документации и архивов в высоком разрешении. Сканирование длинномерных и нестандартных форматов.',
       icon: ScanLine,
+      gradient: 'linear-gradient(to right, hsl(160, 70%, 40%) 0%, hsl(180, 60%, 45%) 100%)',
     },
     {
       id: 3,
       title: 'Фальцовка (сложение)',
       description: 'Автоматическое сложение широкоформатных листов (А0, А1, А2, А3) до формата А4 или А3 для последующей подшивки в тома или папки.',
       icon: FoldVertical,
+      gradient: 'linear-gradient(to right, hsl(270, 60%, 55%) 0%, hsl(290, 50%, 60%) 100%)',
     },
     {
       id: 4,
       title: 'Брошюровка',
       description: 'Сборка рабочей и проектной документации на пластиковую пружину. Аккуратный вид и удобство использования.',
       icon: BookOpenCheck,
+      gradient: 'linear-gradient(to right, hsl(38, 85%, 55%) 0%, hsl(25, 80%, 55%) 100%)',
     },
     {
       id: 5,
       title: 'Твердый переплет',
       description: 'Надежный канальный переплет для диссертаций, дипломов и важных томов исполнительной документации. Презентабельно и долговечно.',
       icon: BookLock,
+      gradient: 'linear-gradient(to right, hsl(350, 70%, 55%) 0%, hsl(330, 60%, 55%) 100%)',
     },
     {
       id: 6,
       title: 'Ламинирование',
       description: 'Покрытие документов глянцевой пленкой. Защита важных схем и генпланов от влаги, грязи и износа на стройплощадке.',
       icon: ShieldCheck,
+      gradient: 'linear-gradient(to right, hsl(175, 70%, 40%) 0%, hsl(200, 70%, 50%) 100%)',
     }
   ];
 
   return (
     <section id="services" className="relative py-16 sm:py-24 bg-white font-sans overflow-hidden">
-      {/* Subtle glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-amber-500/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 border border-black/10 text-amber-600 text-xs font-black uppercase tracking-widest mb-6">
-            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 border border-black/10 text-emerald-600 text-xs font-black uppercase tracking-widest mb-6">
+            <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
             Наши возможности
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black tracking-tight mb-6">
@@ -60,31 +64,46 @@ const ServicesSection = () => {
           </p>
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {services.map((service) => (
             <div
               key={service.id}
-              className="group relative rounded-2xl bg-white border border-black/10 p-6 sm:p-8 shadow-sm transition-all duration-400 ease-out hover:-translate-y-1.5 hover:border-amber-500/40 hover:shadow-[0_8px_40px_-12px_rgba(245,158,11,0.2)]"
+              className="group relative rounded-2xl p-[1.5px] transition-all duration-500 hover:-translate-y-2"
+              style={{ background: service.gradient }}
             >
-              {/* Icon wrapper */}
-              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-amber-500/15 group-hover:border-amber-500/30 transition-all duration-400">
-                <service.icon className="w-7 h-7 sm:w-8 sm:h-8 text-amber-400" strokeWidth={1.8} />
-                {/* Glow behind icon */}
-                <div className="absolute inset-0 rounded-xl bg-amber-400/10 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
+              {/* Glow blur behind card */}
+              <div
+                className="absolute inset-0 -z-10 rounded-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500"
+                style={{
+                  background: service.gradient,
+                  filter: 'blur(28px)',
+                  transform: 'scale(0.82) translateY(16px)',
+                }}
+              />
 
-              <h3 className="text-lg sm:text-xl font-bold text-black mb-3 tracking-tight">
-                {service.title}
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed font-light">
-                {service.description}
-              </p>
+              {/* Glass inner card */}
+              <div
+                className="relative rounded-2xl p-6 sm:p-8 h-full overflow-hidden"
+                style={{
+                  backgroundColor: 'hsla(0, 0%, 100%, 0.85)',
+                  backdropFilter: 'blur(16px)',
+                }}
+              >
+                <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-black/5 border border-black/10 flex items-center justify-center mb-5 sm:mb-6 group-hover:scale-110 transition-transform duration-500">
+                  <service.icon className="w-7 h-7 sm:w-8 sm:h-8 text-amber-500" strokeWidth={1.8} />
+                </div>
+
+                <h3 className="text-lg sm:text-xl font-bold text-black mb-3 tracking-tight">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed font-light">
+                  {service.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* CTA */}
         <div className="mt-12 sm:mt-16 text-center">
           <a
             href="#calculator"
