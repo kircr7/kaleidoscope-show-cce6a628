@@ -158,8 +158,7 @@ const PriceListSection = () => {
   const [expandedBw, setExpandedBw] = useState<string | null>(null);
   const [expandedColor, setExpandedColor] = useState<string | null>(null);
 
-  const toggleBw = (format: string) => setExpandedBw((prev) => (prev === format ? null : format));
-  const toggleColor = (format: string) => setExpandedColor((prev) => (prev === format ? null : format));
+
 
   return (
     <section id="pricelist" className="py-16 sm:py-24 px-3 sm:px-4">
