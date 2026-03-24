@@ -233,7 +233,7 @@ const OrderSection = () => {
 
                 <div className="relative z-10">
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-white">
-                    Отправьте файлы <br className="hidden sm:block" /> в Telegram.
+                    Отправьте файлы <br className="hidden sm:block" /> удобным вам способом.
                   </h2>
                   <p className="mt-3 sm:mt-4 text-sm md:text-base leading-relaxed max-w-sm" style={{ color: 'hsl(0,0%,83%)' }}>
                     Не тратьте время на расчеты. Наш менеджер сам проверит файлы и назовет точную цену.
