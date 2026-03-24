@@ -249,7 +249,7 @@ const OrderSection = () => {
                     href="https://t.me/printprro"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-5 sm:mt-6 inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all active:scale-[0.97]"
+                    className="mt-5 sm:mt-6 inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 active:scale-[0.97] hover:bg-[hsla(266,92%,58%,0.15)] hover:shadow-[0_0_20px_hsla(266,92%,58%,0.3)]"
                     style={{
                       border: '2px solid hsl(266,92%,58%)',
                       color: 'hsl(266,92%,78%)',
