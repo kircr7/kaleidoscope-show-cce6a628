@@ -17,8 +17,15 @@ const colorPrices = [
   { format: "A0", size: "841×1189 мм", under100: "110 ₽", over100: "88 ₽" },
 ];
 
+const foldingPrices = [
+  { format: "A3", price: "5 ₽" },
+  { format: "A2", price: "8 ₽" },
+  { format: "A1", price: "14 ₽" },
+  { format: "A0", price: "18 ₽" },
+];
+
 const services = [
-  { name: "Фальцовка по ГОСТ", desc: "Сложение в формат А4", price: "от 5 ₽/лист" },
+  { name: "Фальцовка по ГОСТ", desc: "Сложение в формат А4", price: "folding" },
   { name: "Брошюровка на пружину", desc: "До 510 листов", price: "А4 — 100 ₽ / А3 — 200 ₽" },
   { name: "Твердый переплет", desc: "Для томов проектной документации", price: "600 ₽" },
 ];
