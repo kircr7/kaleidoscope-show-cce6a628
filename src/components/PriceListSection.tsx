@@ -65,7 +65,7 @@ const PriceCard = ({
 
       <div className={`pt-3 space-y-2 border-t ${isBw ? "border-border/20" : "border-white/20"}`}>
         <div className="flex justify-between items-center">
-          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>цена</span>
+          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>обычная цена</span>
           <span className={`text-base font-semibold ${isBw ? "text-foreground" : "text-white"}`}>
             {item.under100}
           </span>
