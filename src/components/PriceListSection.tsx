@@ -34,7 +34,7 @@ const PriceCard = ({
 
   return (
     <div
-      className={`group relative rounded-2xl border p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 ${
+      className={`group relative rounded-2xl border p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 ${
         isBw
           ? "bg-card/40 backdrop-blur-sm border-border/30 hover:border-border/60 hover:bg-card/70"
           : "border-white/20 hover:border-white/40 hover:shadow-lg hover:shadow-purple-500/10"
