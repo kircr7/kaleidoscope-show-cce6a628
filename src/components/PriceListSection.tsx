@@ -79,7 +79,7 @@ const PriceCard = ({
       >
         <div
           className={`pt-4 mt-3 space-y-2 border-t ${
-            isBw ? "border-gray-200" : "border-white/20"
+            isBw ? "border-border/20" : "border-white/20"
           }`}
         >
           <div className="flex justify-between items-center">
