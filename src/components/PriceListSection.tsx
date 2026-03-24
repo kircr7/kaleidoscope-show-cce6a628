@@ -26,20 +26,15 @@ const services = [
 const PriceCard = ({
   item,
   variant,
-  expandedFormat,
-  onExpand,
 }: {
   item: typeof bwPrices[0];
   variant: "bw" | "color";
-  expandedFormat: string | null;
-  onExpand: (format: string | null) => void;
 }) => {
-  const isOpen = expandedFormat === item.format;
   const isBw = variant === "bw";
 
   return (
     <div
-      className={`group relative rounded-2xl border p-5 sm:p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 ${
+      className={`group relative rounded-2xl border p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 ${
         isBw
           ? "bg-card/40 backdrop-blur-sm border-border/30 hover:border-border/60 hover:bg-card/70"
           : "border-white/20 hover:border-white/40 hover:shadow-lg hover:shadow-purple-500/10"
@@ -54,10 +49,8 @@ const PriceCard = ({
             }
           : undefined
       }
-      onMouseEnter={() => onExpand(item.format)}
-      onMouseLeave={() => onExpand(null)}
     >
-      <div className="flex items-baseline justify-between mb-1">
+      <div className="flex items-baseline justify-between mb-3">
         <span
           className={`text-2xl sm:text-3xl font-bold tracking-tight ${
             isBw ? "text-foreground" : "text-white"
@@ -70,54 +63,25 @@ const PriceCard = ({
         </span>
       </div>
 
-      <div
-        className="overflow-hidden transition-all duration-400 ease-out"
-        style={{
-          maxHeight: isOpen ? "120px" : "0px",
-          opacity: isOpen ? 1 : 0,
-        }}
-      >
-        <div
-          className={`pt-4 mt-3 space-y-2 border-t ${
-            isBw ? "border-border/20" : "border-white/20"
-          }`}
-        >
-          <div className="flex justify-between items-center">
-            <span className={`text-sm ${isBw ? "text-muted-foreground" : "text-white/80"}`}>
-              До 100 листов
-            </span>
-            <span
-              className={`text-base font-semibold ${
-                isBw ? "text-foreground" : "text-white"
-              }`}
-            >
-              {item.under100}
-            </span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className={`text-sm ${isBw ? "text-muted-foreground" : "text-white/80"}`}>
-              От 100 листов
-            </span>
-            <span
-              className={`text-base font-semibold ${
-                isBw ? "text-emerald-400" : "text-yellow-200 drop-shadow-sm"
-              }`}
-            >
-              {item.over100}
-            </span>
-          </div>
+      <div className={`pt-3 space-y-2 border-t ${isBw ? "border-border/20" : "border-white/20"}`}>
+        <div className="flex justify-between items-center">
+          <span className={`text-sm ${isBw ? "text-muted-foreground" : "text-white/80"}`}>
+            {item.under100}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span
+            className={`text-base font-semibold ${
+              isBw ? "text-emerald-400" : "text-yellow-200 drop-shadow-sm"
+            }`}
+          >
+            {item.over100}
+          </span>
+          <span className={`text-[10px] ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>
+            от 100
+          </span>
         </div>
       </div>
-
-      {!isOpen && (
-        <p
-          className={`text-xs mt-2 transition-opacity ${
-            isBw ? "text-muted-foreground/60" : "text-white/50"
-          }`}
-        >
-          Нажмите для просмотра цен
-        </p>
-      )}
     </div>
   );
 };
@@ -155,8 +119,6 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
 };
 
 const PriceListSection = () => {
-  const [expandedBw, setExpandedBw] = useState<string | null>(null);
-  const [expandedColor, setExpandedColor] = useState<string | null>(null);
 
 
 
@@ -209,7 +171,7 @@ const PriceListSection = () => {
             <TabsContent value="bw" className="mt-0">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 items-start">
                 {bwPrices.map((item) => (
-                  <PriceCard key={item.format} item={item} variant="bw" expandedFormat={expandedBw} onExpand={setExpandedBw} />
+                  <PriceCard key={item.format} item={item} variant="bw" />
                 ))}
               </div>
             </TabsContent>
@@ -217,7 +179,7 @@ const PriceListSection = () => {
             <TabsContent value="color" className="mt-0">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 items-start">
                 {colorPrices.map((item) => (
-                  <PriceCard key={item.format} item={item} variant="color" expandedFormat={expandedColor} onExpand={setExpandedColor} />
+                  <PriceCard key={item.format} item={item} variant="color" />
                 ))}
               </div>
             </TabsContent>
