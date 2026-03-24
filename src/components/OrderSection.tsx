@@ -245,10 +245,11 @@ const OrderSection = () => {
                     href="https://t.me/printprro"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-5 sm:mt-6 inline-flex items-center gap-3 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all active:scale-[0.97]"
+                    className="mt-5 sm:mt-6 inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all active:scale-[0.97]"
                     style={{
-                      backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
-                      boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
+                      border: '2px solid hsl(266,92%,58%)',
+                      color: 'hsl(266,92%,78%)',
+                      backgroundColor: 'transparent',
                     }}
                   >
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
