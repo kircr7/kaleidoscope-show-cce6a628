@@ -18,7 +18,7 @@ const PRICES: Record<string, { bw: number; color: number; label: string }> = {
   A3: { bw: 14, color: 24, label: 'A3 (297×420 мм)' },
   A2: { bw: 30, color: 40, label: 'A2 (420×594 мм)' },
   A1: { bw: 50, color: 70, label: 'A1 (594×841 мм)' },
-  A0: { bw: 110, color: 120, label: 'A0 (841×1189 мм)' },
+  A0: { bw: 100, color: 110, label: 'A0 (841×1189 мм)' },
 };
 
 const FOLDING_PRICES: Record<string, number> = {
@@ -393,8 +393,16 @@ const OrderSection = () => {
                         <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-widest text-white/70">
                           <ShoppingCart className="w-4 h-4" /> Ваш заказ
                         </h3>
-                        <label className="flex items-center gap-2 cursor-pointer select-none">
-                          <span className="text-[10px] font-bold uppercase" style={{ color: 'hsl(0,0%,50%)' }}>Фальцовка по ГОСТ</span>
+                        <label
+                          className="flex items-center gap-2.5 cursor-pointer select-none px-3 py-1.5 rounded-full transition-all"
+                          style={{
+                            backgroundColor: foldingEnabled ? 'hsla(266,92%,58%,0.2)' : 'hsla(240,15%,15%,0.6)',
+                            border: `1px solid ${foldingEnabled ? 'hsl(266,92%,58%)' : 'hsl(240,9%,20%)'}`,
+                          }}
+                        >
+                          <span className="text-[10px] font-bold uppercase" style={{ color: foldingEnabled ? 'hsl(266,92%,78%)' : 'hsl(0,0%,60%)' }}>
+                            Фальцовка по ГОСТ
+                          </span>
                           <Switch checked={foldingEnabled} onCheckedChange={setFoldingEnabled} />
                         </label>
                       </div>
