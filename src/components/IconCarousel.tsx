@@ -43,7 +43,7 @@ const smallItems: SmallItem[] = [
 // =============================================
 const largeItems: LargeItem[] = [
   { image: outputBlueprint, label: "Чертежи" },
-  { image: outputPlan, label: "Планы" },
+  
   { image: outputDocs, label: "Документы" },
   { image: outputPoster, label: "Проектная" },
   { image: outputSpec, label: "Рабочая" },
