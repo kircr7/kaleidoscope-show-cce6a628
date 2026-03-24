@@ -348,13 +348,51 @@ const OrderSection = () => {
                           </button>
                         )}
                       </div>
-                      <input type="hidden" name="customer_name" value="Отправка файлов" />
-                      <input type="hidden" name="customer_phone" value="—" />
-                      <input type="hidden" name="order_details" value="Клиент отправил файлы через форму" />
-                      <input type="hidden" name="total_price" value="—" />
 
                       {(fileLink || uploadedFile) && (
                         <>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="relative">
+                              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                              <input
+                                required
+                                name="customer_name"
+                                placeholder="Ваше имя"
+                                value={fileCustomer.name}
+                                onChange={e => setFileCustomer({ ...fileCustomer, name: e.target.value })}
+                                className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                              />
+                            </div>
+                            <div className="relative">
+                              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                              <input
+                                required
+                                name="customer_phone"
+                                type="tel"
+                                placeholder="+7 (___) ___-__-__"
+                                value={fileCustomer.phone}
+                                onChange={e => {
+                                  let digits = e.target.value.replace(/\D/g, '');
+                                  if (digits.startsWith('8')) digits = '7' + digits.slice(1);
+                                  if (!digits.startsWith('7') && digits.length > 0) digits = '7' + digits;
+                                  digits = digits.slice(0, 11);
+                                  let formatted = '';
+                                  if (digits.length > 0) formatted = '+' + digits[0];
+                                  if (digits.length > 1) formatted += ' (' + digits.slice(1, 4);
+                                  if (digits.length > 4) formatted += ') ' + digits.slice(4, 7);
+                                  if (digits.length > 7) formatted += '-' + digits.slice(7, 9);
+                                  if (digits.length > 9) formatted += '-' + digits.slice(9, 11);
+                                  setFileCustomer({ ...fileCustomer, phone: formatted });
+                                }}
+                                maxLength={18}
+                                className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                              />
+                            </div>
+                          </div>
+                          <input type="hidden" name="order_details" value="Клиент отправил файлы через форму" />
+                          <input type="hidden" name="total_price" value="—" />
                           <label className="flex items-start gap-2.5 cursor-pointer select-none">
                             <input
                               type="checkbox"
