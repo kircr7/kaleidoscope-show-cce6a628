@@ -398,7 +398,7 @@ const OrderSection = () => {
                 <div className="p-4 sm:p-6">
                   {status !== 'success' ? (
                     <>
-                      <div className="flex items-center justify-between mb-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                         <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-widest text-white/70">
                           <ShoppingCart className="w-4 h-4" /> Ваш заказ
                         </h3>
@@ -410,7 +410,7 @@ const OrderSection = () => {
                           }}
                         >
                           <span
-                            className="text-xs font-black uppercase tracking-wide"
+                            className="text-[10px] sm:text-xs font-black uppercase tracking-wide"
                             style={{ color: foldingEnabled ? 'hsl(120,60%,70%)' : 'hsl(0,0%,83%)' }}
                           >
                             Фальцовка по ГОСТ
