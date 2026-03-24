@@ -242,7 +242,7 @@ const OrderSection = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2">
 
               {/* ЛЕВАЯ ПАНЕЛЬ */}
-              <div className="relative p-5 sm:p-8 md:p-12 flex flex-col justify-between overflow-hidden">
+              <div className="relative p-5 sm:p-8 md:p-12 flex flex-col justify-between overflow-hidden lg:self-start lg:sticky lg:top-24">
                 <div className="absolute inset-0 lg:border-r" style={{ borderColor: 'hsl(240,9%,17%)' }} />
 
                 <div className="relative z-10">
