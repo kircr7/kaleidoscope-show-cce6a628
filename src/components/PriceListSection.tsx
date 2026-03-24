@@ -88,7 +88,7 @@ const PriceCard = ({
             </span>
             <span
               className={`text-base font-semibold ${
-                isBw ? "text-gray-900" : "text-white"
+                isBw ? "text-foreground" : "text-white"
               }`}
             >
               {item.under100}
