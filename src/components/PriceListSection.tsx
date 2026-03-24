@@ -60,7 +60,7 @@ const PriceCard = ({
       <div className="flex items-baseline justify-between mb-1">
         <span
           className={`text-2xl sm:text-3xl font-bold tracking-tight ${
-            isBw ? "text-gray-900" : "text-white"
+            isBw ? "text-foreground" : "text-white"
           }`}
         >
           {item.format}
