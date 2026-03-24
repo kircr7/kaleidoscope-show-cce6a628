@@ -361,7 +361,7 @@ const OrderSection = () => {
                               style={{ accentColor: 'hsl(266,92%,58%)' }}
                               required
                             />
-                            <span className="text-[11px] leading-relaxed" style={{ color: 'hsl(0,0%,50%)' }}>
+                            <span className="text-[11px] leading-relaxed" style={{ color: 'hsl(0,0%,100%)' }}>
                               Даю согласие на обработку персональных данных согласно{' '}
                               <Link to="/privacy" className="underline" style={{ color: 'hsl(266,92%,68%)' }}>
                                 Политике конфиденциальности
