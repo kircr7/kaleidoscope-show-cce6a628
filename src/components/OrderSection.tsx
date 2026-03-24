@@ -254,7 +254,7 @@ const OrderSection = () => {
                               <button
                                 key={k}
                                 type="button"
-                                onClick={() => { setFormat(k); setDropdownOpen(false); }}
+                                onClick={() => { setFormat(k); }}
                                 className="w-full text-left px-3.5 py-2.5 text-sm font-medium transition-all flex justify-between items-center"
                                 style={{
                                   color: format === k ? 'hsl(266,92%,78%)' : 'hsl(0,0%,83%)',
