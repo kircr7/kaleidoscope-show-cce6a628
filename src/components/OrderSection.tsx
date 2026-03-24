@@ -530,6 +530,37 @@ const OrderSection = () => {
                             </span>
                           </label>
 
+                          {showFoldingReminder && (
+                            <div
+                              className="p-3 rounded-xl mt-3 flex items-center justify-between gap-3 animate-fade-in"
+                              style={{
+                                backgroundColor: 'hsla(45,100%,50%,0.12)',
+                                border: '1px solid hsla(45,100%,50%,0.3)',
+                              }}
+                            >
+                              <p className="text-xs font-semibold" style={{ color: 'hsl(45,100%,75%)' }}>
+                                ⚠️ Вы не добавили фальцовку по ГОСТ. Продолжить без неё?
+                              </p>
+                              <div className="flex gap-2 shrink-0">
+                                <button
+                                  type="button"
+                                  onClick={() => { setFoldingEnabled(true); setShowFoldingReminder(false); }}
+                                  className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase"
+                                  style={{ backgroundColor: 'hsla(266,92%,58%,0.3)', color: 'hsl(266,92%,78%)' }}
+                                >
+                                  Добавить
+                                </button>
+                                <button
+                                  type="submit"
+                                  className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase text-white/60"
+                                  style={{ backgroundColor: 'hsla(0,0%,100%,0.1)' }}
+                                >
+                                  Без неё
+                                </button>
+                              </div>
+                            </div>
+                          )}
+
                           <div
                             className="text-white p-4 sm:p-5 rounded-2xl mt-4 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4"
                             style={{
