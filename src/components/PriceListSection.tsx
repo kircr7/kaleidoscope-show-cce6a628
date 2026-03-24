@@ -119,7 +119,7 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
         {isFolding ? (
           <div className="h-7 overflow-hidden relative">
             <div
-              className="flex items-center gap-2 absolute inset-x-0 transition-all duration-300 ease-in-out"
+              className="flex items-center gap-2 absolute inset-x-0 transition-all duration-500 ease-in-out"
               style={{
                 transform: animating ? 'translateY(-100%)' : 'translateY(0)',
                 opacity: animating ? 0 : 1,
