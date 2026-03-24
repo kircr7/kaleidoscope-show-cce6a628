@@ -413,7 +413,7 @@ const OrderSection = () => {
                             className="text-xs font-black uppercase tracking-wide"
                             style={{ color: foldingEnabled ? 'hsl(120,60%,70%)' : 'hsl(0,0%,83%)' }}
                           >
-                            ✦ Фальцовка по ГОСТ
+                            Фальцовка по ГОСТ
                           </span>
                           <input
                             type="checkbox"
