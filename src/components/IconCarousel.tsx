@@ -91,7 +91,7 @@ const IconCarousel = ({ side }: Props) => {
       >
         {track.map((item, i) => (
           <div key={i} className="flex-shrink-0 relative">
-            <div className="w-20 h-28 md:w-24 md:h-34 rounded-lg bg-black border border-[hsl(0_0%_30%)]/50 p-1.5 flex flex-col gap-1.5 shadow-lg shadow-black/50">
+            <div className="w-24 h-32 md:w-28 md:h-40 rounded-lg bg-black border border-[hsl(0_0%_30%)]/50 p-1.5 flex flex-col gap-1.5 shadow-lg shadow-black/50">
               <div className="flex-1 rounded border border-[hsl(0_0%_30%)]/60 flex items-center justify-center">
                 <item.icon className="w-7 h-7 md:w-9 md:h-9 text-[hsl(0_0%_55%)]" strokeWidth={0.7} />
               </div>
