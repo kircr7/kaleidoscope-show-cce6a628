@@ -216,10 +216,10 @@ const OrderSection = () => {
                     <Printer className="w-4 h-4" /> Калькулятор цены
                   </h3>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-[1.4fr_1fr] gap-3 mb-3">
+                  <div ref={dropdownRef} className="grid grid-cols-1 sm:grid-cols-[1.4fr_1fr] gap-3 mb-3">
                     <div className="space-y-1">
                       <label className="text-[10px] font-bold uppercase ml-1" style={{ color: 'hsl(0,0%,60%)' }}>Формат чертежа</label>
-                      <div className="relative" ref={dropdownRef}>
+                      <div className="relative">
                         <button
                           type="button"
                           onClick={() => setDropdownOpen(!dropdownOpen)}
