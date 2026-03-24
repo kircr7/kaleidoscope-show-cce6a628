@@ -586,7 +586,7 @@ const OrderSection = () => {
                         <button
                           key={service.id}
                           onClick={() => addServiceToCart(service)}
-                          className="text-left p-2.5 sm:p-3 rounded-xl text-[11px] sm:text-xs font-semibold transition-all active:scale-[0.97] flex justify-between items-center"
+                          className="text-left p-2.5 sm:p-3 rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 active:scale-[0.97] flex justify-between items-center hover:bg-[hsla(266,92%,58%,0.1)] hover:border-[hsl(266,92%,58%,0.4)] hover:scale-[1.02]"
                           style={{
                             backgroundColor: 'hsla(240,15%,15%,0.5)',
                             border: '1px solid hsl(240,9%,17%)',
