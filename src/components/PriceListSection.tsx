@@ -173,6 +173,13 @@ const PriceListSection = () => {
             </TabsContent>
           </Tabs>
         </div>
+
+        <p
+          className="text-center text-sm text-muted-foreground/70 mt-6 opacity-0"
+          style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 400ms forwards" }}
+        >
+          * Цены не являются окончательными. При объёмных и регулярных заказах предоставляется скидка.
+        </p>
       </div>
     </section>
   );
