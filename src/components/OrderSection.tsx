@@ -249,7 +249,7 @@ const OrderSection = () => {
                     href="https://t.me/printprro"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-5 sm:mt-6 inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all active:scale-[0.97]"
+                    className="mt-5 sm:mt-6 inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 active:scale-[0.97] hover:bg-[hsla(266,92%,58%,0.15)] hover:shadow-[0_0_20px_hsla(266,92%,58%,0.3)]"
                     style={{
                       border: '2px solid hsl(266,92%,58%)',
                       color: 'hsl(266,92%,78%)',
@@ -290,7 +290,7 @@ const OrderSection = () => {
                           placeholder="Ссылка на файлы (Яндекс.Диск, Облако)"
                           value={fileLink}
                           onChange={e => setFileLink(e.target.value)}
-                          className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                          className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
                           style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                         />
                       </div>
@@ -340,7 +340,7 @@ const OrderSection = () => {
                           <button
                             type="button"
                             onClick={() => fileInputRef.current?.click()}
-                            className="w-full p-3 rounded-2xl text-sm font-semibold transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                            className="w-full p-3 rounded-2xl text-sm font-semibold transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 hover:border-[hsl(266,92%,58%)] hover:bg-[hsla(266,92%,58%,0.08)] hover:text-white"
                             style={{
                               backgroundColor: 'hsla(240,15%,15%,0.5)',
                               border: '1px dashed hsl(240,9%,25%)',
@@ -364,7 +364,7 @@ const OrderSection = () => {
                                 placeholder="Ваше имя"
                                 value={fileCustomer.name}
                                 onChange={e => setFileCustomer({ ...fileCustomer, name: e.target.value })}
-                                className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
                                 style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                               />
                             </div>
@@ -390,7 +390,7 @@ const OrderSection = () => {
                                   setFileCustomer({ ...fileCustomer, phone: formatted });
                                 }}
                                 maxLength={18}
-                                className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
                                 style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                               />
                             </div>
@@ -421,7 +421,7 @@ const OrderSection = () => {
                           <button
                             type="submit"
                             disabled={fileStatus === 'sending'}
-                            className="w-full text-white py-3.5 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97] disabled:opacity-50 flex items-center justify-center gap-2"
+                            className="w-full text-white py-3.5 rounded-full font-bold uppercase text-sm tracking-wider transition-all duration-200 active:scale-[0.97] disabled:opacity-50 flex items-center justify-center gap-2 hover:shadow-[0_0_24px_hsla(266,92%,58%,0.5)] hover:brightness-110"
                             style={{
                               backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
                               boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
@@ -441,9 +441,9 @@ const OrderSection = () => {
                     { icon: <ShieldCheck className="w-5 h-5 text-emerald-400" />, title: 'Конфиденциально (NDA)', desc: 'Ваши чертежи и сметы надежно защищены от третьих лиц.', gradient: 'from-emerald-500/20 to-emerald-600/5' },
                     { icon: <Truck className="w-5 h-5 text-amber-400" />, title: 'Доставка по Москве', desc: 'Аккуратно упакуем и привезем документацию в офис или на стройплощадку.', gradient: 'from-amber-500/20 to-amber-600/5' },
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-4">
+                   <div key={i} className="flex items-start gap-4 p-3 -mx-3 rounded-2xl transition-all duration-200 hover:bg-white/[0.04] cursor-default group/feature">
                       <div
-                        className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.gradient} border border-white/10 flex items-center justify-center shrink-0`}
+                        className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.gradient} border border-white/10 flex items-center justify-center shrink-0 transition-all duration-200 group-hover/feature:scale-110 group-hover/feature:border-white/20`}
                         style={{ backgroundColor: 'hsla(240,15%,15%,0.6)' }}
                       >
                         {item.icon}
@@ -548,7 +548,7 @@ const OrderSection = () => {
 
                   <div className="flex gap-2 sm:gap-3 mb-4">
                     <div
-                      className="flex items-center rounded-lg px-2"
+                      className="flex items-center rounded-lg px-2 transition-all duration-200 hover:border-[hsl(240,9%,25%)]"
                       style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                     >
                       <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-xl font-light p-2 transition-colors" style={{ color: 'hsl(0,0%,60%)' }}>−</button>
@@ -568,7 +568,7 @@ const OrderSection = () => {
                     </div>
                     <button
                       onClick={addPrintToCart}
-                      className="flex-1 text-white py-3 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97]"
+                      className="flex-1 text-white py-3 rounded-full font-bold uppercase text-sm tracking-wider transition-all duration-200 active:scale-[0.97] hover:shadow-[0_0_24px_hsla(266,92%,58%,0.5)] hover:brightness-110"
                       style={{
                         backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
                         boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
@@ -586,7 +586,7 @@ const OrderSection = () => {
                         <button
                           key={service.id}
                           onClick={() => addServiceToCart(service)}
-                          className="text-left p-2.5 sm:p-3 rounded-xl text-[11px] sm:text-xs font-semibold transition-all active:scale-[0.97] flex justify-between items-center"
+                          className="text-left p-2.5 sm:p-3 rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 active:scale-[0.97] flex justify-between items-center hover:bg-[hsla(266,92%,58%,0.1)] hover:border-[hsl(266,92%,58%,0.4)] hover:scale-[1.02]"
                           style={{
                             backgroundColor: 'hsla(240,15%,15%,0.5)',
                             border: '1px solid hsl(240,9%,17%)',
@@ -613,7 +613,7 @@ const OrderSection = () => {
                           <ShoppingCart className="w-4 h-4" /> Ваш заказ
                         </h3>
                         <div
-                          className="flex items-center gap-3 select-none px-3 py-2 rounded-xl"
+                          className="flex items-center gap-3 select-none px-3 py-2 rounded-xl transition-all duration-200 hover:bg-[hsla(240,15%,18%,0.7)] hover:border-[hsl(240,9%,25%)] cursor-pointer"
                           style={{
                             backgroundColor: 'hsla(240,15%,15%,0.5)',
                             border: '1px solid hsl(240,9%,17%)',
@@ -643,7 +643,7 @@ const OrderSection = () => {
                           return (
                             <div
                               key={item.id}
-                              className="flex justify-between items-center p-3 rounded-xl group"
+                              className="flex justify-between items-center p-3 rounded-xl group transition-all duration-200 hover:bg-[hsla(240,15%,18%,0.7)] hover:border-[hsl(240,9%,25%)]"
                               style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
                             >
                               <div className="flex-1 min-w-0">
@@ -694,7 +694,7 @@ const OrderSection = () => {
                               placeholder="Ссылка на файлы для печати"
                               value={orderFileLink}
                               onChange={e => setOrderFileLink(e.target.value)}
-                              className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                              className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
                               style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                             />
                           </div>
@@ -708,7 +708,7 @@ const OrderSection = () => {
                                 placeholder="Ваше имя"
                                 value={customer.name}
                                 onChange={e => setCustomer({ ...customer, name: e.target.value })}
-                                className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
                                 style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                               />
                             </div>
@@ -734,7 +734,7 @@ const OrderSection = () => {
                                   setCustomer({ ...customer, phone: formatted });
                                 }}
                                 maxLength={18}
-                                className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
                                 style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                               />
                               {customer.phone.length > 0 && customer.phone.replace(/\D/g, '').length < 11 && (
@@ -831,7 +831,7 @@ const OrderSection = () => {
                             <button
                               type="submit"
                               disabled={status === 'sending'}
-                              className="w-full sm:w-auto bg-white px-8 py-3.5 rounded-full font-bold uppercase text-sm tracking-wider flex items-center justify-center gap-2 transition-all active:scale-[0.97] disabled:opacity-50"
+                              className="w-full sm:w-auto bg-white px-8 py-3.5 rounded-full font-bold uppercase text-sm tracking-wider flex items-center justify-center gap-2 transition-all duration-200 active:scale-[0.97] disabled:opacity-50 hover:shadow-[0_0_24px_hsla(0,0%,100%,0.4)] hover:scale-[1.03]"
                               style={{ color: 'hsl(266,92%,40%)' }}
                             >
                               {status === 'sending' ? 'Отправка...' : <><Send className="w-4 h-4" /> Оформить заказ</>}
