@@ -65,7 +65,7 @@ const ServicesSection = () => {
           {services.map((service) => (
             <div
               key={service.id}
-              className="group relative rounded-2xl bg-neutral-900 border border-neutral-800 p-6 sm:p-8 transition-all duration-400 ease-out hover:-translate-y-1.5 hover:border-amber-500/40 hover:shadow-[0_8px_40px_-12px_rgba(245,158,11,0.15)]"
+              className="group relative rounded-2xl bg-white border border-black/10 p-6 sm:p-8 shadow-sm transition-all duration-400 ease-out hover:-translate-y-1.5 hover:border-amber-500/40 hover:shadow-[0_8px_40px_-12px_rgba(245,158,11,0.2)]"
             >
               {/* Icon wrapper */}
               <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-amber-500/15 group-hover:border-amber-500/30 transition-all duration-400">
