@@ -51,7 +51,10 @@ const AnimatedHeroWorks = () => {
 
   const floatingImages = useMemo(() => {
     const count = 12;
-    const sizes = [320, 450, 380, 520, 340, 480, 400, 560, 360, 500, 420, 470];
+    const isMobile = window.innerWidth < 640;
+    const sizes = isMobile
+      ? [180, 220, 200, 250, 190, 230, 210, 260, 195, 240, 215, 225]
+      : [320, 450, 380, 520, 340, 480, 400, 560, 360, 500, 420, 470];
     return Array.from({ length: count }).map((_, i) => {
       const angle = (i / count) * Math.PI * 2;
       const radius = i % 2 === 0 ? 70 : 50;

@@ -448,19 +448,19 @@ const OrderSection = () => {
                                   )}
                                 </div>
                               </div>
-                              <div className="flex items-center gap-2 sm:gap-3">
+                              <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
                                 <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
-                                  <button onClick={() => updateQuantity(item.id, -1)} className="p-1.5 transition-colors rounded-l-lg hover:bg-white/5">
+                                  <button onClick={() => updateQuantity(item.id, -1)} className="p-1 sm:p-1.5 transition-colors rounded-l-lg hover:bg-white/5">
                                     <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
                                   </button>
-                                  <span className="px-2.5 text-sm font-bold min-w-[28px] text-center text-white">{item.quantity}</span>
-                                  <button onClick={() => updateQuantity(item.id, 1)} className="p-1.5 transition-colors rounded-r-lg hover:bg-white/5">
+                                  <span className="px-1.5 sm:px-2.5 text-xs sm:text-sm font-bold min-w-[24px] text-center text-white">{item.quantity}</span>
+                                  <button onClick={() => updateQuantity(item.id, 1)} className="p-1 sm:p-1.5 transition-colors rounded-r-lg hover:bg-white/5">
                                     <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
                                   </button>
                                 </div>
-                                <span className="text-sm font-bold text-white w-16 text-right">{lineTotal} ₽</span>
-                                <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-500/10 rounded-full transition-colors">
-                                  <Trash2 className="w-3.5 h-3.5 text-red-400/70" />
+                                <span className="text-xs sm:text-sm font-bold text-white w-12 sm:w-16 text-right">{lineTotal} ₽</span>
+                                <button onClick={() => removeItem(item.id)} className="p-1.5 sm:p-2 hover:bg-red-500/10 rounded-full transition-colors">
+                                  <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-400/70" />
                                 </button>
                               </div>
                             </div>
