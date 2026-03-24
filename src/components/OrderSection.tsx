@@ -365,6 +365,10 @@ const OrderSection = () => {
                               Даю согласие на обработку персональных данных согласно{' '}
                               <Link to="/privacy" className="underline" style={{ color: 'hsl(266,92%,68%)' }}>
                                 Политике конфиденциальности
+                              </Link>{' '}
+                              и принимаю{' '}
+                              <Link to="/terms" className="underline" style={{ color: 'hsl(266,92%,68%)' }}>
+                                Условия обслуживания
                               </Link>.
                             </span>
                           </label>
