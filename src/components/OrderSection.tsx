@@ -350,34 +350,38 @@ const OrderSection = () => {
                       <input type="hidden" name="order_details" value="Клиент отправил файлы через форму" />
                       <input type="hidden" name="total_price" value="—" />
 
-                      <label className="flex items-start gap-2.5 cursor-pointer select-none">
-                        <input
-                          type="checkbox"
-                          checked={fileConsent}
-                          onChange={e => setFileConsent(e.target.checked)}
-                          className="mt-1 w-4 h-4 rounded cursor-pointer bg-transparent"
-                          style={{ accentColor: 'hsl(266,92%,58%)' }}
-                          required
-                        />
-                        <span className="text-[11px] leading-relaxed" style={{ color: 'hsl(0,0%,50%)' }}>
-                          Даю согласие на обработку персональных данных согласно{' '}
-                          <Link to="/privacy" className="underline" style={{ color: 'hsl(266,92%,68%)' }}>
-                            Политике конфиденциальности
-                          </Link>.
-                        </span>
-                      </label>
+                      {(fileLink || uploadedFile) && (
+                        <>
+                          <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                            <input
+                              type="checkbox"
+                              checked={fileConsent}
+                              onChange={e => setFileConsent(e.target.checked)}
+                              className="mt-1 w-4 h-4 rounded cursor-pointer bg-transparent"
+                              style={{ accentColor: 'hsl(266,92%,58%)' }}
+                              required
+                            />
+                            <span className="text-[11px] leading-relaxed" style={{ color: 'hsl(0,0%,50%)' }}>
+                              Даю согласие на обработку персональных данных согласно{' '}
+                              <Link to="/privacy" className="underline" style={{ color: 'hsl(266,92%,68%)' }}>
+                                Политике конфиденциальности
+                              </Link>.
+                            </span>
+                          </label>
 
-                      <button
-                        type="submit"
-                        disabled={fileStatus === 'sending' || (!fileLink && !uploadedFile)}
-                        className="w-full text-white py-3.5 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97] disabled:opacity-50 flex items-center justify-center gap-2"
-                        style={{
-                          backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
-                          boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
-                        }}
-                      >
-                        {fileStatus === 'sending' ? 'Отправка...' : <><Send className="w-4 h-4" /> Отправить файл</>}
-                      </button>
+                          <button
+                            type="submit"
+                            disabled={fileStatus === 'sending'}
+                            className="w-full text-white py-3.5 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97] disabled:opacity-50 flex items-center justify-center gap-2"
+                            style={{
+                              backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
+                              boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
+                            }}
+                          >
+                            {fileStatus === 'sending' ? 'Отправка...' : <><Send className="w-4 h-4" /> Отправить файл</>}
+                          </button>
+                        </>
+                      )}
                     </form>
                   )}
                 </div>
