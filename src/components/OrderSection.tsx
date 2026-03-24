@@ -3,6 +3,8 @@ import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Ruler, S
 import { Link } from 'react-router-dom';
 import { Switch } from '@/components/ui/switch';
 import emailjs from '@emailjs/browser';
+import { useToast } from '@/hooks/use-toast';
+import { Loader2 } from 'lucide-react';
 
 interface CartItem {
   id: number;
