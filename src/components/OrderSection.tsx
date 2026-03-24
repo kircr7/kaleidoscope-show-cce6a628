@@ -292,15 +292,15 @@ const OrderSection = () => {
                     <form ref={fileFormRef} onSubmit={sendFiles} encType="multipart/form-data" className="space-y-3">
                       <div className="relative">
                         <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
-                        <input
-                          type="text"
-                          name="file_link"
-                          placeholder="Ссылка на файлы (Яндекс.Диск, Облако)"
-                          value={fileLink}
-                          onChange={e => setFileLink(e.target.value)}
-                          className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
-                          style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
-                        />
+                         <input
+                           type="text"
+                           name="cloud_link"
+                           placeholder="Ссылка на файлы (Яндекс.Диск, Облако)"
+                           value={fileLink}
+                           onChange={e => setFileLink(e.target.value)}
+                           className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
+                           style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                         />
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="flex-1 h-px" style={{ backgroundColor: 'hsl(240,9%,20%)' }} />
