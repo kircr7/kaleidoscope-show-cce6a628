@@ -19,8 +19,8 @@ const colorPrices = [
 
 const services = [
   { name: "Фальцовка по ГОСТ", desc: "Сложение в формат А4", price: "от 5 ₽/лист" },
-  { name: "Брошюровка на пружину", desc: "До 100 листов", price: "от 100 ₽" },
-  { name: "Твердый переплет", desc: "Для томов проектной документации", price: "от 600 ₽" },
+  { name: "Брошюровка на пружину", desc: "До 510 листов", price: "100 ₽" },
+  { name: "Твердый переплет", desc: "Для томов проектной документации", price: "600 ₽" },
 ];
 
 const PriceCard = ({
@@ -90,29 +90,13 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
 
   return (
     <div
-      className="group relative rounded-2xl border border-border/30 bg-card/40 backdrop-blur-sm p-5 sm:p-6 cursor-pointer transition-all duration-300 hover:border-border/60 hover:bg-card/70 hover:-translate-y-1"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onTouchStart={() => setHovered((v) => !v)}
+      className="group relative rounded-2xl border border-border/30 bg-card/40 backdrop-blur-sm p-3 sm:p-4 transition-all duration-300 hover:border-border/60 hover:bg-card/70 hover:-translate-y-1"
     >
       <span className="text-lg sm:text-xl font-bold text-foreground tracking-tight">{item.name}</span>
-
-      <div
-        className="overflow-hidden transition-all duration-400 ease-out"
-        style={{
-          maxHeight: hovered ? "120px" : "0px",
-          opacity: hovered ? 1 : 0,
-        }}
-      >
-        <div className="pt-3 border-t border-border/20 mt-3 space-y-1.5">
-          <p className="text-sm text-muted-foreground">{item.desc}</p>
-          <p className="text-lg font-semibold text-foreground">{item.price}</p>
-        </div>
+      <div className="pt-2 border-t border-border/20 mt-2 space-y-1">
+        <p className="text-sm text-muted-foreground">{item.desc}</p>
+        <p className="text-lg font-semibold text-foreground">{item.price}</p>
       </div>
-
-      {!hovered && (
-        <p className="text-xs text-muted-foreground/60 mt-2">Наведите для просмотра</p>
-      )}
     </div>
   );
 };
@@ -152,9 +136,9 @@ const PriceListSection = () => {
               >
                 <style>{`
                   [data-state="active"][value="color"] {
-                    background: linear-gradient(135deg, hsla(280,70%,40%,0.85), hsla(330,80%,45%,0.85), hsla(20,90%,50%,0.85), hsla(50,85%,50%,0.85)) !important;
-                    background-size: 300% 300% !important;
-                    animation: gradient-morph 8s ease infinite !important;
+                    background: linear-gradient(135deg, hsla(280,70%,40%,0.85), hsla(330,80%,45%,0.85), hsla(20,90%,50%,0.85), hsla(50,85%,50%,0.85));
+                    background-size: 300% 300%;
+                    animation: gradient-morph 8s ease infinite;
                   }
                 `}</style>
                 Цветная
