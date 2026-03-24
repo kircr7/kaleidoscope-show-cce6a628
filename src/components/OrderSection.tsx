@@ -643,7 +643,7 @@ const OrderSection = () => {
                           return (
                             <div
                               key={item.id}
-                              className="flex justify-between items-center p-3 rounded-xl group"
+                              className="flex justify-between items-center p-3 rounded-xl group transition-all duration-200 hover:bg-[hsla(240,15%,18%,0.7)] hover:border-[hsl(240,9%,25%)]"
                               style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
                             >
                               <div className="flex-1 min-w-0">
