@@ -184,10 +184,18 @@ const PriceListSection = () => {
               </TabsTrigger>
               <TabsTrigger
                 value="color"
-                className="flex-1 rounded-lg text-sm data-[state=active]:text-white data-[state=active]:shadow-md transition-all"
-                style={{}}
+                className="flex-1 rounded-lg text-sm data-[state=active]:text-white data-[state=active]:shadow-md transition-all [&[data-state=active]]:border-0"
+                style={{
+                  background: undefined,
+                }}
               >
-                <span className="data-[state=active]:hidden pointer-events-none absolute inset-0 rounded-lg" />
+                <style>{`
+                  [data-state="active"][value="color"] {
+                    background: linear-gradient(135deg, hsla(280,70%,40%,0.85), hsla(330,80%,45%,0.85), hsla(20,90%,50%,0.85), hsla(50,85%,50%,0.85)) !important;
+                    background-size: 300% 300% !important;
+                    animation: gradient-morph 8s ease infinite !important;
+                  }
+                `}</style>
                 Цветная
               </TabsTrigger>
               <TabsTrigger
