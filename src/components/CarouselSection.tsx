@@ -32,7 +32,7 @@ const CarouselSection = () => {
         </div>
 
         {/* Right half - large icons flowing OUT of center */}
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 flex items-center overflow-hidden">
+        <div className="absolute right-0 top-0 bottom-0 w-1/2 flex items-center overflow-hidden overflow-y-visible">
           <div
             className="w-full h-full flex items-center"
             style={{
