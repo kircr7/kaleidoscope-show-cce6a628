@@ -46,6 +46,9 @@ const OrderSection = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const orderFormRef = useRef<HTMLFormElement>(null);
+  const fileFormRef = useRef<HTMLFormElement>(null);
+  const [fileConsent, setFileConsent] = useState(true);
+  const [fileStatus, setFileStatus] = useState('');
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
