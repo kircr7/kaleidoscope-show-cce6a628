@@ -109,6 +109,14 @@ const OrderSection = () => {
 
   const sendOrder = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Remind about folding if not enabled and cart has non-A4 prints
+    if (!foldingEnabled && !showFoldingReminder && cart.some(item => !item.isService && item.format !== 'A4')) {
+      setShowFoldingReminder(true);
+      return;
+    }
+    setShowFoldingReminder(false);
+
     if (!consent) {
       alert('Необходимо согласие на обработку персональных данных');
       return;
