@@ -221,40 +221,86 @@
   50% { filter: brightness(1.6) drop-shadow(0 0 4px hsl(42, 90%, 50%)); }
 }
 
-/* Toggle switch - Uiverse.io */
-.togglesw {
-  --s: 20px;
-  height: calc(var(--s) + var(--s)/5);
-  width: auto;
-  aspect-ratio: 2.25;
-  border-radius: var(--s);
-  display: grid;
+/* Toggle switch - Uiverse.io by craig_8499 */
+.toggle-container {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background: linear-gradient(
+    135deg,
+    rgba(200, 200, 200, 0.8) 0%,
+    rgba(108, 106, 106, 0.8) 50%,
+    rgba(142, 141, 141, 0.8) 100%
+  );
+  border-radius: 15px;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.5),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  background-color: #ff7a7a;
-  box-sizing: content-box;
-  overflow: hidden;
-  transition: .3s .1s;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  transition: all 0.4s ease;
+  flex-shrink: 0;
 }
-.togglesw:before {
+.toggle-container::before {
   content: "";
-  padding: calc(var(--s)/10);
-  --_g: radial-gradient(circle closest-side at calc(100% - var(--s)/2) 50%,#000 96%,#0000);
-  background: var(--_g) 0 /var(--_p,var(--s)) 100% no-repeat content-box,
-    var(--_g) var(--_p,0)/var(--s) 100% no-repeat content-box,
-    #fff;
-  mix-blend-mode: darken;
-  filter: blur(calc(var(--s)/12)) contrast(11);
-  transition: .4s, background-position .4s .1s,
-    padding cubic-bezier(0,calc(var(--_i,-1)*200),1,calc(var(--_i,-1)*200)) .25s .1s;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  background: #434141ac;
+  border-radius: 15px;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.1),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s ease;
 }
-.togglesw:checked {
-  background-color: #85ff7a;
+.toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(220, 220, 220, 0.6) 30%,
+    rgba(180, 180, 180, 0.9) 100%
+  );
+  border-radius: 50%;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 2;
 }
-.togglesw:checked:before {
-  padding: calc(var(--s)/10 + .05px) calc(var(--s)/10);
-  --_p: 100%;
-  --_i: 1;
+.toggle-knob::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #444;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+#toggle-folding:checked ~ .toggle-container .toggle-knob {
+  transform: translateX(30px);
+}
+#toggle-folding:checked ~ .toggle-container::before {
+  background: #07a00c;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.3),
+    0 0 6px rgba(76, 175, 80, 0.5);
+}
+.toggle-container:active .toggle-knob {
+  transform: scale(0.9);
+}
+#toggle-folding:checked ~ .toggle-container:active .toggle-knob {
+  transform: translateX(30px) scale(0.9);
 }
