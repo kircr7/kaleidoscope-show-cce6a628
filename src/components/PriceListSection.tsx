@@ -207,7 +207,7 @@ const PriceListSection = () => {
             </TabsList>
 
             <TabsContent value="bw" className="mt-0">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 items-start">
                 {bwPrices.map((item) => (
                   <PriceCard key={item.format} item={item} variant="bw" expandedFormat={expandedBw} onExpand={setExpandedBw} />
                 ))}
@@ -215,7 +215,7 @@ const PriceListSection = () => {
             </TabsContent>
 
             <TabsContent value="color" className="mt-0">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 items-start">
                 {colorPrices.map((item) => (
                   <PriceCard key={item.format} item={item} variant="color" expandedFormat={expandedColor} onExpand={setExpandedColor} />
                 ))}
