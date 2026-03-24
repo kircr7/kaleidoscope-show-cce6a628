@@ -753,7 +753,7 @@ const OrderSection = () => {
                           <input
                             type="hidden"
                             name="file_link"
-                            value={fileLink || (uploadedFile ? `Файл: ${uploadedFile.name}` : 'Не указано')}
+                            value={orderFileLink || 'Не указано'}
                           />
 
                           <label className="flex items-start gap-2.5 cursor-pointer select-none mt-1">
