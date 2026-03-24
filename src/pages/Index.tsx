@@ -74,12 +74,12 @@ const Index = () => {
         </div>
       </section>
 
-      <PriceListSection />
       <ServicesSection />
 
       <AnimatedHeroWorks />
 
       <OrderSection />
+      <PriceListSection />
       <Footer />
       
     </div>
