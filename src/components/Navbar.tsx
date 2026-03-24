@@ -13,7 +13,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Услуги', href: '#services' },
-    { name: 'Цены', href: '#calculator' },
+    { name: 'Цены', href: '#pricelist' },
     { name: 'Контакты', href: '#footer' },
   ];
 
