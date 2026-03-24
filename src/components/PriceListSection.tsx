@@ -34,7 +34,7 @@ const PriceCard = ({
 
   return (
     <div
-      className={`group relative rounded-2xl border p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 ${
+      className={`group relative rounded-2xl border p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 ${
         isBw
           ? "bg-card/40 backdrop-blur-sm border-border/30 hover:border-border/60 hover:bg-card/70"
           : "border-white/20 hover:border-white/40 hover:shadow-lg hover:shadow-purple-500/10"
@@ -50,9 +50,9 @@ const PriceCard = ({
           : undefined
       }
     >
-      <div className="flex items-baseline justify-between mb-3">
+      <div className="flex items-baseline justify-between mb-2">
         <span
-          className={`text-2xl sm:text-3xl font-bold tracking-tight ${
+          className={`text-xl sm:text-2xl font-bold tracking-tight ${
             isBw ? "text-foreground" : "text-white"
           }`}
         >
@@ -63,17 +63,17 @@ const PriceCard = ({
         </span>
       </div>
 
-      <div className={`pt-3 space-y-2 border-t ${isBw ? "border-border/20" : "border-white/20"}`}>
+      <div className={`pt-2 space-y-1.5 border-t ${isBw ? "border-border/20" : "border-white/20"}`}>
         <div className="flex justify-between items-center">
           <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>обычная цена</span>
-          <span className={`text-base font-semibold ${isBw ? "text-foreground" : "text-white"}`}>
+          <span className={`text-sm font-semibold ${isBw ? "text-foreground" : "text-white"}`}>
             {item.under100}
           </span>
         </div>
         <div className="flex justify-between items-center">
           <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>от 100 листов</span>
           <span
-            className={`text-base font-semibold ${
+            className={`text-sm font-semibold ${
               isBw ? "text-emerald-400" : "text-yellow-200 drop-shadow-sm"
             }`}
           >
