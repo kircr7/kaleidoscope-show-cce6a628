@@ -637,18 +637,6 @@ const OrderSection = () => {
                       {cart.length > 0 && (
                         <form ref={orderFormRef} onSubmit={sendOrder} encType="multipart/form-data" className="space-y-3 pt-4" style={{ borderTop: '1px solid hsl(240,9%,17%)' }}>
 
-                          <div className="relative">
-                            <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
-                            <input
-                              type="text"
-                              placeholder="Ссылка на файлы для печати"
-                              value={orderFileLink}
-                              onChange={e => setOrderFileLink(e.target.value)}
-                              className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
-                              style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
-                            />
-                          </div>
-
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div className="relative">
                               <User className="absolute left-4 top-4 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
