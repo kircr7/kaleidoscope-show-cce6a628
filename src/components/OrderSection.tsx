@@ -403,7 +403,7 @@ const OrderSection = () => {
                           >
                             <div>
                               <div className="flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase mb-2 w-fit tracking-wider">
-                                Скидка 20% применена
+                                Скидка 20% на первый заказ
                               </div>
                               <div className="flex items-baseline gap-2">
                                 <span className="text-2xl font-black">{Math.round(stats.total)} ₽</span>
