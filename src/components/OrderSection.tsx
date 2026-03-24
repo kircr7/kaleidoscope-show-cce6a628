@@ -256,6 +256,135 @@ const OrderSection = () => {
                   </a>
                 </div>
 
+                {/* File upload form */}
+                <div className="relative z-10 mt-8">
+                  <div className="h-px w-full mb-6" style={{ backgroundColor: 'hsl(240,9%,20%)' }} />
+                  <h3 className="text-base font-black uppercase tracking-tight text-white mb-4">
+                    Или отправьте файлы здесь
+                  </h3>
+                  {fileStatus === 'success' ? (
+                    <div className="text-center py-6">
+                      <CheckCircle className="w-10 h-10 mx-auto mb-3" style={{ color: 'hsl(120,60%,60%)' }} />
+                      <p className="text-sm font-bold text-white">Файлы отправлены!</p>
+                      <p className="text-xs mt-1" style={{ color: 'hsl(0,0%,60%)' }}>Мы свяжемся с вами в ближайшее время.</p>
+                      <button
+                        type="button"
+                        onClick={() => { setFileStatus(''); setFileLink(''); setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
+                        className="mt-3 text-xs font-bold"
+                        style={{ color: 'hsl(266,92%,68%)' }}
+                      >
+                        Отправить ещё →
+                      </button>
+                    </div>
+                  ) : (
+                    <form ref={fileFormRef} onSubmit={sendFiles} encType="multipart/form-data" className="space-y-3">
+                      <div className="relative">
+                        <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                        <input
+                          type="text"
+                          name="file_link"
+                          placeholder="Ссылка на файлы (Яндекс.Диск, Облако)"
+                          value={fileLink}
+                          onChange={e => setFileLink(e.target.value)}
+                          className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                          style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                        />
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1 h-px" style={{ backgroundColor: 'hsl(240,9%,20%)' }} />
+                        <span className="text-[11px] font-medium" style={{ color: 'hsl(0,0%,40%)' }}>или</span>
+                        <div className="flex-1 h-px" style={{ backgroundColor: 'hsl(240,9%,20%)' }} />
+                      </div>
+                      <div>
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          name="order_file"
+                          accept=".pdf,.zip,.rar,.dwg"
+                          className="hidden"
+                          onChange={e => {
+                            const file = e.target.files?.[0];
+                            if (file && file.size <= 50 * 1024 * 1024) {
+                              setUploadedFile(file);
+                            } else if (file) {
+                              alert('Файл слишком большой. Максимум 50 МБ.');
+                              e.target.value = '';
+                            }
+                          }}
+                        />
+                        {uploadedFile ? (
+                          <div
+                            className="flex items-center justify-between p-3 rounded-2xl"
+                            style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                          >
+                            <div className="flex items-center gap-2 min-w-0">
+                              <Paperclip className="w-4 h-4 flex-shrink-0" style={{ color: 'hsl(266,92%,68%)' }} />
+                              <span className="text-sm text-white truncate">{uploadedFile.name}</span>
+                              <span className="text-[10px] flex-shrink-0" style={{ color: 'hsl(0,0%,50%)' }}>
+                                ({(uploadedFile.size / 1024 / 1024).toFixed(1)} МБ)
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => { setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
+                              className="p-1 hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
+                            >
+                              <X className="w-3.5 h-3.5 text-white/50" />
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => fileInputRef.current?.click()}
+                            className="w-full p-3 rounded-2xl text-sm font-semibold transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                            style={{
+                              backgroundColor: 'hsla(240,15%,15%,0.5)',
+                              border: '1px dashed hsl(240,9%,25%)',
+                              color: 'hsl(0,0%,70%)',
+                            }}
+                          >
+                            <Paperclip className="w-4 h-4" />
+                            Загрузить файл (до 50 МБ)
+                          </button>
+                        )}
+                      </div>
+                      <input type="hidden" name="customer_name" value="Отправка файлов" />
+                      <input type="hidden" name="customer_phone" value="—" />
+                      <input type="hidden" name="order_details" value="Клиент отправил файлы через форму" />
+                      <input type="hidden" name="total_price" value="—" />
+
+                      <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={fileConsent}
+                          onChange={e => setFileConsent(e.target.checked)}
+                          className="mt-1 w-4 h-4 rounded cursor-pointer bg-transparent"
+                          style={{ accentColor: 'hsl(266,92%,58%)' }}
+                          required
+                        />
+                        <span className="text-[11px] leading-relaxed" style={{ color: 'hsl(0,0%,50%)' }}>
+                          Даю согласие на обработку персональных данных согласно{' '}
+                          <Link to="/privacy" className="underline" style={{ color: 'hsl(266,92%,68%)' }}>
+                            Политике конфиденциальности
+                          </Link>.
+                        </span>
+                      </label>
+
+                      <button
+                        type="submit"
+                        disabled={fileStatus === 'sending' || (!fileLink && !uploadedFile)}
+                        className="w-full text-white py-3.5 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97] disabled:opacity-50 flex items-center justify-center gap-2"
+                        style={{
+                          backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
+                          boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
+                        }}
+                      >
+                        {fileStatus === 'sending' ? 'Отправка...' : <><Send className="w-4 h-4" /> Отправить файл</>}
+                      </button>
+                    </form>
+                  )}
+                </div>
+
                 <div className="relative z-10 mt-10 space-y-4">
                   {[
                     { icon: <Ruler className="w-5 h-5 text-blue-400" />, title: 'Строго по ГОСТ', desc: 'Идеальное соблюдение масштабов 1:1 и фальцовка под подшивку.', gradient: 'from-blue-500/20 to-blue-600/5' },
