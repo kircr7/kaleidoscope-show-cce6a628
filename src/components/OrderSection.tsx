@@ -33,6 +33,18 @@ const OrderSection = () => {
   const [customer, setCustomer] = useState({ name: '', phone: '' });
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const addPrintToCart = () => {
     const unitPrice = isColor ? PRICES[format].color : PRICES[format].bw;
