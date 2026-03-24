@@ -143,6 +143,7 @@ const OrderSection = () => {
       customer_phone: customer.phone,
       order_details: orderDetailsText,
       total_price: Math.round(stats.total),
+      file_link: fileLink || (uploadedFile ? `Файл: ${uploadedFile.name}` : 'Не указано'),
     };
 
     try {
