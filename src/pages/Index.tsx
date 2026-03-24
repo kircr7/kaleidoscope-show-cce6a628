@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import ServicesSection from "@/components/ServicesSection";
 import PriceListSection from "@/components/PriceListSection";
-import PriceCalculator from "@/components/PriceCalculator";
 import { Crosshair, FileCheck, Clock } from "lucide-react";
 
 const Index = () => {
@@ -80,7 +79,6 @@ const Index = () => {
       <AnimatedHeroWorks />
 
       <OrderSection />
-      <PriceCalculator />
       <PriceListSection />
       <Footer />
       

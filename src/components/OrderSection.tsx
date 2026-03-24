@@ -1,21 +1,32 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Ruler, ShieldCheck, Truck, Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Switch } from '@/components/ui/switch';
 import emailjs from '@emailjs/browser';
 
 interface CartItem {
   id: number;
   label: string;
+  format: string;
   unitPrice: number;
   quantity: number;
+  isService: boolean;
 }
 
 const PRICES: Record<string, { bw: number; color: number; label: string }> = {
-  A4: { bw: 5, color: 10, label: 'A4 (210х297 мм)' },
-  A3: { bw: 19, color: 29, label: 'A3 (с фальцовкой)' },
-  A2: { bw: 38, color: 48, label: 'A2 (с фальцовкой)' },
-  A1: { bw: 64, color: 84, label: 'A1 (с фальцовкой)' },
-  A0: { bw: 118, color: 128, label: 'A0 (с фальцовкой)' },
+  A4: { bw: 5, color: 10, label: 'A4 (210×297 мм)' },
+  A3: { bw: 14, color: 24, label: 'A3 (297×420 мм)' },
+  A2: { bw: 30, color: 40, label: 'A2 (420×594 мм)' },
+  A1: { bw: 50, color: 70, label: 'A1 (594×841 мм)' },
+  A0: { bw: 110, color: 120, label: 'A0 (841×1189 мм)' },
+};
+
+const FOLDING_PRICES: Record<string, number> = {
+  A4: 0,
+  A3: 5,
+  A2: 8,
+  A1: 14,
+  A0: 18,
 };
 
 const SERVICES = [
@@ -34,6 +45,7 @@ const OrderSection = () => {
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [foldingEnabled, setFoldingEnabled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -51,8 +63,10 @@ const OrderSection = () => {
     setCart(prev => [...prev, {
       id: Date.now(),
       label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
+      format,
       unitPrice,
       quantity,
+      isService: false,
     }]);
     setQuantity(1);
   };
@@ -61,8 +75,10 @@ const OrderSection = () => {
     setCart(prev => [...prev, {
       id: Date.now() + Math.random(),
       label: service.label,
+      format: '',
       unitPrice: service.price,
       quantity: 1,
+      isService: true,
     }]);
   };
 
@@ -74,11 +90,21 @@ const OrderSection = () => {
     ));
   };
 
+  const getFoldingPrice = (item: CartItem) => {
+    if (item.isService) return 0;
+    return FOLDING_PRICES[item.format] || 0;
+  };
+
+  const getItemTotal = (item: CartItem) => {
+    const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
+    return (item.unitPrice + folding) * item.quantity;
+  };
+
   const stats = useMemo(() => {
-    const subtotal = cart.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
+    const subtotal = cart.reduce((acc, item) => acc + getItemTotal(item), 0);
     const discount = subtotal * 0.20;
     return { subtotal, discount, total: subtotal - discount };
-  }, [cart]);
+  }, [cart, foldingEnabled]);
 
   const sendOrder = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,9 +119,12 @@ const OrderSection = () => {
 
     setStatus('sending');
 
-    const orderDetailsText = cart.map((item, index) =>
-      `${index + 1}. ${item.label} — ${item.quantity} шт. × ${item.unitPrice} ₽ = ${item.unitPrice * item.quantity} руб.`
-    ).join('\n');
+    const orderDetailsText = cart.map((item, index) => {
+      const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
+      const perUnit = item.unitPrice + folding;
+      const foldingNote = folding > 0 ? ` (вкл. фальцовку ${folding} ₽)` : '';
+      return `${index + 1}. ${item.label}${foldingNote} — ${item.quantity} шт. × ${perUnit} ₽ = ${perUnit * item.quantity} руб.`;
+    }).join('\n');
 
     const templateParams = {
       customer_name: customer.name,
@@ -360,38 +389,58 @@ const OrderSection = () => {
                 <div className="p-4 sm:p-6">
                   {status !== 'success' ? (
                     <>
-                      <h3 className="font-bold mb-4 flex items-center gap-2 text-sm uppercase tracking-widest text-white/70">
-                        <ShoppingCart className="w-4 h-4" /> Ваш заказ
-                      </h3>
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-widest text-white/70">
+                          <ShoppingCart className="w-4 h-4" /> Ваш заказ
+                        </h3>
+                        <label className="flex items-center gap-2 cursor-pointer select-none">
+                          <span className="text-[10px] font-bold uppercase" style={{ color: 'hsl(0,0%,50%)' }}>Фальцовка по ГОСТ</span>
+                          <Switch checked={foldingEnabled} onCheckedChange={setFoldingEnabled} />
+                        </label>
+                      </div>
 
                       <div className="space-y-3 mb-8">
-                        {cart.map(item => (
-                          <div
-                            key={item.id}
-                            className="flex justify-between items-center p-3 rounded-xl group"
-                            style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
-                          >
-                            <div className="flex-1 min-w-0">
-                              <div className="text-sm font-semibold text-white">{item.label}</div>
-                              <div className="text-[10px] mt-0.5 font-medium" style={{ color: 'hsl(0,0%,50%)' }}>{item.unitPrice} ₽ за шт.</div>
-                            </div>
-                            <div className="flex items-center gap-2 sm:gap-3">
-                              <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
-                                <button onClick={() => updateQuantity(item.id, -1)} className="p-1.5 transition-colors rounded-l-lg hover:bg-white/5">
-                                  <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
-                                </button>
-                                <span className="px-2.5 text-sm font-bold min-w-[28px] text-center text-white">{item.quantity}</span>
-                                <button onClick={() => updateQuantity(item.id, 1)} className="p-1.5 transition-colors rounded-r-lg hover:bg-white/5">
-                                  <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                        {cart.map(item => {
+                          const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
+                          const unitWithFolding = item.unitPrice + folding;
+                          const lineTotal = unitWithFolding * item.quantity;
+
+                          return (
+                            <div
+                              key={item.id}
+                              className="flex justify-between items-center p-3 rounded-xl group"
+                              style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
+                            >
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-semibold text-white">{item.label}</div>
+                                <div className="text-[10px] mt-0.5 font-medium" style={{ color: 'hsl(0,0%,50%)' }}>
+                                  {folding > 0 ? (
+                                    <span>
+                                      {item.unitPrice} ₽ + {folding} ₽ <span style={{ color: 'hsl(266,92%,68%)' }}>(фальцовка)</span> = {unitWithFolding} ₽ за шт.
+                                    </span>
+                                  ) : (
+                                    <span>{item.unitPrice} ₽ за шт.</span>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
+                                  <button onClick={() => updateQuantity(item.id, -1)} className="p-1.5 transition-colors rounded-l-lg hover:bg-white/5">
+                                    <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                  </button>
+                                  <span className="px-2.5 text-sm font-bold min-w-[28px] text-center text-white">{item.quantity}</span>
+                                  <button onClick={() => updateQuantity(item.id, 1)} className="p-1.5 transition-colors rounded-r-lg hover:bg-white/5">
+                                    <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                  </button>
+                                </div>
+                                <span className="text-sm font-bold text-white w-16 text-right">{lineTotal} ₽</span>
+                                <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-500/10 rounded-full transition-colors">
+                                  <Trash2 className="w-3.5 h-3.5 text-red-400/70" />
                                 </button>
                               </div>
-                              <span className="text-sm font-bold text-white w-16 text-right">{item.unitPrice * item.quantity} ₽</span>
-                              <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-500/10 rounded-full transition-colors">
-                                <Trash2 className="w-3.5 h-3.5 text-red-400/70" />
-                              </button>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                         {cart.length === 0 && (
                           <p className="text-center py-10 italic rounded-3xl text-white/50" style={{ border: '2px dashed hsla(0,0%,100%,0.15)' }}>
                             Смета пуста. Добавьте чертежи или услуги выше.
