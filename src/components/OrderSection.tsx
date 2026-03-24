@@ -421,7 +421,7 @@ const OrderSection = () => {
                           <button
                             type="submit"
                             disabled={fileStatus === 'sending'}
-                            className="w-full text-white py-3.5 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97] disabled:opacity-50 flex items-center justify-center gap-2"
+                            className="w-full text-white py-3.5 rounded-full font-bold uppercase text-sm tracking-wider transition-all duration-200 active:scale-[0.97] disabled:opacity-50 flex items-center justify-center gap-2 hover:shadow-[0_0_24px_hsla(266,92%,58%,0.5)] hover:brightness-110"
                             style={{
                               backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
                               boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
