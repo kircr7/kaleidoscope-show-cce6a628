@@ -86,7 +86,7 @@ const IconCarousel = ({ side }: Props) => {
               <img
                 src={item.image}
                 alt={item.label}
-                className="w-full h-full object-cover"
+                className={`w-full h-full ${item.label === "Проектная" ? "object-contain bg-white" : "object-cover"}`}
               />
             </div>
             <span className="text-xs md:text-sm text-white tracking-wider font-light text-center py-1.5">
