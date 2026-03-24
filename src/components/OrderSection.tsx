@@ -159,18 +159,20 @@ const OrderSection = () => {
     }
   };
 
+  const { toast: showToast } = useToast();
+
   const sendFiles = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fileConsent) {
-      alert('Необходимо согласие на обработку персональных данных');
+      showToast({ title: 'Ошибка', description: 'Необходимо согласие на обработку персональных данных', variant: 'destructive' });
       return;
     }
     if (!fileLink && !uploadedFile) {
-      alert('Прикрепите файл или укажите ссылку');
+      showToast({ title: 'Ошибка', description: 'Прикрепите файл или укажите ссылку', variant: 'destructive' });
       return;
     }
     if (fileCustomer.phone.replace(/\D/g, '').length < 11) {
-      alert('Пожалуйста, введите полный номер телефона');
+      showToast({ title: 'Ошибка', description: 'Пожалуйста, введите полный номер телефона', variant: 'destructive' });
       return;
     }
     if (!fileFormRef.current) return;
@@ -179,14 +181,18 @@ const OrderSection = () => {
     try {
       await emailjs.sendForm(
         'service_5lojlb2',
-        'template_86or1it',
+        'template_43pwutt',
         fileFormRef.current,
         'ShGXdndtWKIL7zvcD',
       );
       setFileStatus('success');
+      showToast({
+        title: '✅ Файлы успешно отправлены!',
+        description: 'Мы свяжемся с вами в течение 5 минут.',
+      });
     } catch (error) {
       console.error('Ошибка отправки файла:', error);
-      alert('Ошибка отправки. Попробуйте через Telegram.');
+      showToast({ title: 'Ошибка отправки', description: 'Попробуйте ещё раз или напишите нам в Telegram.', variant: 'destructive' });
       setFileStatus('');
     }
   };
