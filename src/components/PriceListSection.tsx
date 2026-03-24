@@ -65,7 +65,7 @@ const PriceCard = ({
         >
           {item.format}
         </span>
-        <span className={`text-xs ${isBw ? "text-gray-500" : "text-white/70"}`}>
+        <span className={`text-xs ${isBw ? "text-muted-foreground" : "text-white/70"}`}>
           {item.size}
         </span>
       </div>
