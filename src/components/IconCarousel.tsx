@@ -43,11 +43,10 @@ const smallItems: SmallItem[] = [
 // =============================================
 const largeItems: LargeItem[] = [
   { image: outputBlueprint, label: "Чертежи" },
-  
-  { image: outputDocs, label: "Документы" },
   { image: outputPoster, label: "Проектная" },
   { image: outputSpec, label: "Рабочая" },
   { image: outputSection, label: "Исполнительная" },
+  { image: outputDocs, label: "Документы" },
 ];
 
 interface Props {
