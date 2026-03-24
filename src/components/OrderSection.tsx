@@ -295,7 +295,7 @@ const OrderSection = () => {
                          <input
                            type="text"
                            name="cloud_link"
-                           placeholder="Ссылка на файлы (Яндекс.Диск, Облако)"
+                           placeholder="Ссылка на файлы для печати (Яндекс.Диск, Облако)"
                            value={fileLink}
                            onChange={e => setFileLink(e.target.value)}
                            className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
