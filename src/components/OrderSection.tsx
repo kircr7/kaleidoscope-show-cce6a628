@@ -43,10 +43,12 @@ const OrderSection = () => {
   const [quantity, setQuantity] = useState(1);
   const [customer, setCustomer] = useState({ name: '', phone: '' });
   const [fileLink, setFileLink] = useState('');
+  const [orderFileLink, setOrderFileLink] = useState('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const orderFormRef = useRef<HTMLFormElement>(null);
   const fileFormRef = useRef<HTMLFormElement>(null);
+  const [fileCustomer, setFileCustomer] = useState({ name: '', phone: '' });
   const [fileConsent, setFileConsent] = useState(true);
   const [fileStatus, setFileStatus] = useState('');
   const [consent, setConsent] = useState(true);
@@ -165,6 +167,10 @@ const OrderSection = () => {
       alert('Прикрепите файл или укажите ссылку');
       return;
     }
+    if (fileCustomer.phone.replace(/\D/g, '').length < 11) {
+      alert('Пожалуйста, введите полный номер телефона');
+      return;
+    }
     if (!fileFormRef.current) return;
 
     setFileStatus('sending');
@@ -243,10 +249,11 @@ const OrderSection = () => {
                     href="https://t.me/printprro"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-5 sm:mt-6 inline-flex items-center gap-3 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all active:scale-[0.97]"
+                    className="mt-5 sm:mt-6 inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider transition-all active:scale-[0.97]"
                     style={{
-                      backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
-                      boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
+                      border: '2px solid hsl(266,92%,58%)',
+                      color: 'hsl(266,92%,78%)',
+                      backgroundColor: 'transparent',
                     }}
                   >
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
@@ -266,7 +273,7 @@ const OrderSection = () => {
                       <p className="text-xs mt-1" style={{ color: 'hsl(0,0%,60%)' }}>Мы свяжемся с вами в ближайшее время.</p>
                       <button
                         type="button"
-                        onClick={() => { setFileStatus(''); setFileLink(''); setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
+                        onClick={() => { setFileStatus(''); setFileLink(''); setFileCustomer({ name: '', phone: '' }); setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
                         className="mt-3 text-xs font-bold"
                         style={{ color: 'hsl(266,92%,68%)' }}
                       >
@@ -345,13 +352,51 @@ const OrderSection = () => {
                           </button>
                         )}
                       </div>
-                      <input type="hidden" name="customer_name" value="Отправка файлов" />
-                      <input type="hidden" name="customer_phone" value="—" />
-                      <input type="hidden" name="order_details" value="Клиент отправил файлы через форму" />
-                      <input type="hidden" name="total_price" value="—" />
 
                       {(fileLink || uploadedFile) && (
                         <>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="relative">
+                              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                              <input
+                                required
+                                name="customer_name"
+                                placeholder="Ваше имя"
+                                value={fileCustomer.name}
+                                onChange={e => setFileCustomer({ ...fileCustomer, name: e.target.value })}
+                                className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                              />
+                            </div>
+                            <div className="relative">
+                              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                              <input
+                                required
+                                name="customer_phone"
+                                type="tel"
+                                placeholder="+7 (___) ___-__-__"
+                                value={fileCustomer.phone}
+                                onChange={e => {
+                                  let digits = e.target.value.replace(/\D/g, '');
+                                  if (digits.startsWith('8')) digits = '7' + digits.slice(1);
+                                  if (!digits.startsWith('7') && digits.length > 0) digits = '7' + digits;
+                                  digits = digits.slice(0, 11);
+                                  let formatted = '';
+                                  if (digits.length > 0) formatted = '+' + digits[0];
+                                  if (digits.length > 1) formatted += ' (' + digits.slice(1, 4);
+                                  if (digits.length > 4) formatted += ') ' + digits.slice(4, 7);
+                                  if (digits.length > 7) formatted += '-' + digits.slice(7, 9);
+                                  if (digits.length > 9) formatted += '-' + digits.slice(9, 11);
+                                  setFileCustomer({ ...fileCustomer, phone: formatted });
+                                }}
+                                maxLength={18}
+                                className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                              />
+                            </div>
+                          </div>
+                          <input type="hidden" name="order_details" value="Клиент отправил файлы через форму" />
+                          <input type="hidden" name="total_price" value="—" />
                           <label className="flex items-start gap-2.5 cursor-pointer select-none">
                             <input
                               type="checkbox"
@@ -642,6 +687,18 @@ const OrderSection = () => {
                       {cart.length > 0 && (
                         <form ref={orderFormRef} onSubmit={sendOrder} encType="multipart/form-data" className="space-y-3 pt-4" style={{ borderTop: '1px solid hsl(240,9%,17%)' }}>
 
+                          <div className="relative">
+                            <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                            <input
+                              type="text"
+                              placeholder="Ссылка на файлы для печати"
+                              value={orderFileLink}
+                              onChange={e => setOrderFileLink(e.target.value)}
+                              className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                              style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                            />
+                          </div>
+
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div className="relative">
                               <User className="absolute left-4 top-4 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
@@ -700,7 +757,7 @@ const OrderSection = () => {
                           <input
                             type="hidden"
                             name="file_link"
-                            value={fileLink || (uploadedFile ? `Файл: ${uploadedFile.name}` : 'Не указано')}
+                            value={orderFileLink || 'Не указано'}
                           />
 
                           <label className="flex items-start gap-2.5 cursor-pointer select-none mt-1">
