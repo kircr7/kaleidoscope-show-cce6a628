@@ -37,18 +37,8 @@ const PriceCard = ({
       className={`group relative rounded-2xl border p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 ${
         isBw
           ? "bg-card/40 backdrop-blur-sm border-border/30 hover:border-border/60 hover:bg-card/70"
-          : "border-white/20 hover:border-white/40 hover:shadow-lg hover:shadow-purple-500/10"
+          : "color-card-gradient border-white/20 hover:border-white/40 hover:shadow-lg hover:shadow-purple-500/10"
       }`}
-      style={
-        !isBw
-          ? {
-              background:
-                "linear-gradient(135deg, hsla(280,70%,40%,0.85), hsla(330,80%,45%,0.85), hsla(20,90%,50%,0.85), hsla(50,85%,50%,0.85))",
-              backgroundSize: "300% 300%",
-              animation: "gradient-morph 8s ease infinite",
-            }
-          : undefined
-      }
     >
       <div className="flex items-baseline justify-between mb-2">
         <span
@@ -132,7 +122,8 @@ const PriceListSection = () => {
                 className="flex-1 rounded-lg text-sm color-tab-trigger data-[state=active]:text-white data-[state=active]:shadow-md transition-all [&[data-state=active]]:border-0"
               >
                 <style>{`
-                  .color-tab-trigger[data-state="active"] {
+                  .color-tab-trigger[data-state="active"],
+                  .color-card-gradient {
                     background: linear-gradient(135deg, hsla(280,70%,40%,0.85), hsla(330,80%,45%,0.85), hsla(20,90%,50%,0.85), hsla(50,85%,50%,0.85)) !important;
                     background-size: 300% 300% !important;
                     animation: gradient-morph 8s ease infinite !important;
