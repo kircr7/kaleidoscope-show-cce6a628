@@ -687,7 +687,7 @@ const OrderSection = () => {
                         Спасибо, <strong className="text-white">{customer.name}</strong>. Мы свяжемся с вами в течение 5 минут по номеру <strong className="text-white">{customer.phone}</strong>.
                       </p>
                       <button
-                        onClick={() => { setStatus(''); setCart([]); setCustomer({ name: '', phone: '' }); }}
+                        onClick={() => { setStatus(''); setCart([]); setCustomer({ name: '', phone: '' }); setFileLink(''); setUploadedFile(null); }}
                         className="inline-block mt-8 text-sm font-bold transition-colors"
                         style={{ color: 'hsl(266,92%,68%)' }}
                       >
