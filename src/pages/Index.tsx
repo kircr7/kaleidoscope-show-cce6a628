@@ -74,6 +74,7 @@ const Index = () => {
         </div>
       </section>
 
+      <PriceListSection />
       <ServicesSection />
 
       <AnimatedHeroWorks />
