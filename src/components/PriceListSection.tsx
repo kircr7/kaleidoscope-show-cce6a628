@@ -83,7 +83,7 @@ const PriceCard = ({
           }`}
         >
           <div className="flex justify-between items-center">
-            <span className={`text-sm ${isBw ? "text-gray-500" : "text-white/80"}`}>
+            <span className={`text-sm ${isBw ? "text-muted-foreground" : "text-white/80"}`}>
               До 100 листов
             </span>
             <span
