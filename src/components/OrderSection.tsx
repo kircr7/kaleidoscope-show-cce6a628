@@ -540,7 +540,7 @@ const OrderSection = () => {
 
                           {showFoldingReminder && (
                             <div
-                              className="p-3 rounded-xl mt-3 flex items-center justify-between gap-3 animate-fade-in"
+                              className="p-3 rounded-xl mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 animate-fade-in"
                               style={{
                                 backgroundColor: 'hsla(45,100%,50%,0.12)',
                                 border: '1px solid hsla(45,100%,50%,0.3)',
