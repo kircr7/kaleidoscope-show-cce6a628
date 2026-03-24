@@ -405,16 +405,13 @@ const OrderSection = () => {
                         <div
                           className="flex items-center gap-3 select-none px-3 py-2 rounded-xl"
                           style={{
-                            backgroundColor: foldingEnabled ? 'hsla(120,60%,40%,0.15)' : 'hsla(266,92%,58%,0.1)',
-                            border: `1px solid ${foldingEnabled ? 'hsla(120,60%,40%,0.4)' : 'hsla(266,92%,58%,0.3)'}`,
-                            boxShadow: foldingEnabled
-                              ? '0 0 12px hsla(120,60%,40%,0.2)'
-                              : '0 0 12px hsla(266,92%,58%,0.15)',
+                            backgroundColor: 'hsla(240,15%,15%,0.5)',
+                            border: '1px solid hsl(240,9%,17%)',
                           }}
                         >
                           <span
                             className="text-xs font-black uppercase tracking-wide"
-                            style={{ color: foldingEnabled ? 'hsl(120,60%,70%)' : 'hsl(266,92%,80%)' }}
+                            style={{ color: foldingEnabled ? 'hsl(120,60%,70%)' : 'hsl(0,0%,83%)' }}
                           >
                             ✦ Фальцовка по ГОСТ
                           </span>
