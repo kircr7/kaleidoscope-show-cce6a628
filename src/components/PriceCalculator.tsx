@@ -1,14 +1,23 @@
 import React, { useState, useMemo } from 'react';
 import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Switch } from '@/components/ui/switch';
 import emailjs from '@emailjs/browser';
 
 const PRINT_PRICES: Record<string, { bw: number; color: number; label: string }> = {
-  A4: { bw: 5, color: 10, label: 'A4 (210х297 мм)' },
-  A3: { bw: 19, color: 29, label: 'A3 (с фальцовкой)' },
-  A2: { bw: 38, color: 48, label: 'A2 (с фальцовкой)' },
-  A1: { bw: 64, color: 84, label: 'A1 (с фальцовкой)' },
-  A0: { bw: 118, color: 128, label: 'A0 (с фальцовкой)' },
+  A4: { bw: 5, color: 10, label: 'A4 (210×297 мм)' },
+  A3: { bw: 14, color: 24, label: 'A3 (297×420 мм)' },
+  A2: { bw: 30, color: 40, label: 'A2 (420×594 мм)' },
+  A1: { bw: 50, color: 70, label: 'A1 (594×841 мм)' },
+  A0: { bw: 110, color: 120, label: 'A0 (841×1189 мм)' },
+};
+
+const FOLDING_PRICES: Record<string, number> = {
+  A4: 0,
+  A3: 5,
+  A2: 8,
+  A1: 14,
+  A0: 18,
 };
 
 const SERVICE_PRICES: { id: string; label: string; price: number }[] = [
@@ -21,8 +30,10 @@ const SERVICE_PRICES: { id: string; label: string; price: number }[] = [
 interface CartItem {
   id: number;
   label: string;
-  unitPrice: number;
+  format: string; // to look up folding price
+  unitPrice: number; // base price without folding
   quantity: number;
+  isService: boolean;
 }
 
 const PriceCalculator = () => {
@@ -33,14 +44,17 @@ const PriceCalculator = () => {
   const [customer, setCustomer] = useState({ name: '', phone: '' });
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
+  const [foldingEnabled, setFoldingEnabled] = useState(false);
 
   const addPrintToCart = () => {
     const unitPrice = isColor ? PRINT_PRICES[format].color : PRINT_PRICES[format].bw;
     const newItem: CartItem = {
       id: Date.now(),
       label: `${PRINT_PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
+      format,
       unitPrice,
       quantity,
+      isService: false,
     };
     setCart(prev => [...prev, newItem]);
     setQuantity(1);
@@ -50,8 +64,10 @@ const PriceCalculator = () => {
     setCart(prev => [...prev, {
       id: Date.now() + Math.random(),
       label: service.label,
+      format: '',
       unitPrice: service.price,
       quantity: 1,
+      isService: true,
     }]);
   };
 
@@ -65,11 +81,21 @@ const PriceCalculator = () => {
     }));
   };
 
+  const getItemTotal = (item: CartItem) => {
+    const folding = (!item.isService && foldingEnabled) ? (FOLDING_PRICES[item.format] || 0) : 0;
+    return (item.unitPrice + folding) * item.quantity;
+  };
+
+  const getFoldingPrice = (item: CartItem) => {
+    if (item.isService) return 0;
+    return FOLDING_PRICES[item.format] || 0;
+  };
+
   const stats = useMemo(() => {
-    const subtotal = cart.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
+    const subtotal = cart.reduce((acc, item) => acc + getItemTotal(item), 0);
     const discount = subtotal * 0.20;
     return { subtotal, discount, total: subtotal - discount };
-  }, [cart]);
+  }, [cart, foldingEnabled]);
 
   const sendOrder = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,9 +106,12 @@ const PriceCalculator = () => {
 
     setStatus('sending');
 
-    const orderDetailsText = cart.map((item, index) =>
-      `${index + 1}. ${item.label} — ${item.quantity} шт. × ${item.unitPrice} ₽ = ${item.unitPrice * item.quantity} руб.`
-    ).join('\n');
+    const orderDetailsText = cart.map((item, index) => {
+      const folding = (!item.isService && foldingEnabled) ? (FOLDING_PRICES[item.format] || 0) : 0;
+      const perUnit = item.unitPrice + folding;
+      const foldingNote = folding > 0 ? ` (включая фальцовку ${folding} ₽)` : '';
+      return `${index + 1}. ${item.label}${foldingNote} — ${item.quantity} шт. × ${perUnit} ₽ = ${perUnit * item.quantity} руб.`;
+    }).join('\n');
 
     const templateParams = {
       customer_name: customer.name,
@@ -114,7 +143,6 @@ const PriceCalculator = () => {
               <Printer className="w-6 h-6" /> Конфигуратор заказа
             </h2>
 
-            {/* Print format selection */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-400 uppercase ml-1">Размер чертежа</label>
@@ -159,7 +187,6 @@ const PriceCalculator = () => {
               </button>
             </div>
 
-            {/* Services as separate items */}
             <div>
               <label className="text-[10px] font-bold text-slate-400 uppercase ml-1 mb-2 block">Дополнительные услуги</label>
               <div className="grid grid-cols-2 gap-2">
@@ -184,34 +211,54 @@ const PriceCalculator = () => {
           <div className="p-8">
             {status !== 'success' ? (
               <>
-                <h3 className="font-bold text-slate-300 mb-4 flex items-center gap-2 text-sm uppercase tracking-widest">
-                  <ShoppingCart className="w-4 h-4" /> Ваш расчет
-                </h3>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-bold text-slate-300 flex items-center gap-2 text-sm uppercase tracking-widest">
+                    <ShoppingCart className="w-4 h-4" /> Ваш расчет
+                  </h3>
+                  <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                    <span className="text-xs font-semibold text-slate-500">Добавить фальцовку по ГОСТ</span>
+                    <Switch checked={foldingEnabled} onCheckedChange={setFoldingEnabled} />
+                  </label>
+                </div>
 
                 <div className="space-y-3 mb-8">
-                  {cart.map(item => (
-                    <div key={item.id} className="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100 group">
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm font-semibold text-slate-800">{item.label}</div>
-                        <div className="text-[10px] text-slate-400 font-medium mt-0.5">{item.unitPrice} ₽ за шт.</div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center bg-white border border-slate-200 rounded-lg">
-                          <button onClick={() => updateQuantity(item.id, -1)} className="p-1.5 hover:bg-slate-50 rounded-l-lg transition-colors">
-                            <Minus className="w-3 h-3 text-slate-500" />
-                          </button>
-                          <span className="px-2.5 text-sm font-bold min-w-[28px] text-center">{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.id, 1)} className="p-1.5 hover:bg-slate-50 rounded-r-lg transition-colors">
-                            <Plus className="w-3 h-3 text-slate-500" />
+                  {cart.map(item => {
+                    const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
+                    const unitWithFolding = item.unitPrice + folding;
+                    const lineTotal = unitWithFolding * item.quantity;
+
+                    return (
+                      <div key={item.id} className="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100 group">
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm font-semibold text-slate-800">{item.label}</div>
+                          <div className="text-[10px] text-slate-400 font-medium mt-0.5">
+                            {folding > 0 ? (
+                              <span>
+                                {item.unitPrice} ₽ + {folding} ₽ <span className="text-blue-500">(фальцовка)</span> = {unitWithFolding} ₽ за шт.
+                              </span>
+                            ) : (
+                              <span>{item.unitPrice} ₽ за шт.</span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center bg-white border border-slate-200 rounded-lg">
+                            <button onClick={() => updateQuantity(item.id, -1)} className="p-1.5 hover:bg-slate-50 rounded-l-lg transition-colors">
+                              <Minus className="w-3 h-3 text-slate-500" />
+                            </button>
+                            <span className="px-2.5 text-sm font-bold min-w-[28px] text-center">{item.quantity}</span>
+                            <button onClick={() => updateQuantity(item.id, 1)} className="p-1.5 hover:bg-slate-50 rounded-r-lg transition-colors">
+                              <Plus className="w-3 h-3 text-slate-500" />
+                            </button>
+                          </div>
+                          <span className="text-sm font-bold w-16 text-right">{lineTotal} ₽</span>
+                          <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-50 rounded-full transition-colors">
+                            <Trash2 className="w-3.5 h-3.5 text-red-400" />
                           </button>
                         </div>
-                        <span className="text-sm font-bold w-16 text-right">{item.unitPrice * item.quantity} ₽</span>
-                        <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-50 rounded-full transition-colors">
-                          <Trash2 className="w-3.5 h-3.5 text-red-400" />
-                        </button>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                   {cart.length === 0 && (
                     <p className="text-slate-300 text-center py-10 italic border-2 border-dashed border-slate-200 rounded-3xl">
                       Список пуст. Добавьте чертежи или услуги выше.
