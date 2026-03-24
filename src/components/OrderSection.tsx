@@ -1,14 +1,13 @@
 import React, { useState, useMemo } from 'react';
-import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Ruler, ShieldCheck, Truck } from 'lucide-react';
+import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Ruler, ShieldCheck, Truck, Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 
 interface CartItem {
   id: number;
   label: string;
-  options: string[];
+  unitPrice: number;
   quantity: number;
-  itemTotal: number;
 }
 
 const PRICES: Record<string, { bw: number; color: number; label: string }> = {
@@ -19,44 +18,52 @@ const PRICES: Record<string, { bw: number; color: number; label: string }> = {
   A0: { bw: 118, color: 128, label: 'A0 (с фальцовкой)' },
 };
 
-const OPTIONS: Record<string, { label: string; price: number }> = {
-  bindingA4: { label: 'Брошюровка в А4', price: 100 },
-  bindingA3: { label: 'Брошюровка в А3', price: 200 },
-  hardcover: { label: 'Твердый переплет', price: 600 },
-  lamination: { label: 'Ламинация', price: 100 },
-};
+const SERVICES = [
+  { id: 'bindingA4', label: 'Брошюровка в А4', price: 100 },
+  { id: 'bindingA3', label: 'Брошюровка в А3', price: 200 },
+  { id: 'hardcover', label: 'Твердый переплет', price: 600 },
+  { id: 'lamination', label: 'Ламинация', price: 100 },
+];
 
 const OrderSection = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [format, setFormat] = useState('A1');
   const [isColor, setIsColor] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [customer, setCustomer] = useState({ name: '', phone: '' });
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
 
-  const addToCart = () => {
-    const basePrice = isColor ? PRICES[format].color : PRICES[format].bw;
-    const optionsSum = selectedOptions.reduce((acc, id) => acc + OPTIONS[id].price, 0);
-
-    const newItem: CartItem = {
+  const addPrintToCart = () => {
+    const unitPrice = isColor ? PRICES[format].color : PRICES[format].bw;
+    setCart(prev => [...prev, {
       id: Date.now(),
       label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
-      options: selectedOptions.map(id => OPTIONS[id].label),
+      unitPrice,
       quantity,
-      itemTotal: (basePrice * quantity) + optionsSum,
-    };
-
-    setCart([...cart, newItem]);
-    setSelectedOptions([]);
+    }]);
     setQuantity(1);
+  };
+
+  const addServiceToCart = (service: typeof SERVICES[0]) => {
+    setCart(prev => [...prev, {
+      id: Date.now() + Math.random(),
+      label: service.label,
+      unitPrice: service.price,
+      quantity: 1,
+    }]);
   };
 
   const removeItem = (id: number) => setCart(cart.filter(item => item.id !== id));
 
+  const updateQuantity = (id: number, delta: number) => {
+    setCart(prev => prev.map(item =>
+      item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
+    ));
+  };
+
   const stats = useMemo(() => {
-    const subtotal = cart.reduce((acc, item) => acc + item.itemTotal, 0);
+    const subtotal = cart.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
     const discount = subtotal * 0.20;
     return { subtotal, discount, total: subtotal - discount };
   }, [cart]);
@@ -75,8 +82,8 @@ const OrderSection = () => {
     setStatus('sending');
 
     const orderDetailsText = cart.map((item, index) =>
-      `${index + 1}. ${item.label} — ${item.quantity} шт.\n   Доп. услуги: ${item.options.length > 0 ? item.options.join(', ') : 'Нет'}\n   Сумма: ${item.itemTotal} руб.`
-    ).join('\n\n');
+      `${index + 1}. ${item.label} — ${item.quantity} шт. × ${item.unitPrice} ₽ = ${item.unitPrice * item.quantity} руб.`
+    ).join('\n');
 
     const templateParams = {
       customer_name: customer.name,
@@ -98,7 +105,6 @@ const OrderSection = () => {
   return (
     <section id="calculator" className="relative py-12 sm:py-20 md:py-32 px-3 sm:px-4 bg-white overflow-hidden">
       <div className="relative z-10 container max-w-7xl mx-auto overflow-hidden">
-        {/* Card with rotating border */}
         <div
           className="relative rounded-2xl opacity-0"
           style={{ animation: 'reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 100ms forwards' }}
@@ -110,9 +116,7 @@ const OrderSection = () => {
           >
             <div
               className="absolute inset-0"
-              style={{
-                backgroundImage: 'linear-gradient(0deg, hsl(0,0%,100%) -50%, hsl(0,0%,40%) 100%)',
-              }}
+              style={{ backgroundImage: 'linear-gradient(0deg, hsl(0,0%,100%) -50%, hsl(0,0%,40%) 100%)' }}
             />
             <div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-border-rotate pointer-events-none"
@@ -243,24 +247,7 @@ const OrderSection = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mb-4">
-                    {Object.entries(OPTIONS).map(([id, opt]) => (
-                      <button
-                        key={id}
-                        onClick={() => setSelectedOptions(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id])}
-                        className="text-left p-2.5 sm:p-3 rounded-xl text-[11px] sm:text-xs font-semibold transition-all active:scale-[0.97]"
-                        style={{
-                          backgroundColor: selectedOptions.includes(id) ? 'hsla(266,92%,58%,0.25)' : 'hsla(240,15%,15%,0.5)',
-                          border: `1px solid ${selectedOptions.includes(id) ? 'hsl(266,92%,58%)' : 'hsl(240,9%,17%)'}`,
-                          color: selectedOptions.includes(id) ? 'hsl(266,92%,78%)' : 'hsl(0,0%,83%)',
-                        }}
-                      >
-                        {opt.label} <span className="block opacity-60">+{opt.price} ₽</span>
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="flex gap-2 sm:gap-3">
+                  <div className="flex gap-2 sm:gap-3 mb-4">
                     <div
                       className="flex items-center rounded-lg px-2"
                       style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
@@ -281,7 +268,7 @@ const OrderSection = () => {
                       <button onClick={() => setQuantity(quantity + 1)} className="text-xl font-light p-2 transition-colors" style={{ color: 'hsl(0,0%,60%)' }}>+</button>
                     </div>
                     <button
-                      onClick={addToCart}
+                      onClick={addPrintToCart}
                       className="flex-1 text-white py-3 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97]"
                       style={{
                         backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
@@ -290,6 +277,31 @@ const OrderSection = () => {
                     >
                       В корзину
                     </button>
+                  </div>
+
+                  {/* Services as separate add-to-cart items */}
+                  <div>
+                    <label className="text-[10px] font-bold uppercase ml-1 mb-2 block" style={{ color: 'hsl(0,0%,60%)' }}>Дополнительные услуги</label>
+                    <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
+                      {SERVICES.map(service => (
+                        <button
+                          key={service.id}
+                          onClick={() => addServiceToCart(service)}
+                          className="text-left p-2.5 sm:p-3 rounded-xl text-[11px] sm:text-xs font-semibold transition-all active:scale-[0.97] flex justify-between items-center"
+                          style={{
+                            backgroundColor: 'hsla(240,15%,15%,0.5)',
+                            border: '1px solid hsl(240,9%,17%)',
+                            color: 'hsl(0,0%,83%)',
+                          }}
+                        >
+                          <div>
+                            {service.label}
+                            <span className="block opacity-60">{service.price} ₽</span>
+                          </div>
+                          <Plus className="w-4 h-4 flex-shrink-0" style={{ color: 'hsl(266,92%,68%)' }} />
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -308,14 +320,21 @@ const OrderSection = () => {
                             className="flex justify-between items-center p-3 rounded-xl group"
                             style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
                           >
-                            <div>
-                              <div className="text-sm font-semibold text-white">{item.label} <span style={{ color: 'hsl(0,0%,50%)' }}>x{item.quantity}</span></div>
-                              <div className="text-[9px] uppercase font-bold mt-0.5 tracking-tighter" style={{ color: 'hsl(0,0%,50%)' }}>
-                                {item.options.length > 0 ? item.options.join(' • ') : 'Без доп. услуг'}
-                              </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-semibold text-white">{item.label}</div>
+                              <div className="text-[10px] mt-0.5 font-medium" style={{ color: 'hsl(0,0%,50%)' }}>{item.unitPrice} ₽ за шт.</div>
                             </div>
-                            <div className="flex items-center gap-3">
-                              <span className="text-sm font-bold text-white">{item.itemTotal} ₽</span>
+                            <div className="flex items-center gap-2 sm:gap-3">
+                              <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
+                                <button onClick={() => updateQuantity(item.id, -1)} className="p-1.5 transition-colors rounded-l-lg hover:bg-white/5">
+                                  <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                </button>
+                                <span className="px-2.5 text-sm font-bold min-w-[28px] text-center text-white">{item.quantity}</span>
+                                <button onClick={() => updateQuantity(item.id, 1)} className="p-1.5 transition-colors rounded-r-lg hover:bg-white/5">
+                                  <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                </button>
+                              </div>
+                              <span className="text-sm font-bold text-white w-16 text-right">{item.unitPrice * item.quantity} ₽</span>
                               <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-500/10 rounded-full transition-colors">
                                 <Trash2 className="w-3.5 h-3.5 text-red-400/70" />
                               </button>
@@ -324,7 +343,7 @@ const OrderSection = () => {
                         ))}
                         {cart.length === 0 && (
                           <p className="text-center py-10 italic rounded-3xl text-white/50" style={{ border: '2px dashed hsla(0,0%,100%,0.15)' }}>
-                            Смета пуста. Добавьте чертежи для расчета.
+                            Смета пуста. Добавьте чертежи или услуги выше.
                           </p>
                         )}
                       </div>
