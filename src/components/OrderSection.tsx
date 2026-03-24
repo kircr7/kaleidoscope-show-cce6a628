@@ -246,10 +246,10 @@ const OrderSection = () => {
                 <div className="absolute inset-0 lg:border-r" style={{ borderColor: 'hsl(240,9%,17%)' }} />
 
                 <div className="relative z-10">
-                  <h2 className="text-lg sm:text-xl md:text-2xl font-black leading-tight tracking-tight text-white">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-black leading-tight tracking-tight text-white">
                     Отправьте файлы <br className="hidden sm:block" /> удобным вам способом.
                   </h2>
-                  <p className="mt-2 sm:mt-3 text-xs md:text-sm leading-relaxed max-w-sm" style={{ color: 'hsl(0,0%,83%)' }}>
+                  <p className="mt-2 sm:mt-3 text-sm md:text-base leading-relaxed max-w-sm" style={{ color: 'hsl(0,0%,83%)' }}>
                     Не тратьте время на расчеты. Наш менеджер сам проверит файлы и назовет точную цену.
                   </p>
 
