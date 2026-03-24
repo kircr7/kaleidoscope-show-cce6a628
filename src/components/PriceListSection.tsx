@@ -26,7 +26,7 @@ const foldingPrices = [
 
 const services = [
   { name: "Фальцовка по ГОСТ", desc: "Сложение в формат А4", price: "folding" },
-  { name: "Брошюровка на пружину", desc: "До 510 листов", price: "А4 — 100 ₽ / А3 — 200 ₽" },
+  { name: "Брошюровка на пружину", desc: "До 510 листов", price: "binding" },
   { name: "Твердый переплет", desc: "Для томов проектной документации", price: "600 ₽" },
 ];
 
@@ -130,6 +130,12 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
               <span className="text-lg font-semibold text-emerald-400">{foldingPrices[foldingIndex].price}</span>
             </div>
           </div>
+        ) : item.price === "binding" ? (
+          <p className="text-base font-semibold">
+            <span className="text-foreground">А4 — </span><span className="text-emerald-400">100 ₽</span>
+            <span className="text-muted-foreground"> / </span>
+            <span className="text-foreground">А3 — </span><span className="text-emerald-400">200 ₽</span>
+          </p>
         ) : (
           <p className="text-lg font-semibold text-emerald-400">{item.price}</p>
         )}
