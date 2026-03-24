@@ -100,7 +100,7 @@ const PriceCard = ({
             </span>
             <span
               className={`text-base font-semibold ${
-                isBw ? "text-emerald-600" : "text-yellow-200 drop-shadow-sm"
+                isBw ? "text-emerald-400" : "text-yellow-200 drop-shadow-sm"
               }`}
             >
               {item.over100}
