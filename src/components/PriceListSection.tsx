@@ -41,7 +41,7 @@ const PriceCard = ({
     <div
       className={`group relative rounded-2xl border p-5 sm:p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 ${
         isBw
-          ? "bg-white border-gray-200 hover:border-gray-300 hover:shadow-lg"
+          ? "bg-card/40 backdrop-blur-sm border-border/30 hover:border-border/60 hover:bg-card/70"
           : "border-white/20 hover:border-white/40 hover:shadow-lg hover:shadow-purple-500/10"
       }`}
       style={
@@ -60,12 +60,12 @@ const PriceCard = ({
       <div className="flex items-baseline justify-between mb-1">
         <span
           className={`text-2xl sm:text-3xl font-bold tracking-tight ${
-            isBw ? "text-gray-900" : "text-white"
+            isBw ? "text-foreground" : "text-white"
           }`}
         >
           {item.format}
         </span>
-        <span className={`text-xs ${isBw ? "text-gray-500" : "text-white/70"}`}>
+        <span className={`text-xs ${isBw ? "text-muted-foreground" : "text-white/70"}`}>
           {item.size}
         </span>
       </div>
@@ -79,28 +79,28 @@ const PriceCard = ({
       >
         <div
           className={`pt-4 mt-3 space-y-2 border-t ${
-            isBw ? "border-gray-200" : "border-white/20"
+            isBw ? "border-border/20" : "border-white/20"
           }`}
         >
           <div className="flex justify-between items-center">
-            <span className={`text-sm ${isBw ? "text-gray-500" : "text-white/80"}`}>
+            <span className={`text-sm ${isBw ? "text-muted-foreground" : "text-white/80"}`}>
               До 100 листов
             </span>
             <span
               className={`text-base font-semibold ${
-                isBw ? "text-gray-900" : "text-white"
+                isBw ? "text-foreground" : "text-white"
               }`}
             >
               {item.under100}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className={`text-sm ${isBw ? "text-gray-500" : "text-white/80"}`}>
+            <span className={`text-sm ${isBw ? "text-muted-foreground" : "text-white/80"}`}>
               От 100 листов
             </span>
             <span
               className={`text-base font-semibold ${
-                isBw ? "text-emerald-600" : "text-yellow-200 drop-shadow-sm"
+                isBw ? "text-emerald-400" : "text-yellow-200 drop-shadow-sm"
               }`}
             >
               {item.over100}
@@ -112,7 +112,7 @@ const PriceCard = ({
       {!isOpen && (
         <p
           className={`text-xs mt-2 transition-opacity ${
-            isBw ? "text-gray-400" : "text-white/50"
+            isBw ? "text-muted-foreground/60" : "text-white/50"
           }`}
         >
           Нажмите для просмотра цен
