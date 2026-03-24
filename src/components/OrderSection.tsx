@@ -1,13 +1,16 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Ruler, ShieldCheck, Truck, Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Switch } from '@/components/ui/switch';
 import emailjs from '@emailjs/browser';
 
 interface CartItem {
   id: number;
   label: string;
+  format: string;
   unitPrice: number;
   quantity: number;
+  isService: boolean;
 }
 
 const PRICES: Record<string, { bw: number; color: number; label: string }> = {
