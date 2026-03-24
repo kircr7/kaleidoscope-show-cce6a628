@@ -22,7 +22,7 @@ const CentralIcon = () => {
   }, []);
 
   return (
-    <div className="relative w-44 h-44 md:w-56 md:h-56 flex-shrink-0 z-10">
+    <div className="relative w-52 h-52 md:w-64 md:h-64 flex-shrink-0 z-10">
       {/* Black frame */}
       <div
         className="absolute inset-0 rounded-[2rem] border border-border/30"
