@@ -77,7 +77,7 @@ const Navbar = () => {
               <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
               <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 blur-md opacity-0 cta-glow" />
               <span className="relative block px-4 py-2 rounded-full text-[11px] font-bold text-white bg-[hsl(0,0%,8%)] m-[1.5px]">
-                Заказ
+                Сделать заказ
               </span>
             </a>
 
