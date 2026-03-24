@@ -93,7 +93,21 @@ const PriceCard = ({
 };
 
 const ServiceCard = ({ item }: { item: typeof services[0] }) => {
-  const [hovered, setHovered] = useState(false);
+  const [foldingIndex, setFoldingIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const isFolding = item.price === "folding";
+
+  useEffect(() => {
+    if (!isFolding) return;
+    const interval = setInterval(() => {
+      setAnimating(true);
+      setTimeout(() => {
+        setFoldingIndex((prev) => (prev + 1) % foldingPrices.length);
+        setAnimating(false);
+      }, 300);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isFolding]);
 
   return (
     <div
@@ -102,7 +116,23 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
       <span className="text-lg sm:text-xl font-bold text-foreground tracking-tight">{item.name}</span>
       <div className="pt-2 border-t border-border/20 mt-2 space-y-1">
         <p className="text-sm text-muted-foreground">{item.desc}</p>
-        <p className="text-lg font-semibold text-foreground">{item.price}</p>
+        {isFolding ? (
+          <div className="h-7 overflow-hidden relative">
+            <div
+              className="flex items-center gap-2 absolute inset-x-0 transition-all duration-300 ease-in-out"
+              style={{
+                transform: animating ? 'translateY(-100%)' : 'translateY(0)',
+                opacity: animating ? 0 : 1,
+              }}
+            >
+              <span className="text-lg font-semibold text-foreground">{foldingPrices[foldingIndex].format}</span>
+              <span className="text-muted-foreground">—</span>
+              <span className="text-lg font-semibold text-emerald-400">{foldingPrices[foldingIndex].price}</span>
+            </div>
+          </div>
+        ) : (
+          <p className="text-lg font-semibold text-foreground">{item.price}</p>
+        )}
       </div>
     </div>
   );
