@@ -14,11 +14,19 @@ interface CartItem {
 }
 
 const PRICES: Record<string, { bw: number; color: number; label: string }> = {
-  A4: { bw: 5, color: 10, label: 'A4 (210х297 мм)' },
-  A3: { bw: 19, color: 29, label: 'A3 (с фальцовкой)' },
-  A2: { bw: 38, color: 48, label: 'A2 (с фальцовкой)' },
-  A1: { bw: 64, color: 84, label: 'A1 (с фальцовкой)' },
-  A0: { bw: 118, color: 128, label: 'A0 (с фальцовкой)' },
+  A4: { bw: 5, color: 10, label: 'A4 (210×297 мм)' },
+  A3: { bw: 14, color: 24, label: 'A3 (297×420 мм)' },
+  A2: { bw: 30, color: 40, label: 'A2 (420×594 мм)' },
+  A1: { bw: 50, color: 70, label: 'A1 (594×841 мм)' },
+  A0: { bw: 110, color: 120, label: 'A0 (841×1189 мм)' },
+};
+
+const FOLDING_PRICES: Record<string, number> = {
+  A4: 0,
+  A3: 5,
+  A2: 8,
+  A1: 14,
+  A0: 18,
 };
 
 const SERVICES = [
