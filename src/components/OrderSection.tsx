@@ -46,6 +46,7 @@ const OrderSection = () => {
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [foldingEnabled, setFoldingEnabled] = useState(false);
+  const [showFoldingReminder, setShowFoldingReminder] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -108,6 +109,14 @@ const OrderSection = () => {
 
   const sendOrder = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Remind about folding if not enabled and cart has non-A4 prints
+    if (!foldingEnabled && !showFoldingReminder && cart.some(item => !item.isService && item.format !== 'A4')) {
+      setShowFoldingReminder(true);
+      return;
+    }
+    setShowFoldingReminder(false);
+
     if (!consent) {
       alert('Необходимо согласие на обработку персональных данных');
       return;
@@ -394,13 +403,13 @@ const OrderSection = () => {
                           <ShoppingCart className="w-4 h-4" /> Ваш заказ
                         </h3>
                         <label
-                          className="flex items-center gap-2.5 cursor-pointer select-none px-3 py-1.5 rounded-full transition-all"
+                          className={`flex items-center gap-2.5 cursor-pointer select-none px-3 py-1.5 rounded-full transition-all ${!foldingEnabled ? 'animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]' : ''}`}
                           style={{
                             backgroundColor: foldingEnabled ? 'hsla(266,92%,58%,0.2)' : 'hsla(240,15%,15%,0.6)',
                             border: `1px solid ${foldingEnabled ? 'hsl(266,92%,58%)' : 'hsl(240,9%,20%)'}`,
                           }}
                         >
-                          <span className="text-[10px] font-bold uppercase" style={{ color: foldingEnabled ? 'hsl(266,92%,78%)' : 'hsl(0,0%,60%)' }}>
+                          <span className="text-[10px] font-bold uppercase text-white">
                             Фальцовка по ГОСТ
                           </span>
                           <Switch checked={foldingEnabled} onCheckedChange={setFoldingEnabled} />
@@ -520,6 +529,37 @@ const OrderSection = () => {
                               </Link>.
                             </span>
                           </label>
+
+                          {showFoldingReminder && (
+                            <div
+                              className="p-3 rounded-xl mt-3 flex items-center justify-between gap-3 animate-fade-in"
+                              style={{
+                                backgroundColor: 'hsla(45,100%,50%,0.12)',
+                                border: '1px solid hsla(45,100%,50%,0.3)',
+                              }}
+                            >
+                              <p className="text-xs font-semibold" style={{ color: 'hsl(45,100%,75%)' }}>
+                                ⚠️ Вы не добавили фальцовку по ГОСТ. Продолжить без неё?
+                              </p>
+                              <div className="flex gap-2 shrink-0">
+                                <button
+                                  type="button"
+                                  onClick={() => { setFoldingEnabled(true); setShowFoldingReminder(false); }}
+                                  className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase"
+                                  style={{ backgroundColor: 'hsla(266,92%,58%,0.3)', color: 'hsl(266,92%,78%)' }}
+                                >
+                                  Добавить
+                                </button>
+                                <button
+                                  type="submit"
+                                  className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase text-white/60"
+                                  style={{ backgroundColor: 'hsla(0,0%,100%,0.1)' }}
+                                >
+                                  Без неё
+                                </button>
+                              </div>
+                            </div>
+                          )}
 
                           <div
                             className="text-white p-4 sm:p-5 rounded-2xl mt-4 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4"
