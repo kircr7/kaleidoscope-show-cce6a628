@@ -41,9 +41,9 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section id="services" className="relative py-16 sm:py-24 bg-black font-sans overflow-hidden">
+    <section id="services" className="relative py-16 sm:py-24 bg-white font-sans overflow-hidden">
       {/* Subtle glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-500/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-amber-500/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
