@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { FileText, FileType, FileSpreadsheet, Image, Type, FileCode } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
