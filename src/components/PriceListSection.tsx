@@ -3,18 +3,18 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 const bwPrices = [
   { format: "A4", size: "210×297 мм", under100: "5 ₽", over100: "4 ₽" },
-  { format: "A3", size: "297×420 мм", under100: "19 ₽", over100: "15 ₽" },
-  { format: "A2", size: "420×594 мм", under100: "38 ₽", over100: "30 ₽" },
-  { format: "A1", size: "594×841 мм", under100: "64 ₽", over100: "50 ₽" },
-  { format: "A0", size: "841×1189 мм", under100: "118 ₽", over100: "95 ₽" },
+  { format: "A3", size: "297×420 мм", under100: "14 ₽", over100: "11 ₽" },
+  { format: "A2", size: "420×594 мм", under100: "30 ₽", over100: "24 ₽" },
+  { format: "A1", size: "594×841 мм", under100: "50 ₽", over100: "40 ₽" },
+  { format: "A0", size: "841×1189 мм", under100: "100 ₽", over100: "80 ₽" },
 ];
 
 const colorPrices = [
   { format: "A4", size: "210×297 мм", under100: "10 ₽", over100: "8 ₽" },
-  { format: "A3", size: "297×420 мм", under100: "29 ₽", over100: "23 ₽" },
-  { format: "A2", size: "420×594 мм", under100: "48 ₽", over100: "38 ₽" },
-  { format: "A1", size: "594×841 мм", under100: "84 ₽", over100: "67 ₽" },
-  { format: "A0", size: "841×1189 мм", under100: "128 ₽", over100: "102 ₽" },
+  { format: "A3", size: "297×420 мм", under100: "24 ₽", over100: "19 ₽" },
+  { format: "A2", size: "420×594 мм", under100: "40 ₽", over100: "32 ₽" },
+  { format: "A1", size: "594×841 мм", under100: "70 ₽", over100: "56 ₽" },
+  { format: "A0", size: "841×1189 мм", under100: "110 ₽", over100: "88 ₽" },
 ];
 
 const services = [
