@@ -146,7 +146,7 @@ const Footer = () => {
         {/* Нижняя планка */}
         <div className="mt-10 sm:mt-12 pt-6 border-t border-[hsl(var(--border))] flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-[hsl(var(--muted-foreground))] text-center md:text-left">
-            © {currentYear} ООО «ПринтПро». Все права защищены.
+            © {currentYear} Типография «ПринтПро». Все права защищены.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 text-center">
             <a href="/privacy" className="text-xs text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors">
