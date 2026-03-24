@@ -65,20 +65,19 @@ const PriceCard = ({
 
       <div className={`pt-3 space-y-2 border-t ${isBw ? "border-border/20" : "border-white/20"}`}>
         <div className="flex justify-between items-center">
-          <span className={`text-sm ${isBw ? "text-muted-foreground" : "text-white/80"}`}>
+          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>цена</span>
+          <span className={`text-base font-semibold ${isBw ? "text-foreground" : "text-white"}`}>
             {item.under100}
           </span>
         </div>
         <div className="flex justify-between items-center">
+          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>от 100 л.</span>
           <span
             className={`text-base font-semibold ${
               isBw ? "text-emerald-400" : "text-yellow-200 drop-shadow-sm"
             }`}
           >
             {item.over100}
-          </span>
-          <span className={`text-[10px] ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>
-            от 100
           </span>
         </div>
       </div>
