@@ -45,6 +45,7 @@ const OrderSection = () => {
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [foldingEnabled, setFoldingEnabled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -62,8 +63,10 @@ const OrderSection = () => {
     setCart(prev => [...prev, {
       id: Date.now(),
       label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
+      format,
       unitPrice,
       quantity,
+      isService: false,
     }]);
     setQuantity(1);
   };
@@ -72,8 +75,10 @@ const OrderSection = () => {
     setCart(prev => [...prev, {
       id: Date.now() + Math.random(),
       label: service.label,
+      format: '',
       unitPrice: service.price,
       quantity: 1,
+      isService: true,
     }]);
   };
 
@@ -85,11 +90,21 @@ const OrderSection = () => {
     ));
   };
 
+  const getFoldingPrice = (item: CartItem) => {
+    if (item.isService) return 0;
+    return FOLDING_PRICES[item.format] || 0;
+  };
+
+  const getItemTotal = (item: CartItem) => {
+    const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
+    return (item.unitPrice + folding) * item.quantity;
+  };
+
   const stats = useMemo(() => {
-    const subtotal = cart.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
+    const subtotal = cart.reduce((acc, item) => acc + getItemTotal(item), 0);
     const discount = subtotal * 0.20;
     return { subtotal, discount, total: subtotal - discount };
-  }, [cart]);
+  }, [cart, foldingEnabled]);
 
   const sendOrder = async (e: React.FormEvent) => {
     e.preventDefault();
