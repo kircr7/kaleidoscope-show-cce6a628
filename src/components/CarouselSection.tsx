@@ -3,7 +3,7 @@ import IconCarousel from "./IconCarousel";
 
 const CarouselSection = () => {
   return (
-    <section className="w-full max-w-6xl mx-auto py-8 md:py-14 relative -mt-4 z-0">
+    <section className="w-full max-w-6xl mx-auto py-4 md:py-8 relative -mt-6 z-0">
       {/* Soft radial glow from center icon */}
       <div
         className="absolute pointer-events-none z-0"
