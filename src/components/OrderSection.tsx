@@ -167,6 +167,10 @@ const OrderSection = () => {
       alert('Прикрепите файл или укажите ссылку');
       return;
     }
+    if (fileCustomer.phone.replace(/\D/g, '').length < 11) {
+      alert('Пожалуйста, введите полный номер телефона');
+      return;
+    }
     if (!fileFormRef.current) return;
 
     setFileStatus('sending');
