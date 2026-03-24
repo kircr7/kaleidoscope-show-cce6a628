@@ -474,7 +474,7 @@ const OrderSection = () => {
                       </div>
 
                       {cart.length > 0 && (
-                        <form onSubmit={sendOrder} className="space-y-3 pt-6" style={{ borderTop: '1px solid hsl(240,9%,17%)' }}>
+                        <form ref={orderFormRef} onSubmit={sendOrder} encType="multipart/form-data" className="space-y-3 pt-6" style={{ borderTop: '1px solid hsl(240,9%,17%)' }}>
                           {/* File submission section */}
                           <div className="space-y-3 mb-1">
                             <label className="text-[10px] font-bold uppercase ml-1" style={{ color: 'hsl(0,0%,60%)' }}>Прикрепить файлы</label>
@@ -482,6 +482,7 @@ const OrderSection = () => {
                               <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
                               <input
                                 type="text"
+                                name="file_link_input"
                                 placeholder="Ссылка на файлы (Яндекс.Диск, Облако Mail.ru)"
                                 value={fileLink}
                                 onChange={e => setFileLink(e.target.value)}
@@ -498,6 +499,7 @@ const OrderSection = () => {
                               <input
                                 ref={fileInputRef}
                                 type="file"
+                                name="order_file"
                                 accept=".pdf,.zip,.rar,.dwg"
                                 className="hidden"
                                 onChange={e => {
@@ -553,6 +555,7 @@ const OrderSection = () => {
                               <User className="absolute left-4 top-4 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
                               <input
                                 required
+                                name="customer_name"
                                 placeholder="Ваше имя"
                                 value={customer.name}
                                 onChange={e => setCustomer({ ...customer, name: e.target.value })}
@@ -564,6 +567,7 @@ const OrderSection = () => {
                               <Phone className="absolute left-4 top-4 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
                               <input
                                 required
+                                name="customer_phone"
                                 type="tel"
                                 placeholder="+7 (___) ___-__-__"
                                 value={customer.phone}
@@ -589,6 +593,23 @@ const OrderSection = () => {
                               )}
                             </div>
                           </div>
+
+                          <input
+                            type="hidden"
+                            name="order_details"
+                            value={cart.map((item, index) => {
+                              const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
+                              const perUnit = item.unitPrice + folding;
+                              const foldingNote = folding > 0 ? ` (вкл. фальцовку ${folding} ₽)` : '';
+                              return `${index + 1}. ${item.label}${foldingNote} — ${item.quantity} шт. × ${perUnit} ₽ = ${perUnit * item.quantity} руб.`;
+                            }).join('\n')}
+                          />
+                          <input type="hidden" name="total_price" value={String(Math.round(stats.total))} />
+                          <input
+                            type="hidden"
+                            name="file_link"
+                            value={fileLink || (uploadedFile ? `Файл: ${uploadedFile.name}` : 'Не указано')}
+                          />
 
                           <label className="flex items-start gap-2.5 cursor-pointer select-none mt-1">
                             <input
