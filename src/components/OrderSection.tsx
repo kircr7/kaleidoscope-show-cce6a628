@@ -437,9 +437,10 @@ const OrderSection = () => {
                                 <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-500/10 rounded-full transition-colors">
                                   <Trash2 className="w-3.5 h-3.5 text-red-400/70" />
                                 </button>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                         {cart.length === 0 && (
                           <p className="text-center py-10 italic rounded-3xl text-white/50" style={{ border: '2px dashed hsla(0,0%,100%,0.15)' }}>
                             Смета пуста. Добавьте чертежи или услуги выше.
