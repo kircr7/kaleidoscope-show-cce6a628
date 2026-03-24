@@ -56,10 +56,10 @@ interface Props {
 
 const IconCarousel = ({ side }: Props) => {
   const isSmall = side === "small";
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const isDragging = React.useRef(false);
-  const startX = React.useRef(0);
-  const scrollLeft = React.useRef(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     isDragging.current = true;
