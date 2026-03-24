@@ -302,64 +302,6 @@ const OrderSection = () => {
                            style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                          />
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="flex-1 h-px" style={{ backgroundColor: 'hsl(240,9%,20%)' }} />
-                        <span className="text-[11px] font-medium" style={{ color: 'hsl(0,0%,40%)' }}>или</span>
-                        <div className="flex-1 h-px" style={{ backgroundColor: 'hsl(240,9%,20%)' }} />
-                      </div>
-                      <div>
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          name="order_file"
-                          accept=".pdf,.zip,.rar,.dwg"
-                          className="hidden"
-                          onChange={e => {
-                            const file = e.target.files?.[0];
-                            if (file && file.size <= 50 * 1024 * 1024) {
-                              setUploadedFile(file);
-                            } else if (file) {
-                              alert('Файл слишком большой. Максимум 50 МБ.');
-                              e.target.value = '';
-                            }
-                          }}
-                        />
-                        {uploadedFile ? (
-                          <div
-                            className="flex items-center justify-between p-3 rounded-2xl"
-                            style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
-                          >
-                            <div className="flex items-center gap-2 min-w-0">
-                              <Paperclip className="w-4 h-4 flex-shrink-0" style={{ color: 'hsl(266,92%,68%)' }} />
-                              <span className="text-sm text-white truncate">{uploadedFile.name}</span>
-                              <span className="text-[10px] flex-shrink-0" style={{ color: 'hsl(0,0%,50%)' }}>
-                                ({(uploadedFile.size / 1024 / 1024).toFixed(1)} МБ)
-                              </span>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => { setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
-                              className="p-1 hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
-                            >
-                              <X className="w-3.5 h-3.5 text-white/50" />
-                            </button>
-                          </div>
-                        ) : (
-                          <button
-                            type="button"
-                            onClick={() => fileInputRef.current?.click()}
-                            className="w-full p-3 rounded-2xl text-sm font-semibold transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 hover:border-[hsl(266,92%,58%)] hover:bg-[hsla(266,92%,58%,0.08)] hover:text-white"
-                            style={{
-                              backgroundColor: 'hsla(240,15%,15%,0.5)',
-                              border: '1px dashed hsl(240,9%,25%)',
-                              color: 'hsl(0,0%,70%)',
-                            }}
-                          >
-                            <Paperclip className="w-4 h-4" />
-                            Загрузить файл (до 50 МБ)
-                          </button>
-                        )}
-                      </div>
 
                       {(fileLink || uploadedFile) && (
                         <>
