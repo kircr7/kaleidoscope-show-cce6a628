@@ -148,7 +148,7 @@ const OrderSection = () => {
 
                 <div className="relative z-10">
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-white">
-                    Скидывайте файлы <br className="hidden sm:block" /> в Telegram.
+                    Отправьте файлы <br className="hidden sm:block" /> в Telegram.
                   </h2>
                   <p className="mt-3 sm:mt-4 text-sm md:text-base leading-relaxed max-w-sm" style={{ color: 'hsl(0,0%,83%)' }}>
                     Не тратьте время на расчеты. Наш менеджер сам проверит файлы и назовет точную цену.
@@ -197,7 +197,7 @@ const OrderSection = () => {
               <div className="text-white">
                 <div className="p-4 sm:p-5" style={{ borderBottom: '1px solid hsl(240,9%,17%)' }}>
                   <h3 className="text-base font-black mb-4 flex items-center gap-2 uppercase tracking-tight" style={{ color: 'hsl(0,0%,83%)' }}>
-                    <Printer className="w-4 h-4" /> Или рассчитайте сами
+                    <Printer className="w-4 h-4" /> Калькулятор цены
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-[1.4fr_1fr] gap-3 mb-3">
@@ -403,7 +403,7 @@ const OrderSection = () => {
                           >
                             <div>
                               <div className="flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase mb-2 w-fit tracking-wider">
-                                Скидка 20% применена
+                                Скидка 20% на первый заказ
                               </div>
                               <div className="flex items-baseline gap-2">
                                 <span className="text-2xl font-black">{Math.round(stats.total)} ₽</span>

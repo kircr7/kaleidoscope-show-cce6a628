@@ -42,11 +42,11 @@ const smallItems: SmallItem[] = [
 // =============================================
 const largeItems: LargeItem[] = [
   { image: outputBlueprint, label: "Чертежи" },
-  { image: outputDocs, label: "Документы" },
-  { image: outputPoster, label: "Постеры" },
   { image: outputPlan, label: "Планы" },
-  { image: outputSpec, label: "Спецификации" },
-  { image: outputSection, label: "Разрезы" },
+  { image: outputDocs, label: "Документация" },
+  { image: outputPoster, label: "Проектная" },
+  { image: outputSpec, label: "Рабочая" },
+  { image: outputSection, label: "Исполнительная" },
 ];
 
 interface Props {
