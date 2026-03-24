@@ -27,7 +27,7 @@ const PriceCard = ({
   item,
   variant,
   expandedFormat,
-  onToggle,
+  onExpand,
 }: {
   item: typeof bwPrices[0];
   variant: "bw" | "color";
