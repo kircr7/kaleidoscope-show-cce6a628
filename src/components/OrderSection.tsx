@@ -258,10 +258,7 @@ const OrderSection = () => {
 
                 {/* File upload form */}
                 <div className="relative z-10 mt-8">
-                  <div className="h-px w-full mb-6" style={{ backgroundColor: 'hsl(240,9%,20%)' }} />
-                  <h3 className="text-base font-black uppercase tracking-tight text-white mb-4">
-                    Или отправьте файлы здесь
-                  </h3>
+                   <div className="h-px w-full mb-6" style={{ backgroundColor: 'hsl(240,9%,20%)' }} />
                   {fileStatus === 'success' ? (
                     <div className="text-center py-6">
                       <CheckCircle className="w-10 h-10 mx-auto mb-3" style={{ color: 'hsl(120,60%,60%)' }} />
