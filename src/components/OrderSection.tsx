@@ -435,7 +435,7 @@ const OrderSection = () => {
                               boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
                             }}
                           >
-                            {fileStatus === 'sending' ? 'Отправка...' : <><Send className="w-4 h-4" /> Отправить файл</>}
+                            {fileStatus === 'sending' ? <><Loader2 className="w-4 h-4 animate-spin" /> Отправка...</> : <><Send className="w-4 h-4" /> Отправить файл</>}
                           </button>
                         </>
                       )}
