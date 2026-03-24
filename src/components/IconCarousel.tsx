@@ -117,7 +117,7 @@ const IconCarousel = ({ side }: Props) => {
     >
       {track.map((item, i) => (
         <div key={i} className="flex-shrink-0 transition-transform duration-300 hover:scale-150 hover:z-30 relative">
-          <div className="w-36 h-32 md:w-44 md:h-40 bg-[hsl(0_0%_4%)] border border-[hsl(0_0%_15%)]/30 p-1.5 shadow-xl shadow-black/50 flex flex-col">
+          <div className="w-44 h-40 md:w-52 md:h-48 bg-[hsl(0_0%_4%)] border border-[hsl(0_0%_15%)]/30 p-1.5 shadow-xl shadow-black/50 flex flex-col">
             <div className="flex-1 overflow-hidden">
               <img
                 src={item.image}
