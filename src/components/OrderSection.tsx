@@ -568,7 +568,7 @@ const OrderSection = () => {
                     </div>
                     <button
                       onClick={addPrintToCart}
-                      className="flex-1 text-white py-3 rounded-full font-bold uppercase text-sm tracking-wider transition-all active:scale-[0.97]"
+                      className="flex-1 text-white py-3 rounded-full font-bold uppercase text-sm tracking-wider transition-all duration-200 active:scale-[0.97] hover:shadow-[0_0_24px_hsla(266,92%,58%,0.5)] hover:brightness-110"
                       style={{
                         backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
                         boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
