@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 const bwPrices = [
@@ -17,8 +17,15 @@ const colorPrices = [
   { format: "A0", size: "841×1189 мм", under100: "110 ₽", over100: "88 ₽" },
 ];
 
+const foldingPrices = [
+  { format: "A3", price: "5 ₽" },
+  { format: "A2", price: "8 ₽" },
+  { format: "A1", price: "14 ₽" },
+  { format: "A0", price: "18 ₽" },
+];
+
 const services = [
-  { name: "Фальцовка по ГОСТ", desc: "Сложение в формат А4", price: "от 5 ₽/лист" },
+  { name: "Фальцовка по ГОСТ", desc: "Сложение в формат А4", price: "folding" },
   { name: "Брошюровка на пружину", desc: "До 510 листов", price: "А4 — 100 ₽ / А3 — 200 ₽" },
   { name: "Твердый переплет", desc: "Для томов проектной документации", price: "600 ₽" },
 ];
@@ -86,7 +93,21 @@ const PriceCard = ({
 };
 
 const ServiceCard = ({ item }: { item: typeof services[0] }) => {
-  const [hovered, setHovered] = useState(false);
+  const [foldingIndex, setFoldingIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const isFolding = item.price === "folding";
+
+  useEffect(() => {
+    if (!isFolding) return;
+    const interval = setInterval(() => {
+      setAnimating(true);
+      setTimeout(() => {
+        setFoldingIndex((prev) => (prev + 1) % foldingPrices.length);
+        setAnimating(false);
+      }, 300);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isFolding]);
 
   return (
     <div
@@ -95,7 +116,23 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
       <span className="text-lg sm:text-xl font-bold text-foreground tracking-tight">{item.name}</span>
       <div className="pt-2 border-t border-border/20 mt-2 space-y-1">
         <p className="text-sm text-muted-foreground">{item.desc}</p>
-        <p className="text-lg font-semibold text-foreground">{item.price}</p>
+        {isFolding ? (
+          <div className="h-7 overflow-hidden relative">
+            <div
+              className="flex items-center gap-2 absolute inset-x-0 transition-all duration-300 ease-in-out"
+              style={{
+                transform: animating ? 'translateY(-100%)' : 'translateY(0)',
+                opacity: animating ? 0 : 1,
+              }}
+            >
+              <span className="text-lg font-semibold text-foreground">{foldingPrices[foldingIndex].format}</span>
+              <span className="text-muted-foreground">—</span>
+              <span className="text-lg font-semibold text-emerald-400">{foldingPrices[foldingIndex].price}</span>
+            </div>
+          </div>
+        ) : (
+          <p className="text-lg font-semibold text-foreground">{item.price}</p>
+        )}
       </div>
     </div>
   );
