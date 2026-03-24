@@ -104,8 +104,8 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
       setTimeout(() => {
         setFoldingIndex((prev) => (prev + 1) % foldingPrices.length);
         setAnimating(false);
-      }, 300);
-    }, 2000);
+      }, 500);
+    }, 2500);
     return () => clearInterval(interval);
   }, [isFolding]);
 
