@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Ruler, ShieldCheck, Truck, Plus, Minus } from 'lucide-react';
+import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Ruler, ShieldCheck, Truck, Plus, Minus, Link2, Paperclip, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Switch } from '@/components/ui/switch';
 import emailjs from '@emailjs/browser';
@@ -42,6 +42,9 @@ const OrderSection = () => {
   const [isColor, setIsColor] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [customer, setCustomer] = useState({ name: '', phone: '' });
+  const [fileLink, setFileLink] = useState('');
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -140,6 +143,7 @@ const OrderSection = () => {
       customer_phone: customer.phone,
       order_details: orderDetailsText,
       total_price: Math.round(stats.total),
+      file_link: fileLink || (uploadedFile ? `Файл: ${uploadedFile.name}` : 'Не указано'),
     };
 
     try {
@@ -475,6 +479,79 @@ const OrderSection = () => {
 
                       {cart.length > 0 && (
                         <form onSubmit={sendOrder} className="space-y-3 pt-6" style={{ borderTop: '1px solid hsl(240,9%,17%)' }}>
+                          {/* File submission section */}
+                          <div className="space-y-3 mb-1">
+                            <label className="text-[10px] font-bold uppercase ml-1" style={{ color: 'hsl(0,0%,60%)' }}>Прикрепить файлы</label>
+                            <div className="relative">
+                              <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                              <input
+                                type="text"
+                                placeholder="Ссылка на файлы (Яндекс.Диск, Облако Mail.ru)"
+                                value={fileLink}
+                                onChange={e => setFileLink(e.target.value)}
+                                className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40"
+                                style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                              />
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="flex-1 h-px" style={{ backgroundColor: 'hsl(240,9%,17%)' }} />
+                              <span className="text-[11px] font-medium" style={{ color: 'hsl(0,0%,40%)' }}>или</span>
+                              <div className="flex-1 h-px" style={{ backgroundColor: 'hsl(240,9%,17%)' }} />
+                            </div>
+                            <div>
+                              <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept=".pdf,.zip,.rar,.dwg"
+                                className="hidden"
+                                onChange={e => {
+                                  const file = e.target.files?.[0];
+                                  if (file && file.size <= 50 * 1024 * 1024) {
+                                    setUploadedFile(file);
+                                  } else if (file) {
+                                    alert('Файл слишком большой. Максимум 50 МБ.');
+                                    e.target.value = '';
+                                  }
+                                }}
+                              />
+                              {uploadedFile ? (
+                                <div
+                                  className="flex items-center justify-between p-3 rounded-2xl"
+                                  style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                                >
+                                  <div className="flex items-center gap-2 min-w-0">
+                                    <Paperclip className="w-4 h-4 flex-shrink-0" style={{ color: 'hsl(266,92%,68%)' }} />
+                                    <span className="text-sm text-white truncate">{uploadedFile.name}</span>
+                                    <span className="text-[10px] flex-shrink-0" style={{ color: 'hsl(0,0%,50%)' }}>
+                                      ({(uploadedFile.size / 1024 / 1024).toFixed(1)} МБ)
+                                    </span>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={() => { setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
+                                    className="p-1 hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
+                                  >
+                                    <X className="w-3.5 h-3.5 text-white/50" />
+                                  </button>
+                                </div>
+                              ) : (
+                                <button
+                                  type="button"
+                                  onClick={() => fileInputRef.current?.click()}
+                                  className="w-full p-3.5 rounded-2xl text-sm font-semibold transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                                  style={{
+                                    backgroundColor: 'hsla(240,15%,15%,0.5)',
+                                    border: '1px dashed hsl(240,9%,25%)',
+                                    color: 'hsl(0,0%,70%)',
+                                  }}
+                                >
+                                  <Paperclip className="w-4 h-4" />
+                                  Загрузить файл (до 50 МБ)
+                                </button>
+                              )}
+                            </div>
+                          </div>
+
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div className="relative">
                               <User className="absolute left-4 top-4 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
@@ -610,7 +687,7 @@ const OrderSection = () => {
                         Спасибо, <strong className="text-white">{customer.name}</strong>. Мы свяжемся с вами в течение 5 минут по номеру <strong className="text-white">{customer.phone}</strong>.
                       </p>
                       <button
-                        onClick={() => { setStatus(''); setCart([]); setCustomer({ name: '', phone: '' }); }}
+                        onClick={() => { setStatus(''); setCart([]); setCustomer({ name: '', phone: '' }); setFileLink(''); setUploadedFile(null); }}
                         className="inline-block mt-8 text-sm font-bold transition-colors"
                         style={{ color: 'hsl(266,92%,68%)' }}
                       >
