@@ -18,7 +18,7 @@ const PRICES: Record<string, { bw: number; color: number; label: string }> = {
   A3: { bw: 14, color: 24, label: 'A3 (297×420 мм)' },
   A2: { bw: 30, color: 40, label: 'A2 (420×594 мм)' },
   A1: { bw: 50, color: 70, label: 'A1 (594×841 мм)' },
-  A0: { bw: 110, color: 120, label: 'A0 (841×1189 мм)' },
+  A0: { bw: 100, color: 110, label: 'A0 (841×1189 мм)' },
 };
 
 const FOLDING_PRICES: Record<string, number> = {
