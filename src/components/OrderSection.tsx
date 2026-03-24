@@ -402,9 +402,21 @@ const OrderSection = () => {
                         <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-widest text-white/70">
                           <ShoppingCart className="w-4 h-4" /> Ваш заказ
                         </h3>
-                        <div className="flex items-center gap-2.5 select-none">
-                          <span className="text-[10px] font-bold uppercase text-white">
-                            Фальцовка по ГОСТ
+                        <div
+                          className="flex items-center gap-3 select-none px-3 py-2 rounded-xl"
+                          style={{
+                            backgroundColor: foldingEnabled ? 'hsla(120,60%,40%,0.15)' : 'hsla(266,92%,58%,0.1)',
+                            border: `1px solid ${foldingEnabled ? 'hsla(120,60%,40%,0.4)' : 'hsla(266,92%,58%,0.3)'}`,
+                            boxShadow: foldingEnabled
+                              ? '0 0 12px hsla(120,60%,40%,0.2)'
+                              : '0 0 12px hsla(266,92%,58%,0.15)',
+                          }}
+                        >
+                          <span
+                            className="text-xs font-black uppercase tracking-wide"
+                            style={{ color: foldingEnabled ? 'hsl(120,60%,70%)' : 'hsl(266,92%,80%)' }}
+                          >
+                            ✦ Фальцовка по ГОСТ
                           </span>
                           <input
                             type="checkbox"
