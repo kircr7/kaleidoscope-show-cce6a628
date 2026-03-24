@@ -340,7 +340,7 @@ const OrderSection = () => {
                           <button
                             type="button"
                             onClick={() => fileInputRef.current?.click()}
-                            className="w-full p-3 rounded-2xl text-sm font-semibold transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                            className="w-full p-3 rounded-2xl text-sm font-semibold transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 hover:border-[hsl(266,92%,58%)] hover:bg-[hsla(266,92%,58%,0.08)] hover:text-white"
                             style={{
                               backgroundColor: 'hsla(240,15%,15%,0.5)',
                               border: '1px dashed hsl(240,9%,25%)',
