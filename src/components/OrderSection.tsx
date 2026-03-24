@@ -389,35 +389,54 @@ const OrderSection = () => {
                 <div className="p-4 sm:p-6">
                   {status !== 'success' ? (
                     <>
-                      <h3 className="font-bold mb-4 flex items-center gap-2 text-sm uppercase tracking-widest text-white/70">
-                        <ShoppingCart className="w-4 h-4" /> Ваш заказ
-                      </h3>
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-widest text-white/70">
+                          <ShoppingCart className="w-4 h-4" /> Ваш заказ
+                        </h3>
+                        <label className="flex items-center gap-2 cursor-pointer select-none">
+                          <span className="text-[10px] font-bold uppercase" style={{ color: 'hsl(0,0%,50%)' }}>Фальцовка по ГОСТ</span>
+                          <Switch checked={foldingEnabled} onCheckedChange={setFoldingEnabled} />
+                        </label>
+                      </div>
 
                       <div className="space-y-3 mb-8">
-                        {cart.map(item => (
-                          <div
-                            key={item.id}
-                            className="flex justify-between items-center p-3 rounded-xl group"
-                            style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
-                          >
-                            <div className="flex-1 min-w-0">
-                              <div className="text-sm font-semibold text-white">{item.label}</div>
-                              <div className="text-[10px] mt-0.5 font-medium" style={{ color: 'hsl(0,0%,50%)' }}>{item.unitPrice} ₽ за шт.</div>
-                            </div>
-                            <div className="flex items-center gap-2 sm:gap-3">
-                              <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
-                                <button onClick={() => updateQuantity(item.id, -1)} className="p-1.5 transition-colors rounded-l-lg hover:bg-white/5">
-                                  <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
-                                </button>
-                                <span className="px-2.5 text-sm font-bold min-w-[28px] text-center text-white">{item.quantity}</span>
-                                <button onClick={() => updateQuantity(item.id, 1)} className="p-1.5 transition-colors rounded-r-lg hover:bg-white/5">
-                                  <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
-                                </button>
+                        {cart.map(item => {
+                          const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
+                          const unitWithFolding = item.unitPrice + folding;
+                          const lineTotal = unitWithFolding * item.quantity;
+
+                          return (
+                            <div
+                              key={item.id}
+                              className="flex justify-between items-center p-3 rounded-xl group"
+                              style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
+                            >
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-semibold text-white">{item.label}</div>
+                                <div className="text-[10px] mt-0.5 font-medium" style={{ color: 'hsl(0,0%,50%)' }}>
+                                  {folding > 0 ? (
+                                    <span>
+                                      {item.unitPrice} ₽ + {folding} ₽ <span style={{ color: 'hsl(266,92%,68%)' }}>(фальцовка)</span> = {unitWithFolding} ₽ за шт.
+                                    </span>
+                                  ) : (
+                                    <span>{item.unitPrice} ₽ за шт.</span>
+                                  )}
+                                </div>
                               </div>
-                              <span className="text-sm font-bold text-white w-16 text-right">{item.unitPrice * item.quantity} ₽</span>
-                              <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-500/10 rounded-full transition-colors">
-                                <Trash2 className="w-3.5 h-3.5 text-red-400/70" />
-                              </button>
+                              <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
+                                  <button onClick={() => updateQuantity(item.id, -1)} className="p-1.5 transition-colors rounded-l-lg hover:bg-white/5">
+                                    <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                  </button>
+                                  <span className="px-2.5 text-sm font-bold min-w-[28px] text-center text-white">{item.quantity}</span>
+                                  <button onClick={() => updateQuantity(item.id, 1)} className="p-1.5 transition-colors rounded-r-lg hover:bg-white/5">
+                                    <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                  </button>
+                                </div>
+                                <span className="text-sm font-bold text-white w-16 text-right">{lineTotal} ₽</span>
+                                <button onClick={() => removeItem(item.id)} className="p-2 hover:bg-red-500/10 rounded-full transition-colors">
+                                  <Trash2 className="w-3.5 h-3.5 text-red-400/70" />
+                                </button>
                             </div>
                           </div>
                         ))}
