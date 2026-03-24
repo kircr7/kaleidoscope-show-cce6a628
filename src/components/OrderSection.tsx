@@ -831,7 +831,7 @@ const OrderSection = () => {
                             <button
                               type="submit"
                               disabled={status === 'sending'}
-                              className="w-full sm:w-auto bg-white px-8 py-3.5 rounded-full font-bold uppercase text-sm tracking-wider flex items-center justify-center gap-2 transition-all active:scale-[0.97] disabled:opacity-50"
+                              className="w-full sm:w-auto bg-white px-8 py-3.5 rounded-full font-bold uppercase text-sm tracking-wider flex items-center justify-center gap-2 transition-all duration-200 active:scale-[0.97] disabled:opacity-50 hover:shadow-[0_0_24px_hsla(0,0%,100%,0.4)] hover:scale-[1.03]"
                               style={{ color: 'hsl(266,92%,40%)' }}
                             >
                               {status === 'sending' ? 'Отправка...' : <><Send className="w-4 h-4" /> Оформить заказ</>}
