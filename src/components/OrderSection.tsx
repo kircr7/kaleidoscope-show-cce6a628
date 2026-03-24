@@ -219,22 +219,61 @@ const OrderSection = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-[1.4fr_1fr] gap-3 mb-3">
                     <div className="space-y-1">
                       <label className="text-[10px] font-bold uppercase ml-1" style={{ color: 'hsl(0,0%,60%)' }}>Формат чертежа</label>
-                      <select
-                        value={format}
-                        onChange={(e) => setFormat(e.target.value)}
-                        className="w-full p-2.5 text-sm rounded-xl outline-none font-medium"
-                        style={{
-                          backgroundColor: 'hsla(240,15%,15%,0.8)',
-                          border: '1px solid hsl(240,9%,17%)',
-                          color: 'hsl(0,0%,83%)',
-                        }}
-                      >
-                        {Object.keys(PRICES).map(k => (
-                          <option key={k} value={k} style={{ backgroundColor: 'hsl(240,15%,9%)' }}>
-                            {PRICES[k].label} · {isColor ? PRICES[k].color : PRICES[k].bw} ₽
-                          </option>
-                        ))}
-                      </select>
+                      <div className="relative" ref={dropdownRef}>
+                        <button
+                          type="button"
+                          onClick={() => setDropdownOpen(!dropdownOpen)}
+                          className="w-full p-2.5 text-sm rounded-xl outline-none font-medium text-left flex items-center justify-between transition-all"
+                          style={{
+                            backgroundColor: 'hsla(240,15%,15%,0.8)',
+                            border: `1px solid ${dropdownOpen ? 'hsl(266,92%,58%)' : 'hsl(240,9%,17%)'}`,
+                            color: 'hsl(0,0%,83%)',
+                          }}
+                        >
+                          <span>{PRICES[format].label} · {isColor ? PRICES[format].color : PRICES[format].bw} ₽</span>
+                          <svg
+                            className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}
+                            style={{ color: 'hsl(0,0%,60%)' }}
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        {dropdownOpen && (
+                          <div
+                            className="absolute z-50 w-full mt-1 rounded-xl overflow-hidden animate-scale-in"
+                            style={{
+                              backgroundColor: 'hsla(240,15%,11%,0.95)',
+                              border: '1px solid hsl(240,9%,20%)',
+                              backdropFilter: 'blur(20px)',
+                              WebkitBackdropFilter: 'blur(20px)',
+                              boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px hsla(266,92%,58%,0.1)',
+                            }}
+                          >
+                            {Object.keys(PRICES).map(k => (
+                              <button
+                                key={k}
+                                type="button"
+                                onClick={() => { setFormat(k); setDropdownOpen(false); }}
+                                className="w-full text-left px-3.5 py-2.5 text-sm font-medium transition-all flex justify-between items-center"
+                                style={{
+                                  color: format === k ? 'hsl(266,92%,78%)' : 'hsl(0,0%,83%)',
+                                  backgroundColor: format === k ? 'hsla(266,92%,58%,0.15)' : 'transparent',
+                                }}
+                                onMouseEnter={(e) => {
+                                  if (format !== k) e.currentTarget.style.backgroundColor = 'hsla(240,15%,20%,0.6)';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.backgroundColor = format === k ? 'hsla(266,92%,58%,0.15)' : 'transparent';
+                                }}
+                              >
+                                <span>{PRICES[k].label}</span>
+                                <span style={{ color: 'hsl(0,0%,50%)' }}>{isColor ? PRICES[k].color : PRICES[k].bw} ₽</span>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] font-bold uppercase ml-1" style={{ color: 'hsl(0,0%,60%)' }}>Цветность</label>
