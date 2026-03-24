@@ -402,20 +402,22 @@ const OrderSection = () => {
                         <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-widest text-white/70">
                           <ShoppingCart className="w-4 h-4" /> Ваш заказ
                         </h3>
-                        <div className="flex items-center gap-2.5 cursor-pointer select-none">
+                        <div className="flex items-center gap-2.5 select-none">
                           <span className="text-[10px] font-bold uppercase text-white">
                             Фальцовка по ГОСТ
                           </span>
-                          <input
-                            type="checkbox"
-                            id="toggle-folding"
-                            checked={foldingEnabled}
-                            onChange={(e) => setFoldingEnabled(e.target.checked)}
-                            className="hidden"
-                          />
-                          <label htmlFor="toggle-folding" className="toggle-container">
-                            <div className="toggle-knob" />
-                          </label>
+                          <div className="relative inline-flex items-center">
+                            <input
+                              type="checkbox"
+                              id="toggle-folding"
+                              checked={foldingEnabled}
+                              onChange={(e) => setFoldingEnabled(e.target.checked)}
+                              className="hidden"
+                            />
+                            <label htmlFor="toggle-folding" className="toggle-container">
+                              <div className="toggle-knob" />
+                            </label>
+                          </div>
                         </div>
                       </div>
 
