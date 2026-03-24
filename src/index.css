@@ -221,86 +221,124 @@
   50% { filter: brightness(1.6) drop-shadow(0 0 4px hsl(42, 90%, 50%)); }
 }
 
-/* Toggle switch - Uiverse.io by craig_8499 */
-.toggle-container {
+/* Switch - Uiverse.io by ilkhoeri */
+.switch-wrap {
+  z-index: 20;
   position: relative;
-  width: 60px;
-  height: 30px;
-  background: linear-gradient(
-    135deg,
-    rgba(200, 200, 200, 0.8) 0%,
-    rgba(108, 106, 106, 0.8) 50%,
-    rgba(142, 141, 141, 0.8) 100%
-  );
-  border-radius: 15px;
-  box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.5),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.2),
-    0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  width: calc(var(--w-switch) + calc(var(--p) * 2));
+  height: calc(var(--h-switch) + calc(var(--p) * 2));
+  box-shadow: hsla(var(--pure-black), 0.25) 2px -5px 4px inset,
+    hsla(var(--pure-black), 0.25) 0px 2px 5px -1px,
+    hsla(var(--pure-black), 0.3) 0 1px 3px -1px,
+    0 70px 40px -20px hsla(var(--pure-black), 0.2),
+    hsla(var(--pure-black), 0.2) 0 0 0 1px inset;
+  --round: 1.2rem;
+  --pure-black: 0, 0%, 0%;
+  --pure-white: 0, 0%, 100%;
+  --scale-x: calc(1.35 * var(--round));
+  --p: calc(calc(6.25 / 100) * var(--round));
+  --checked: calc(100% - calc(var(--round) + var(--p)));
+  --sz-marbles: calc(var(--w-switch) + calc(var(--p) * 2));
+  --h-switch: calc(var(--round) + calc(var(--p) * 2));
+  --w-switch: calc(calc(var(--round) * 2) + calc(var(--p) * 2));
+  --bg-switch: var(--pure-black);
+  --box: var(--pure-white);
+}
+.switch-wrap .switch-input {
+  display: none;
+  background: transparent none;
+  visibility: hidden;
+}
+.switch-label {
   cursor: pointer;
-  transition: all 0.4s ease;
-  flex-shrink: 0;
+  user-select: none;
+  position: relative;
+  z-index: 20;
+  width: var(--w-switch);
+  height: var(--h-switch);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  background-color: hsl(var(--pure-white));
+  border-radius: 9999px;
+  border-width: 0px;
+  transition: all linear 300ms;
+  box-shadow: var(--shadow);
+  --shadow: hsla(var(--pure-black), 0.4) 0 2px 4px,
+    hsla(var(--pure-black), 0.3) 0 7px 13px -3px,
+    hsla(var(--pure-black), 0.25) -2px -5px 4px inset,
+    hsla(var(--pure-black), 0.2) 0 0 0 1px inset;
 }
-.toggle-container::before {
+.switch-label::after {
+  position: absolute;
+  display: block;
+  content: "";
+  width: var(--round);
+  height: var(--round);
+  left: var(--p);
+  border-radius: 9999px;
+  background-color: hsl(0, 0%, 100%);
+  will-change: left, width, margin, padding;
+  box-shadow: var(--shadow);
+  transition: left 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    width 300ms ease, padding 300ms ease, margin 300ms ease,
+    background-color 300ms ease, box-shadow 300ms linear;
+}
+.switch-input + .switch-label:active::after {
+  width: var(--scale-x);
+  --shadow: hsla(var(--pure-black), 0.4) 0 2px 4px,
+    hsla(var(--pure-black), 0.3) 0 7px 13px -3px,
+    hsla(var(--pure-black), 0.25) 0px -2px 8px 6px inset,
+    hsla(var(--pure-black), 0.25) 0 0 0 1px inset;
+}
+.switch-input:checked + .switch-label {
+  --shadow: hsla(var(--pure-black), 0.4) 0 2px 4px,
+    hsla(var(--pure-black), 0.3) 0 7px 13px -3px,
+    hsla(var(--pure-black), 0.25) 2px -5px 4px inset,
+    hsla(var(--pure-black), 0.2) 0 0 0 1px inset;
+}
+.switch-input:checked + .switch-label::after {
+  background: white linear-gradient(-45deg, #f8acff 0%, #696eff 100%);
+  left: var(--checked);
+}
+.switch-input:checked + .switch-label:active::after {
+  margin-left: calc(calc(var(--checked) - var(--scale-x)) - var(--p));
+}
+.switch-marbles {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 9999px;
+}
+.switch-marbles::after {
+  height: var(--sz-marbles);
+  width: var(--sz-marbles);
+  z-index: 0;
   content: "";
   position: absolute;
-  top: 3px;
-  left: 3px;
-  right: 3px;
-  bottom: 3px;
-  background: #434141ac;
-  border-radius: 15px;
-  box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.1),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.5);
-  transition: all 0.4s ease;
+  border-radius: 9999px;
 }
-.toggle-knob {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 24px;
-  height: 24px;
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.4) 0%,
-    rgba(220, 220, 220, 0.6) 30%,
-    rgba(180, 180, 180, 0.9) 100%
-  );
-  border-radius: 50%;
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.3),
-    inset 0 1px 1px rgba(255, 255, 255, 0.5);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  z-index: 2;
-}
-.toggle-knob::after {
+.switch-marbles::before {
   content: "";
+  height: var(--sz-marbles);
+  width: var(--sz-marbles);
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  background: #444;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow:
-    inset 0 1px 1px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(0, 0, 0, 0.2);
+  border-radius: 9999px;
+  z-index: -1;
+  background-image: linear-gradient(-45deg, #f8acff 0%, #696eff);
+  filter: blur(20px);
+  opacity: 0.7;
+  animation: rotate 4000ms linear running infinite;
 }
-#toggle-folding:checked ~ .toggle-container .toggle-knob {
-  transform: translateX(30px);
-}
-#toggle-folding:checked ~ .toggle-container::before {
-  background: #07a00c;
-  box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.2),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.3),
-    0 0 6px rgba(76, 175, 80, 0.5);
-}
-.toggle-container:active .toggle-knob {
-  transform: scale(0.9);
-}
-#toggle-folding:checked ~ .toggle-container:active .toggle-knob {
-  transform: translateX(30px) scale(0.9);
+@keyframes rotate {
+  to { rotate: 360deg; }
 }
