@@ -273,7 +273,7 @@ const OrderSection = () => {
                       <p className="text-xs mt-1" style={{ color: 'hsl(0,0%,60%)' }}>Мы свяжемся с вами в ближайшее время.</p>
                       <button
                         type="button"
-                        onClick={() => { setFileStatus(''); setFileLink(''); setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
+                        onClick={() => { setFileStatus(''); setFileLink(''); setFileCustomer({ name: '', phone: '' }); setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
                         className="mt-3 text-xs font-bold"
                         style={{ color: 'hsl(266,92%,68%)' }}
                       >
