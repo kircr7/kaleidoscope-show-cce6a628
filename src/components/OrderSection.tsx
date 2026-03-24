@@ -119,9 +119,12 @@ const OrderSection = () => {
 
     setStatus('sending');
 
-    const orderDetailsText = cart.map((item, index) =>
-      `${index + 1}. ${item.label} — ${item.quantity} шт. × ${item.unitPrice} ₽ = ${item.unitPrice * item.quantity} руб.`
-    ).join('\n');
+    const orderDetailsText = cart.map((item, index) => {
+      const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
+      const perUnit = item.unitPrice + folding;
+      const foldingNote = folding > 0 ? ` (вкл. фальцовку ${folding} ₽)` : '';
+      return `${index + 1}. ${item.label}${foldingNote} — ${item.quantity} шт. × ${perUnit} ₽ = ${perUnit * item.quantity} руб.`;
+    }).join('\n');
 
     const templateParams = {
       customer_name: customer.name,
