@@ -91,9 +91,9 @@ const IconCarousel = ({ side }: Props) => {
       >
         {track.map((item, i) => (
           <div key={i} className="flex-shrink-0 relative">
-            <div className="w-20 h-28 md:w-24 md:h-34 rounded-lg bg-black border border-[hsl(0_0%_30%)]/50 p-1.5 flex flex-col gap-1.5 shadow-lg shadow-black/50">
+            <div className="w-24 h-32 md:w-28 md:h-40 rounded-lg bg-black border border-[hsl(0_0%_30%)]/50 p-1.5 flex flex-col gap-1.5 shadow-lg shadow-black/50">
               <div className="flex-1 rounded border border-[hsl(0_0%_30%)]/60 flex items-center justify-center">
-                <item.icon className="w-7 h-7 md:w-9 md:h-9 text-[hsl(0_0%_55%)]" strokeWidth={0.7} />
+                <item.icon className="w-8 h-8 md:w-11 md:h-11 text-[hsl(0_0%_55%)]" strokeWidth={0.7} />
               </div>
               <div className="rounded border border-[hsl(0_0%_30%)]/60 py-1.5 flex items-center justify-center">
                 <span className="text-[9px] md:text-xs text-[hsl(0_0%_60%)] tracking-wider">{item.label}</span>
@@ -117,7 +117,7 @@ const IconCarousel = ({ side }: Props) => {
     >
       {track.map((item, i) => (
         <div key={i} className="flex-shrink-0 transition-transform duration-300 hover:scale-150 hover:z-30 relative">
-          <div className="w-36 h-32 md:w-44 md:h-40 bg-[hsl(0_0%_4%)] border border-[hsl(0_0%_15%)]/30 p-1.5 shadow-xl shadow-black/50 flex flex-col">
+          <div className="w-44 h-40 md:w-52 md:h-48 bg-[hsl(0_0%_4%)] border border-[hsl(0_0%_15%)]/30 p-1.5 shadow-xl shadow-black/50 flex flex-col">
             <div className="flex-1 overflow-hidden">
               <img
                 src={item.image}
