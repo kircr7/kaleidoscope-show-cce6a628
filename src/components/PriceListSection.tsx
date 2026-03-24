@@ -112,7 +112,7 @@ const PriceCard = ({
       {!isOpen && (
         <p
           className={`text-xs mt-2 transition-opacity ${
-            isBw ? "text-gray-400" : "text-white/50"
+            isBw ? "text-muted-foreground/60" : "text-white/50"
           }`}
         >
           Нажмите для просмотра цен
