@@ -43,10 +43,12 @@ const OrderSection = () => {
   const [quantity, setQuantity] = useState(1);
   const [customer, setCustomer] = useState({ name: '', phone: '' });
   const [fileLink, setFileLink] = useState('');
+  const [orderFileLink, setOrderFileLink] = useState('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const orderFormRef = useRef<HTMLFormElement>(null);
   const fileFormRef = useRef<HTMLFormElement>(null);
+  const [fileCustomer, setFileCustomer] = useState({ name: '', phone: '' });
   const [fileConsent, setFileConsent] = useState(true);
   const [fileStatus, setFileStatus] = useState('');
   const [consent, setConsent] = useState(true);
