@@ -54,7 +54,8 @@ const PriceCard = ({
             }
           : undefined
       }
-      onClick={() => onToggle(item.format)}
+      onMouseEnter={() => onExpand(item.format)}
+      onMouseLeave={() => onExpand(null)}
     >
       <div className="flex items-baseline justify-between mb-1">
         <span
