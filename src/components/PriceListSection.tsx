@@ -171,7 +171,7 @@ const PriceListSection = () => {
             <TabsContent value="bw" className="mt-0">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 items-start">
                 {bwPrices.map((item) => (
-                  <PriceCard key={item.format} item={item} variant="bw" expandedFormat={expandedBw} onExpand={setExpandedBw} />
+                  <PriceCard key={item.format} item={item} variant="bw" />
                 ))}
               </div>
             </TabsContent>
