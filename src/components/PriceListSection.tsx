@@ -119,8 +119,6 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
 };
 
 const PriceListSection = () => {
-  const [expandedBw, setExpandedBw] = useState<string | null>(null);
-  const [expandedColor, setExpandedColor] = useState<string | null>(null);
 
 
 
