@@ -41,21 +41,21 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section id="services" className="relative py-16 sm:py-24 bg-black font-sans overflow-hidden">
+    <section id="services" className="relative py-16 sm:py-24 bg-white font-sans overflow-hidden">
       {/* Subtle glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-500/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-amber-500/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-amber-400 text-xs font-black uppercase tracking-widest mb-6">
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 border border-black/10 text-amber-600 text-xs font-black uppercase tracking-widest mb-6">
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
             Наши возможности
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black tracking-tight mb-6">
             С чем мы можем вам помочь?
           </h2>
-          <p className="text-base sm:text-lg text-gray-400 font-light leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-600 font-light leading-relaxed">
             Выполняем полный цикл постпечатной обработки. От вывода первого листа из плоттера до сшитого тома проектной документации.
           </p>
         </div>
@@ -65,7 +65,7 @@ const ServicesSection = () => {
           {services.map((service) => (
             <div
               key={service.id}
-              className="group relative rounded-2xl bg-neutral-900 border border-neutral-800 p-6 sm:p-8 transition-all duration-400 ease-out hover:-translate-y-1.5 hover:border-amber-500/40 hover:shadow-[0_8px_40px_-12px_rgba(245,158,11,0.15)]"
+              className="group relative rounded-2xl bg-white border border-black/10 p-6 sm:p-8 shadow-sm transition-all duration-400 ease-out hover:-translate-y-1.5 hover:border-amber-500/40 hover:shadow-[0_8px_40px_-12px_rgba(245,158,11,0.2)]"
             >
               {/* Icon wrapper */}
               <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-amber-500/15 group-hover:border-amber-500/30 transition-all duration-400">
@@ -74,10 +74,10 @@ const ServicesSection = () => {
                 <div className="absolute inset-0 rounded-xl bg-amber-400/10 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
 
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 tracking-tight">
+              <h3 className="text-lg sm:text-xl font-bold text-black mb-3 tracking-tight">
                 {service.title}
               </h3>
-              <p className="text-sm text-gray-400 leading-relaxed font-light">
+              <p className="text-sm text-slate-600 leading-relaxed font-light">
                 {service.description}
               </p>
             </div>
@@ -88,7 +88,7 @@ const ServicesSection = () => {
         <div className="mt-12 sm:mt-16 text-center">
           <a
             href="#calculator"
-            className="inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-amber-500 text-black rounded-full font-black uppercase tracking-widest text-xs sm:text-sm hover:scale-105 hover:bg-amber-400 transition-all duration-300 shadow-[0_0_40px_rgba(245,158,11,0.2)] active:scale-95"
+            className="inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-black text-white rounded-full font-black uppercase tracking-widest text-xs sm:text-sm hover:scale-105 hover:bg-slate-800 transition-all duration-300 shadow-[0_0_40px_rgba(0,0,0,0.15)] active:scale-95"
           >
             Рассчитать стоимость
           </a>
