@@ -73,7 +73,7 @@ const PriceCard = ({
         <div className="flex justify-between items-center">
           <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>от 100 листов</span>
           <span
-            className={`text-base font-semibold ${
+            className={`text-sm font-semibold ${
               isBw ? "text-emerald-400" : "text-yellow-200 drop-shadow-sm"
             }`}
           >
