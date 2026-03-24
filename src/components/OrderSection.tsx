@@ -613,7 +613,7 @@ const OrderSection = () => {
                           <ShoppingCart className="w-4 h-4" /> Ваш заказ
                         </h3>
                         <div
-                          className="flex items-center gap-3 select-none px-3 py-2 rounded-xl"
+                          className="flex items-center gap-3 select-none px-3 py-2 rounded-xl transition-all duration-200 hover:bg-[hsla(240,15%,18%,0.7)] hover:border-[hsl(240,9%,25%)] cursor-pointer"
                           style={{
                             backgroundColor: 'hsla(240,15%,15%,0.5)',
                             border: '1px solid hsl(240,9%,17%)',
