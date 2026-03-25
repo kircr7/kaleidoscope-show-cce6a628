@@ -399,8 +399,8 @@ const OrderSection = () => {
                         {item.icon}
                       </div>
                       <div>
-                        <h4 className="font-bold text-sm text-white">{item.title}</h4>
-                        <p className="text-xs mt-0.5" style={{ color: 'hsl(0,0%,83%)' }}>{item.desc}</p>
+                        <h4 className="font-bold text-xs sm:text-sm text-white">{item.title}</h4>
+                        <p className="text-[10px] sm:text-xs mt-0.5" style={{ color: 'hsl(0,0%,83%)' }}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
