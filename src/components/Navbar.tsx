@@ -4,8 +4,28 @@ import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo.svg';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (href.startsWith('/') && !href.includes('#')) {
+      navigate(href);
+    } else if (href.startsWith('/#')) {
+      const hash = href.slice(1);
+      if (location.pathname === '/') {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        navigate('/' + hash);
+      }
+    } else if (href.startsWith('#')) {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 300);
