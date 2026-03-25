@@ -12,9 +12,10 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Услуги', href: '#services' },
-    { name: 'Цены', href: '#pricelist' },
-    { name: 'Контакты', href: '#footer' },
+    { name: 'Услуги', href: '/#services' },
+    { name: 'Цены', href: '/#pricelist' },
+    { name: 'Блог', href: '/blog' },
+    { name: 'Контакты', href: '/#footer' },
   ];
 
   return (

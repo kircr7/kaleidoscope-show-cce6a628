@@ -149,6 +149,9 @@ const Footer = () => {
             © {currentYear} Типография «ПринтПро». Все права защищены.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 text-center">
+            <a href="/blog" className="text-xs text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors">
+              Блог
+            </a>
             <a href="/privacy" className="text-xs text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors">
               Политика конфиденциальности
             </a>
