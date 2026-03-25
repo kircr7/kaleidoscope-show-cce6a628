@@ -18,10 +18,12 @@ const Index = () => {
       const timer = setTimeout(() => {
         const el = document.querySelector(location.hash);
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      }, 300);
+      }, 500);
       return () => clearTimeout(timer);
+    } else {
+      window.scrollTo({ top: 0 });
     }
   }, [location.hash]);
   return (
