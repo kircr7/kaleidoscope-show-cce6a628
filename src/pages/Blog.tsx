@@ -2,8 +2,30 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import { articles } from "@/data/articles";
 import { blogPosts } from "@/data/blogPosts";
 import { ArrowRight, Calendar } from "lucide-react";
+
+const allPosts = [
+  ...articles.map((a) => ({
+    slug: a.slug,
+    title: a.h1,
+    excerpt: a.excerpt,
+    category: a.category,
+    image: a.image,
+    date: a.date,
+    source: "articles" as const,
+  })),
+  ...blogPosts.map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    excerpt: p.excerpt,
+    category: p.category,
+    image: p.image,
+    date: p.date,
+    source: "blog" as const,
+  })),
+].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 const Blog = () => {
   return (
@@ -33,13 +55,12 @@ const Blog = () => {
 
           {/* Articles Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {blogPosts.map((post) => (
+            {allPosts.map((post) => (
               <Link
                 key={post.slug}
                 to={`/blog/${post.slug}`}
                 className="group relative rounded-2xl border border-[hsl(var(--border))] bg-[hsl(0,0%,6%)] overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-[hsl(45,90%,55%)/0.3] hover:shadow-[0_8px_40px_-12px_rgba(245,158,11,0.15)]"
               >
-                {/* Image */}
                 <div className="aspect-[16/10] overflow-hidden">
                   <img
                     src={post.image}
@@ -49,7 +70,6 @@ const Blog = () => {
                   />
                 </div>
 
-                {/* Content */}
                 <div className="p-5">
                   <div className="flex items-center gap-3 mb-3">
                     <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[hsl(45,90%,55%)/0.15] text-[hsl(45,90%,55%)] border border-[hsl(45,90%,55%)/0.2]">
