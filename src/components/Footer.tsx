@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MapPin, Phone, Mail, FileText } from 'lucide-react';
 import logoImg from '@/assets/logo.svg';
 
-const Footer = () => {
+const Footer = React.forwardRef<HTMLElement>((_, ref) => {
   const currentYear = new Date().getFullYear();
 
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
@@ -163,6 +163,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = 'Footer';
 
 export default Footer;

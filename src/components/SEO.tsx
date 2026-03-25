@@ -1,3 +1,4 @@
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 interface SEOProps {
@@ -6,7 +7,7 @@ interface SEOProps {
   keywords: string;
 }
 
-const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
+const SEO = React.forwardRef<HTMLDivElement, SEOProps>(({ title, description, keywords }, ref) => {
   return (
     <Helmet>
       <title>{title}</title>
@@ -18,6 +19,8 @@ const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
       <meta property="og:site_name" content="Типография ПринтПРО" />
     </Helmet>
   );
-};
+});
+
+SEO.displayName = 'SEO';
 
 export default SEO;
