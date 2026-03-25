@@ -57,7 +57,7 @@ export const blogPosts: BlogPost[] = [
     title: "Как подготовить файлы для печати чертежей: советы инженерам",
     excerpt: "Практические рекомендации по подготовке PDF, DWG и других форматов для качественной широкоформатной печати.",
     category: "Советы",
-    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=400&fit=crop",
+    image: blogFilePrep,
     date: "2026-03-15",
     content: `
 ## Правильная подготовка файлов — залог качественной печати
