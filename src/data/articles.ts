@@ -11,6 +11,25 @@ export interface Article {
   excerpt: string;
 }
 
+import articleProjectDocs from "@/assets/blog/article-project-docs.jpg";
+import articleWorkingDocs from "@/assets/blog/article-working-docs.jpg";
+import articleExecDocs from "@/assets/blog/article-exec-docs.jpg";
+import articleBlueprints from "@/assets/blog/article-blueprints.jpg";
+import articleBinding from "@/assets/blog/article-binding.jpg";
+
+export interface Article {
+  id: number;
+  slug: string;
+  seoTitle: string;
+  seoDescription: string;
+  h1: string;
+  content: string;
+  image: string;
+  category: string;
+  date: string;
+  excerpt: string;
+}
+
 export const articles: Article[] = [
   {
     id: 1,
@@ -21,7 +40,7 @@ export const articles: Article[] = [
     category: "Документация",
     date: "2026-03-20",
     excerpt: "Подготовка проектной документации для сдачи в Мосгосэкспертизу — процесс, не терпящий ошибок. Строго по ГОСТ 21.101-2020.",
-    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&h=400&fit=crop",
+    image: articleProjectDocs,
     content: `<p>Подготовка проектной документации для сдачи в Мосгосэкспертизу — процесс, не терпящий ошибок. Каждый том должен быть оформлен строго по ГОСТ 21.101-2020: правильная нумерация, штампы, рамки, фальцовка чертежей.</p>
 
 <p>Мы специализируемся на печати проектной документации стадии «П» и знаем все требования экспертизы. Наши инженеры проверяют каждый файл перед выводом на печать, чтобы исключить ошибки масштабирования и обрезки.</p>
@@ -46,7 +65,7 @@ export const articles: Article[] = [
     category: "Стройка",
     date: "2026-03-18",
     excerpt: "Рабочая документация — это расходный материал любой московской стройки. Печать чертежей стадии «Р» с доставкой на объект.",
-    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=400&fit=crop",
+    image: articleWorkingDocs,
     content: `<p>Рабочая документация — это расходный материал любой московской стройки. Комплекты чертежей передаются прорабам, субподрядчикам, инженерам технадзора. Они мокнут, рвутся, теряются — и их нужно оперативно допечатывать.</p>
 
 <p>Мы понимаем ритм стройки и работаем в режиме «на вчера». Принимаем файлы через мессенджеры, облачные хранилища и по email. Стандартный заказ выполняется за 2–4 часа.</p>
@@ -67,7 +86,7 @@ export const articles: Article[] = [
     category: "Документация",
     date: "2026-03-15",
     excerpt: "Сдача исполнительной документации — самый нервный этап закрытия объекта. Полный цикл: печать, фальцовка, сборка томов.",
-    image: "https://images.unsplash.com/photo-1568667256549-094345857637?w=600&h=400&fit=crop",
+    image: articleExecDocs,
     content: `<p>Сдача исполнительной документации — самый нервный этап закрытия объекта. Строительный контроль и заказчик требуют идеально оформленные тома: акты скрытых работ, исполнительные схемы, сертификаты, паспорта на материалы.</p>
 
 <p>Мы берём на себя весь цикл подготовки бумажных комплектов: от печати микс-форматов до финальной сборки в папки-регистраторы с корешками и описями.</p>
@@ -88,7 +107,7 @@ export const articles: Article[] = [
     category: "Печать",
     date: "2026-03-12",
     excerpt: "Принимаем в печать исходники в форматах PDF, DWG (AutoCAD), PLN (ArchiCAD) и CDW (Компас-3D). Гарантируем 100% попадание в масштаб.",
-    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&h=400&fit=crop",
+    image: articleBlueprints,
     content: `<p>Принимаем в печать исходники в форматах PDF, DWG (AutoCAD), PLN (ArchiCAD) и CDW (Компас-3D). Наши плоттеры откалиброваны для точного воспроизведения масштаба — каждый чертеж проходит контроль перед выдачей.</p>
 
 <p>Широкоформатная печать — наша основная специализация. Мы работаем с инженерной документацией ежедневно и знаем все нюансы вывода чертежей разных форматов.</p>
@@ -111,7 +130,7 @@ export const articles: Article[] = [
     category: "Переплёт",
     date: "2026-03-10",
     excerpt: "Машинная фальцовка чертежей в размер А4, брошюровка на пластиковую и металлическую пружину, твердый классический переплет.",
-    image: "https://images.unsplash.com/photo-1568667256549-094345857637?w=600&h=400&fit=crop",
+    image: articleBinding,
     content: `<h2>1. Машинная фальцовка чертежей</h2>
 <p>Сложение в размер А4 (210×297 мм) с полем для подшивки и без поля. Автоматическая фальцовка обеспечивает идеальную точность и скорость — до 1000 листов в час.</p>
 

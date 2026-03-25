@@ -1,3 +1,7 @@
+import blogGost from "@/assets/blog/blog-gost.jpg";
+import blogFilePrep from "@/assets/blog/blog-file-prep.jpg";
+import blogBindingTypes from "@/assets/blog/blog-binding-types.jpg";
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -14,7 +18,7 @@ export const blogPosts: BlogPost[] = [
     title: "Требования ГОСТ к печати чертежей: полное руководство",
     excerpt: "Разбираем основные стандарты ГОСТ для печати проектной документации — масштабы, рамки, штампы и допустимые отклонения.",
     category: "ГОСТ",
-    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&h=400&fit=crop",
+    image: blogGost,
     date: "2026-03-20",
     content: `
 ## Зачем соблюдать ГОСТ при печати чертежей?
@@ -53,7 +57,7 @@ export const blogPosts: BlogPost[] = [
     title: "Как подготовить файлы для печати чертежей: советы инженерам",
     excerpt: "Практические рекомендации по подготовке PDF, DWG и других форматов для качественной широкоформатной печати.",
     category: "Советы",
-    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=400&fit=crop",
+    image: blogFilePrep,
     date: "2026-03-15",
     content: `
 ## Правильная подготовка файлов — залог качественной печати
@@ -89,7 +93,7 @@ export const blogPosts: BlogPost[] = [
     title: "Виды переплёта для проектной документации: что выбрать?",
     excerpt: "Сравниваем пластиковую пружину, металлический переплёт и твёрдый канальный переплёт для разных типов документации.",
     category: "Обзоры",
-    image: "https://images.unsplash.com/photo-1568667256549-094345857637?w=600&h=400&fit=crop",
+    image: blogBindingTypes,
     date: "2026-03-10",
     content: `
 ## Какой переплёт подойдет для вашей документации?
