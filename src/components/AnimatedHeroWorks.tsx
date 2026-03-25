@@ -29,7 +29,7 @@ const AnimatedHeroWorks = () => {
   ];
 
   // Массив картинок — добавляйте или убирайте по желанию
-  const imageUrls = [work1, work2, work3, work4, work5, work6];
+  const imageUrls = [work1, work2, work3, work4, work5, work6, work7, work8, work9, work10, work11, work12];
 
   const [wordIndex, setWordIndex] = useState(0);
 
