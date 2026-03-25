@@ -1,3 +1,7 @@
+import blogGost from "@/assets/blog/blog-gost.jpg";
+import blogFilePrep from "@/assets/blog/blog-file-prep.jpg";
+import blogBindingTypes from "@/assets/blog/blog-binding-types.jpg";
+
 export interface BlogPost {
   slug: string;
   title: string;
