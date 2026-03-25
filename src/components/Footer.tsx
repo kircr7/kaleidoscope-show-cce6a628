@@ -149,7 +149,6 @@ const Footer = () => {
             <p>© {currentYear} ИП Стрыгина Екатерина Александровна (Типография «ПринтПРО»)</p>
             <p>ИНН: 245907557883 · ОГРНИП: 326246800000141</p>
           </div>
-          </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 text-center">
             <a href="/blog" className="text-xs text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors">
               Блог
