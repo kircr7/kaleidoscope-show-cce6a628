@@ -60,19 +60,24 @@ const IconCarousel = ({ side }: Props) => {
   const startX = useRef(0);
   const scrollLeft = useRef(0);
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   const handleMouseDown = (e: React.MouseEvent) => {
+    if (isMobile) return;
     isDragging.current = true;
     startX.current = e.pageX - (containerRef.current?.offsetLeft || 0);
     scrollLeft.current = containerRef.current?.scrollLeft || 0;
     if (containerRef.current) containerRef.current.style.animationPlayState = "paused";
   };
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (isMobile) return;
     if (!isDragging.current || !containerRef.current) return;
     e.preventDefault();
     const x = e.pageX - (containerRef.current.offsetLeft || 0);
     containerRef.current.style.transform = `translateX(${x - startX.current}px)`;
   };
   const handleMouseUp = () => {
+    if (isMobile) return;
     isDragging.current = false;
     if (containerRef.current) containerRef.current.style.animationPlayState = "";
   };
