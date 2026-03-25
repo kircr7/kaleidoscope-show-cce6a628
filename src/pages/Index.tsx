@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import CarouselSection from "@/components/CarouselSection";
 import Navbar from "@/components/Navbar";
 import AnimatedHeroWorks from "@/components/AnimatedHeroWorks";
@@ -9,6 +11,19 @@ import PriceListSection from "@/components/PriceListSection";
 import { Crosshair, FileCheck, Clock } from "lucide-react";
 
 const Index = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const timer = setTimeout(() => {
+        const el = document.querySelector(location.hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [location.hash]);
   return (
     <div className="min-h-screen bg-black overflow-x-hidden relative">
       <SEO 
