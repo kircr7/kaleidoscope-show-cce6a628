@@ -1,10 +1,31 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo.svg';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (href.startsWith('/') && !href.includes('#')) {
+      navigate(href);
+    } else if (href.startsWith('/#')) {
+      const hash = href.slice(1);
+      if (location.pathname === '/') {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        navigate('/' + hash);
+      }
+    } else if (href.startsWith('#')) {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 300);
@@ -37,6 +58,7 @@ const Navbar = () => {
           <a
             key={link.name}
             href={link.href}
+            onClick={(e) => handleNavClick(e, link.href)}
             className="px-5 py-2.5 rounded-full text-xs font-medium text-white/50 hover:text-white hover:bg-white/[0.06] transition-all duration-300 active:scale-95"
           >
             {link.name}
@@ -99,7 +121,7 @@ const Navbar = () => {
             <a
               key={link.name}
               href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(e) => { handleNavClick(e, link.href); setIsMobileMenuOpen(false); }}
               className="text-lg font-bold text-white/60 hover:text-white transition-colors"
             >
               {link.name}
