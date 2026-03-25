@@ -147,10 +147,7 @@ const Navbar = () => {
           opacity: 0.6;
         }
       `}</style>
-    </>
   );
-});
-
-Navbar.displayName = 'Navbar';
+};
 
 export default Navbar;
