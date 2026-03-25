@@ -11,7 +11,7 @@ const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
 
   useEffect(() => {
-    window.scrollTo({ top: 0 });
+    window.scrollTo(0, 0);
   }, [slug]);
 
   // Check articles first, then legacy blogPosts
