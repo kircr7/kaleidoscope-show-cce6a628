@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo.svg';
 
-const Navbar = React.forwardRef<HTMLDivElement>((_, ref) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
@@ -149,8 +149,6 @@ const Navbar = React.forwardRef<HTMLDivElement>((_, ref) => {
       `}</style>
     </>
   );
-});
-
-Navbar.displayName = 'Navbar';
+};
 
 export default Navbar;
