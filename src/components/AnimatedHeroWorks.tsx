@@ -7,12 +7,18 @@ import { useState, useEffect, useMemo } from 'react';
 // 2. Замените импорты ниже на свои файлы
 // 3. Обновите массив imageUrls
 // =====================================================
-import work1 from "@/assets/work-1.jpg";   // Картинка 1
-import work2 from "@/assets/work-2.jpg";   // Картинка 2
-import work3 from "@/assets/work-3.jpg";   // Картинка 3
-import work4 from "@/assets/work-4.jpg";   // Картинка 4
-import work5 from "@/assets/work-5.jpg";   // Картинка 5
-import work6 from "@/assets/work-6.jpg";   // Картинка 6
+import work1 from "@/assets/work-1.jpg";
+import work2 from "@/assets/work-2.jpg";
+import work3 from "@/assets/work-3.jpg";
+import work4 from "@/assets/work-4.jpg";
+import work5 from "@/assets/work-5.jpg";
+import work6 from "@/assets/work-6.jpg";
+import work7 from "@/assets/work-7.jpg";
+import work8 from "@/assets/work-8.jpg";
+import work9 from "@/assets/work-9.jpg";
+import work10 from "@/assets/work-10.jpg";
+import work11 from "@/assets/work-11.jpg";
+import work12 from "@/assets/work-12.jpg";
 
 const AnimatedHeroWorks = () => {
   const words = [
