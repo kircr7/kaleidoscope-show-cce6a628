@@ -15,13 +15,18 @@ const Index = () => {
 
   useEffect(() => {
     if (location.hash) {
-      const timer = setTimeout(() => {
-        const el = document.querySelector(location.hash);
-        if (el) {
-          el.scrollIntoView({ behavior: 'instant', block: 'start' });
-        }
-      }, 100);
-      return () => clearTimeout(timer);
+      // Need multiple attempts because Lenis may interfere and content may not be rendered yet
+      const attempts = [50, 200, 500];
+      const timers = attempts.map((delay) =>
+        setTimeout(() => {
+          const el = document.querySelector(location.hash);
+          if (el) {
+            const top = el.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({ top, behavior: 'instant' as ScrollBehavior });
+          }
+        }, delay)
+      );
+      return () => timers.forEach(clearTimeout);
     } else {
       window.scrollTo(0, 0);
     }
