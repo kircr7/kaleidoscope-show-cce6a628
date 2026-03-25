@@ -28,10 +28,10 @@ const allPosts = [
   })),
 ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
+const Blog = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
-
 
   return (
     <div className="min-h-screen bg-black overflow-x-hidden">
