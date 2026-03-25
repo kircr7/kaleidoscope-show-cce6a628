@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo.svg';
 
-const Navbar = React.forwardRef<HTMLDivElement>((_, ref) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
