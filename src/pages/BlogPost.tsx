@@ -114,7 +114,7 @@ const BlogPost = () => {
           {/* Content */}
           {article ? (
             <div
-              className="prose prose-invert max-w-none prose-headings:text-[hsl(var(--foreground))] prose-headings:font-bold prose-h2:text-xl prose-h2:sm:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-p:text-[hsl(var(--muted-foreground))] prose-p:text-base prose-p:leading-relaxed prose-p:mb-4 prose-li:text-[hsl(var(--muted-foreground))] prose-li:text-base prose-li:leading-relaxed prose-ul:my-4 prose-ul:pl-6 prose-strong:text-[hsl(var(--foreground))] prose-strong:font-semibold"
+              className="prose prose-invert prose-lg max-w-none prose-headings:text-[hsl(var(--foreground))] prose-headings:font-bold prose-h2:text-xl sm:prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-p:text-[hsl(var(--muted-foreground))] prose-p:text-base prose-p:leading-relaxed prose-p:mb-4 prose-ul:list-disc prose-ul:pl-6 prose-ul:my-4 prose-ul:space-y-2 prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-4 prose-ol:space-y-2 prose-li:text-[hsl(var(--muted-foreground))] prose-li:text-base prose-li:leading-relaxed prose-li:marker:text-[hsl(45,90%,55%)] prose-strong:text-[hsl(var(--foreground))] prose-strong:font-bold prose-b:text-[hsl(var(--foreground))] prose-b:font-bold"
               dangerouslySetInnerHTML={{ __html: article.content }}
             />
           ) : (
