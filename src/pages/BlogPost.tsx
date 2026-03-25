@@ -2,21 +2,24 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import { articles } from "@/data/articles";
 import { blogPosts } from "@/data/blogPosts";
 import { ArrowLeft, Calendar, Printer } from "lucide-react";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const post = blogPosts.find((p) => p.slug === slug);
 
-  if (!post) return <Navigate to="/blog" replace />;
+  // Check articles first, then legacy blogPosts
+  const article = articles.find((a) => a.slug === slug);
+  const legacyPost = !article ? blogPosts.find((p) => p.slug === slug) : null;
 
-  // Simple markdown-like rendering for ## and ### headers, lists, **bold**
-  const renderContent = (content: string) => {
+  if (!article && !legacyPost) return <Navigate to="/blog" replace />;
+
+  // Render legacy markdown-like content
+  const renderLegacyContent = (content: string) => {
     return content.split("\n").map((line, i) => {
       const trimmed = line.trim();
       if (!trimmed) return <br key={i} />;
-
       if (trimmed.startsWith("### ")) {
         return (
           <h3 key={i} className="text-lg sm:text-xl font-bold text-[hsl(var(--foreground))] mt-8 mb-3">
@@ -47,7 +50,6 @@ const BlogPost = () => {
           />
         );
       }
-
       return (
         <p key={i} className="text-[hsl(var(--muted-foreground))] text-base leading-relaxed mb-3"
           dangerouslySetInnerHTML={{ __html: trimmed.replace(/\*\*(.*?)\*\*/g, '<strong class="text-[hsl(var(--foreground))] font-semibold">$1</strong>') }}
@@ -56,18 +58,24 @@ const BlogPost = () => {
     });
   };
 
+  const title = article ? article.seoTitle : legacyPost!.title;
+  const description = article ? article.seoDescription : legacyPost!.excerpt;
+  const category = article ? article.category : legacyPost!.category;
+  const date = article ? article.date : legacyPost!.date;
+  const image = article ? article.image : legacyPost!.image;
+  const h1 = article ? article.h1 : legacyPost!.title;
+
   return (
     <div className="min-h-screen bg-black overflow-x-hidden">
       <SEO
-        title={`${post.title} | ПринтПРО`}
-        description={post.excerpt}
-        keywords={`${post.category}, печать чертежей, проектная документация`}
+        title={`${title} | ПринтПРО`}
+        description={description}
+        keywords={`${category}, печать чертежей, проектная документация`}
       />
       <Navbar />
 
       <main className="pt-24 sm:pt-32 pb-16 sm:pb-24 px-4">
         <article className="container max-w-3xl mx-auto">
-          {/* Back link */}
           <Link
             to="/blog"
             className="inline-flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors mb-8"
@@ -76,15 +84,14 @@ const BlogPost = () => {
             Назад к блогу
           </Link>
 
-          {/* Header */}
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-4">
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[hsl(45,90%,55%)/0.15] text-[hsl(45,90%,55%)] border border-[hsl(45,90%,55%)/0.2]">
-                {post.category}
+                {category}
               </span>
               <span className="flex items-center gap-1 text-sm text-[hsl(var(--muted-foreground))]">
                 <Calendar className="w-3.5 h-3.5" />
-                {new Date(post.date).toLocaleDateString("ru-RU", {
+                {new Date(date).toLocaleDateString("ru-RU", {
                   day: "numeric",
                   month: "long",
                   year: "numeric",
@@ -92,23 +99,29 @@ const BlogPost = () => {
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[hsl(var(--foreground))] leading-tight">
-              {post.title}
+              {h1}
             </h1>
           </div>
 
-          {/* Hero image */}
           <div className="rounded-2xl overflow-hidden border border-[hsl(var(--border))] mb-10">
             <img
-              src={post.image}
-              alt={post.title}
+              src={image}
+              alt={h1}
               className="w-full aspect-[2/1] object-cover"
             />
           </div>
 
           {/* Content */}
-          <div className="prose-custom">
-            {renderContent(post.content)}
-          </div>
+          {article ? (
+            <div
+              className="prose prose-invert max-w-none prose-headings:text-[hsl(var(--foreground))] prose-headings:font-bold prose-h2:text-xl prose-h2:sm:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-p:text-[hsl(var(--muted-foreground))] prose-p:text-base prose-p:leading-relaxed prose-p:mb-4 prose-li:text-[hsl(var(--muted-foreground))] prose-li:text-base prose-li:leading-relaxed prose-ul:my-4 prose-ul:pl-6 prose-strong:text-[hsl(var(--foreground))] prose-strong:font-semibold"
+              dangerouslySetInnerHTML={{ __html: article.content }}
+            />
+          ) : (
+            <div className="prose-custom">
+              {renderLegacyContent(legacyPost!.content)}
+            </div>
+          )}
 
           {/* CTA */}
           <div className="mt-16 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(0,0%,6%)] p-6 sm:p-10 text-center">
