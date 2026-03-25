@@ -149,6 +149,8 @@ const Navbar = React.forwardRef<HTMLDivElement>((_, ref) => {
       `}</style>
     </>
   );
-};
+});
+
+Navbar.displayName = 'Navbar';
 
 export default Navbar;
