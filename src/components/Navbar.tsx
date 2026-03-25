@@ -67,7 +67,8 @@ const Navbar = () => {
 
         {/* CTA with gradient border + periodic glow */}
         <a
-          href="#calculator"
+          href="/#calculator"
+          onClick={(e) => handleNavClick(e, '/#calculator')}
           className="relative group ml-1 cta-glow-wrap"
         >
           <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
