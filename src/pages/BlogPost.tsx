@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,6 +9,10 @@ import { ArrowLeft, Calendar, Printer } from "lucide-react";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [slug]);
 
   // Check articles first, then legacy blogPosts
   const article = articles.find((a) => a.slug === slug);
