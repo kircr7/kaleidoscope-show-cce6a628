@@ -147,6 +147,7 @@ const Navbar = () => {
           opacity: 0.6;
         }
       `}</style>
+    </>
   );
 };
 
