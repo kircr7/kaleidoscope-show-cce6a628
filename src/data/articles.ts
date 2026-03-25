@@ -11,6 +11,25 @@ export interface Article {
   excerpt: string;
 }
 
+import articleProjectDocs from "@/assets/blog/article-project-docs.jpg";
+import articleWorkingDocs from "@/assets/blog/article-working-docs.jpg";
+import articleExecDocs from "@/assets/blog/article-exec-docs.jpg";
+import articleBlueprints from "@/assets/blog/article-blueprints.jpg";
+import articleBinding from "@/assets/blog/article-binding.jpg";
+
+export interface Article {
+  id: number;
+  slug: string;
+  seoTitle: string;
+  seoDescription: string;
+  h1: string;
+  content: string;
+  image: string;
+  category: string;
+  date: string;
+  excerpt: string;
+}
+
 export const articles: Article[] = [
   {
     id: 1,
@@ -21,7 +40,7 @@ export const articles: Article[] = [
     category: "Документация",
     date: "2026-03-20",
     excerpt: "Подготовка проектной документации для сдачи в Мосгосэкспертизу — процесс, не терпящий ошибок. Строго по ГОСТ 21.101-2020.",
-    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&h=400&fit=crop",
+    image: articleProjectDocs,
     content: `<p>Подготовка проектной документации для сдачи в Мосгосэкспертизу — процесс, не терпящий ошибок. Каждый том должен быть оформлен строго по ГОСТ 21.101-2020: правильная нумерация, штампы, рамки, фальцовка чертежей.</p>
 
 <p>Мы специализируемся на печати проектной документации стадии «П» и знаем все требования экспертизы. Наши инженеры проверяют каждый файл перед выводом на печать, чтобы исключить ошибки масштабирования и обрезки.</p>
