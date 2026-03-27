@@ -385,7 +385,7 @@ const OrderSection = () => {
                   )}
                 </div>
 
-                <div className="relative z-10 mt-10 space-y-4">
+                <div className="relative z-10 mt-10 space-y-4 hidden lg:block">
                   {[
                     { icon: <Ruler className="w-5 h-5 text-blue-400" />, title: 'Строго по ГОСТ', desc: 'Идеальное соблюдение масштабов 1:1 и фальцовка под подшивку.', gradient: 'from-blue-500/20 to-blue-600/5' },
                     { icon: <ShieldCheck className="w-5 h-5 text-emerald-400" />, title: 'Конфиденциально (NDA)', desc: 'Ваши чертежи и сметы надежно защищены от третьих лиц.', gradient: 'from-emerald-500/20 to-emerald-600/5' },
