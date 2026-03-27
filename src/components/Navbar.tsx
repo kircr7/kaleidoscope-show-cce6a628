@@ -43,7 +43,7 @@ const Navbar = () => {
     <>
       {/* Desktop floating top nav */}
       <nav
-        className={`fixed top-5 left-1/2 -translate-x-1/2 z-50 hidden md:flex items-center gap-1 px-2 py-2 rounded-full border border-white/[0.08] transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
+        className={`fixed top-5 left-1/2 -translate-x-1/2 z-50 hidden md:flex items-center gap-1 px-2 py-2 rounded-full border border-white/[0.08] transition-all duration-700 max-w-[calc(100%-2rem)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
         style={{
           background: 'hsla(0, 0%, 8%, 0.75)',
           backdropFilter: 'blur(20px)',
@@ -59,7 +59,7 @@ const Navbar = () => {
             key={link.name}
             href={link.href}
             onClick={(e) => handleNavClick(e, link.href)}
-            className="px-5 py-2.5 rounded-full text-xs font-medium text-white/50 hover:text-white hover:bg-white/[0.06] transition-all duration-300 active:scale-95"
+            className="px-3 lg:px-5 py-2.5 rounded-full text-xs font-medium text-white/50 hover:text-white hover:bg-white/[0.06] transition-all duration-300 active:scale-95 whitespace-nowrap"
           >
             {link.name}
           </a>
@@ -69,7 +69,7 @@ const Navbar = () => {
         <a
           href="/#calculator"
           onClick={(e) => handleNavClick(e, '/#calculator')}
-          className="relative group ml-1 cta-glow-wrap"
+          className="relative group ml-1 cta-glow-wrap flex-shrink-0"
         >
           <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
           <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 blur-md opacity-0 cta-glow" />
