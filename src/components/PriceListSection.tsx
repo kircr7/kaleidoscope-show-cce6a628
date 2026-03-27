@@ -127,7 +127,15 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
 
   return (
     <div
-      className="group relative rounded-2xl border border-border/30 bg-card/40 backdrop-blur-sm p-3 sm:p-4 transition-all duration-300 hover:border-border/60 hover:bg-card/70 hover:-translate-y-1 h-full flex flex-col justify-between"
+      className="liquid-glass-card group relative rounded-2xl p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 h-full flex flex-col justify-between"
+      style={{
+        backgroundColor: 'hsla(240,15%,12%,0.35)',
+        backdropFilter: 'blur(40px) saturate(1.4)',
+        WebkitBackdropFilter: 'blur(40px) saturate(1.4)',
+        border: '1px solid hsla(0,0%,100%,0.12)',
+        boxShadow: 'inset 0 1px 1px 0 hsla(0,0%,100%,0.1), 0 4px 20px -4px hsla(0,0%,0%,0.2)',
+        backgroundImage: 'linear-gradient(170deg, hsla(0,0%,100%,0.08) 0%, transparent 50%)',
+      }}
     >
       <span className="text-lg sm:text-xl font-bold text-foreground tracking-tight">{item.name}</span>
       <div className="pt-2 border-t border-border/20 mt-2 space-y-1">
