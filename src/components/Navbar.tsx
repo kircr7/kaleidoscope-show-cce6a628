@@ -43,11 +43,12 @@ const Navbar = () => {
     <>
       {/* Desktop floating top nav */}
       <nav
-        className={`fixed top-5 left-1/2 -translate-x-1/2 z-50 hidden md:flex items-center gap-1 px-2 py-2 rounded-full border border-white/[0.08] transition-all duration-700 max-w-[calc(100%-2rem)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
+        className={`fixed top-5 left-1/2 -translate-x-1/2 z-50 hidden md:flex items-center gap-1 rounded-full border border-white/[0.08] transition-all duration-700 max-w-[calc(100%-2rem)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
         style={{
           background: 'hsla(0, 0%, 8%, 0.75)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
+          padding: '6px 6px 6px 8px',
         }}
       >
         <a href="#" className="px-2 py-1 rounded-full flex items-center flex-shrink-0">
@@ -73,7 +74,7 @@ const Navbar = () => {
           style={{ background: 'linear-gradient(to right, #22d3ee, #3b82f6, #ec4899)' }}
         >
           <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 blur-md opacity-0 cta-glow" />
-          <span className="relative block px-4 lg:px-6 py-2.5 rounded-full text-xs font-bold text-white whitespace-nowrap" style={{ background: 'hsla(0, 0%, 8%, 0.9)' }}>
+          <span className="relative block px-4 lg:px-6 py-2.5 rounded-full text-xs font-bold text-white whitespace-nowrap" style={{ background: 'hsl(0, 0%, 8%)' }}>
             Сделать заказ
           </span>
         </a>
