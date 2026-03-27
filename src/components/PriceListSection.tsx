@@ -49,10 +49,10 @@ const PriceCard = ({
 
   return (
     <div
-      className={`group relative rounded-2xl border p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 ${
+      className={`liquid-glass-card group relative rounded-2xl p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 ${
         isBw
-          ? "bg-card/40 backdrop-blur-sm border-border/30 hover:border-border/60 hover:bg-card/70"
-          : "border-white/20 hover:border-white/40 hover:shadow-lg hover:shadow-purple-500/10"
+          ? ""
+          : "hover:shadow-lg hover:shadow-purple-500/10"
       }`}
       style={
         !isBw
@@ -61,8 +61,16 @@ const PriceCard = ({
                 "linear-gradient(135deg, hsla(280,70%,40%,0.85), hsla(330,80%,45%,0.85), hsla(20,90%,50%,0.85), hsla(50,85%,50%,0.85))",
               backgroundSize: "300% 300%",
               animation: "gradient-morph 8s ease infinite",
+              border: '1px solid hsla(0,0%,100%,0.2)',
             }
-          : undefined
+          : {
+              backgroundColor: 'hsla(240,15%,12%,0.35)',
+              backdropFilter: 'blur(40px) saturate(1.4)',
+              WebkitBackdropFilter: 'blur(40px) saturate(1.4)',
+              border: '1px solid hsla(0,0%,100%,0.12)',
+              boxShadow: 'inset 0 1px 1px 0 hsla(0,0%,100%,0.1), 0 4px 20px -4px hsla(0,0%,0%,0.2)',
+              backgroundImage: 'linear-gradient(170deg, hsla(0,0%,100%,0.08) 0%, transparent 50%)',
+            }
       }
     >
       <div className="flex items-baseline justify-between mb-2">
