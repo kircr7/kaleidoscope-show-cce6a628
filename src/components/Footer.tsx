@@ -74,7 +74,7 @@ const Footer = () => {
           <div className="md:col-span-3 space-y-5">
             <h4 className="text-base font-semibold text-[hsl(var(--foreground))]">Наши контакты</h4>
             <div className="space-y-4">
-              <div className="flex items-start gap-3 text-sm text-[hsl(var(--muted-foreground))]">
+              <div className="flex items-start gap-3 text-sm text-white">
                 <MapPin size={16} className="text-[hsl(45,90%,55%)] mt-0.5 flex-shrink-0" />
                 г. Москва, ул. Свободы, д. 35, стр. 5
               </div>
