@@ -69,7 +69,7 @@ const Navbar = () => {
         <a
           href="/#calculator"
           onClick={(e) => handleNavClick(e, '/#calculator')}
-          className="relative group ml-1 cta-glow-wrap"
+          className="relative group ml-1 cta-glow-wrap flex-shrink-0"
         >
           <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
           <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 blur-md opacity-0 cta-glow" />
