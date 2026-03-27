@@ -1,4 +1,5 @@
 import { Printer, ScanLine, FoldVertical, BookOpenCheck, BookLock, ShieldCheck } from 'lucide-react';
+import servicesBg from '@/assets/services-bg.jpg';
 
 const ServicesSection = () => {
   const services = [
