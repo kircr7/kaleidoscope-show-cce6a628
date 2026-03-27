@@ -80,13 +80,13 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Phone size={16} className="text-[hsl(45,90%,55%)] flex-shrink-0" />
-                <a href="tel:+79851547772" className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors">
+                <a href="tel:+79851547772" className="text-white hover:text-white/80 transition-colors">
                   +7 (985) 154-77-72
                 </a>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Mail size={16} className="text-[hsl(45,90%,55%)] flex-shrink-0" />
-                <a href="mailto:printprro@gmail.com" className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors">
+                <a href="mailto:printprro@gmail.com" className="text-white hover:text-white/80 transition-colors">
                   printprro@gmail.com
                 </a>
               </div>
