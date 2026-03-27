@@ -192,6 +192,12 @@ const PriceListSection = () => {
                 Цветная
               </TabsTrigger>
               <TabsTrigger
+                value="scan"
+                className="flex-1 rounded-lg text-sm data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md transition-all"
+              >
+                Сканирование
+              </TabsTrigger>
+              <TabsTrigger
                 value="services"
                 className="flex-1 rounded-lg text-sm data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md transition-all"
               >
