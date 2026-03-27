@@ -62,6 +62,13 @@ const IconCarousel = ({ side }: Props) => {
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
+  const touchProps = isMobile ? {} : {
+    onMouseDown: handleMouseDown,
+    onMouseMove: handleMouseMove,
+    onMouseUp: handleMouseUp,
+    onMouseLeave: handleMouseUp,
+  };
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (isMobile) return;
     isDragging.current = true;
