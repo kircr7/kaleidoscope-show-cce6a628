@@ -65,15 +65,15 @@ const Navbar = () => {
           </a>
         ))}
 
-        {/* CTA with gradient border + periodic glow */}
+        {/* CTA with gradient border */}
         <a
           href="/#calculator"
           onClick={(e) => handleNavClick(e, '/#calculator')}
-          className="relative group ml-1 cta-glow-wrap flex-shrink-0"
+          className="relative group ml-1 flex-shrink-0 rounded-full p-[1.5px] cta-glow-wrap"
+          style={{ background: 'linear-gradient(to right, #22d3ee, #3b82f6, #ec4899)' }}
         >
-          <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
           <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 blur-md opacity-0 cta-glow" />
-          <span className="relative block px-4 sm:px-6 py-2.5 rounded-full text-xs font-bold text-white bg-[hsl(0,0%,8%)] m-[1.5px] whitespace-nowrap">
+          <span className="relative block px-4 lg:px-6 py-2.5 rounded-full text-xs font-bold text-white whitespace-nowrap" style={{ background: 'hsla(0, 0%, 8%, 0.9)' }}>
             Сделать заказ
           </span>
         </a>
