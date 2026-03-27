@@ -30,7 +30,7 @@ const FloatingPhone = () => {
       </span>
 
       <a
-        href="tel:+74951234567"
+        href="tel:+79851547772"
         className="flex items-center justify-center w-12 h-12 bg-emerald-500 text-white rounded-full shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_25px_rgba(16,185,129,0.6)] hover:scale-110 transition-all duration-500 animate-[glow-pulse_6s_ease-in-out_infinite]"
         aria-label="Позвоните нам"
       >
