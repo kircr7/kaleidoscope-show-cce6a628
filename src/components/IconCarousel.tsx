@@ -87,11 +87,8 @@ const IconCarousel = ({ side }: Props) => {
     return (
       <div
         ref={containerRef}
-        className="flex items-center gap-3 md:gap-4 animate-carousel-to-right cursor-grab active:cursor-grabbing"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
+        className={`flex items-center gap-3 md:gap-4 animate-carousel-to-right ${isMobile ? '' : 'cursor-grab active:cursor-grabbing'}`}
+        {...(!isMobile ? { onMouseDown: handleMouseDown, onMouseMove: handleMouseMove, onMouseUp: handleMouseUp, onMouseLeave: handleMouseUp } : {})}
       >
         {track.map((item, i) => (
           <div key={i} className="flex-shrink-0 relative">
