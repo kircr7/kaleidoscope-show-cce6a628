@@ -43,7 +43,7 @@ const Navbar = () => {
     <>
       {/* Desktop floating top nav */}
       <nav
-        className={`fixed top-5 left-1/2 -translate-x-1/2 z-50 hidden md:flex items-center gap-1 px-2 py-2 rounded-full border border-white/[0.08] transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
+        className={`fixed top-5 left-1/2 -translate-x-1/2 z-50 hidden md:flex items-center gap-1 px-2 py-2 rounded-full border border-white/[0.08] overflow-hidden transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
         style={{
           background: 'hsla(0, 0%, 8%, 0.75)',
           backdropFilter: 'blur(20px)',
