@@ -73,9 +73,8 @@ const Navbar = () => {
         >
           <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
           <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 blur-md opacity-0 cta-glow" />
-          <span className="relative block px-4 sm:px-6 py-2.5 rounded-full text-xs font-bold text-white bg-[hsl(0,0%,8%)] m-[1.5px]">
-            <span className="hidden sm:inline">Сделать заказ</span>
-            <span className="sm:hidden">Заказать</span>
+          <span className="relative block px-4 sm:px-6 py-2.5 rounded-full text-xs font-bold text-white bg-[hsl(0,0%,8%)] m-[1.5px] whitespace-nowrap">
+            Сделать заказ
           </span>
         </a>
       </nav>
