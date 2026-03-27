@@ -50,8 +50,8 @@ const Navbar = () => {
           WebkitBackdropFilter: 'blur(20px)',
         }}
       >
-        <a href="#" className="px-2 py-1 rounded-full flex items-center">
-          <img src={logo} alt="ПринтПРО — печать чертежей" className="h-5 brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
+        <a href="#" className="px-2 py-1 rounded-full flex items-center flex-shrink-0">
+          <img src={logo} alt="ПринтПРО — печать чертежей" className="h-5 lg:h-6 brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
         </a>
 
         {navLinks.map((link) => (
