@@ -261,3 +261,35 @@
   transform: translateX(100%);
   border-color: rgba(77, 175, 80, 1);
 }
+
+/* Liquid Glass hover glare */
+.liquid-glass-card {
+  position: relative;
+}
+.liquid-glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    hsla(0, 0%, 100%, 0.06) 35%,
+    hsla(0, 0%, 100%, 0.15) 42%,
+    hsla(0, 0%, 100%, 0.06) 50%,
+    transparent 65%
+  );
+  background-size: 250% 100%;
+  background-position: 200% 0;
+  transition: opacity 0.4s ease;
+}
+.liquid-glass-card:hover::after {
+  opacity: 1;
+  animation: glare-sweep 1.2s ease forwards;
+}
+@keyframes glare-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -50% 0; }
+}

@@ -226,7 +226,7 @@ const OrderSection = () => {
 
           {/* Main card body */}
           <div
-            className="relative overflow-hidden rounded-3xl"
+            className="liquid-glass-card relative overflow-hidden rounded-3xl"
             style={{
               backgroundColor: 'hsla(240,15%,12%,0.35)',
               backdropFilter: 'blur(60px) saturate(1.6)',
