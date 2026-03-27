@@ -17,6 +17,14 @@ const colorPrices = [
   { format: "A0", size: "841×1189 мм", under100: "110 ₽", over100: "88 ₽" },
 ];
 
+const scanPrices = [
+  { format: "A4", size: "210×297 мм", price: "10 ₽" },
+  { format: "A3", size: "297×420 мм", price: "20 ₽" },
+  { format: "A2", size: "420×594 мм", price: "90 ₽" },
+  { format: "A1", size: "594×841 мм", price: "120 ₽" },
+  { format: "A0", size: "841×1189 мм", price: "160 ₽" },
+];
+
 const foldingPrices = [
   { format: "A3", price: "5 ₽" },
   { format: "A2", price: "8 ₽" },
@@ -184,6 +192,12 @@ const PriceListSection = () => {
                 Цветная
               </TabsTrigger>
               <TabsTrigger
+                value="scan"
+                className="flex-1 rounded-lg text-sm data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md transition-all"
+              >
+                Сканирование
+              </TabsTrigger>
+              <TabsTrigger
                 value="services"
                 className="flex-1 rounded-lg text-sm data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md transition-all"
               >
@@ -203,6 +217,25 @@ const PriceListSection = () => {
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 items-start">
                 {colorPrices.map((item) => (
                   <PriceCard key={item.format} item={item} variant="color" />
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="scan" className="mt-0">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 items-start">
+                {scanPrices.map((item) => (
+                  <div
+                    key={item.format}
+                    className="group relative rounded-2xl border p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 bg-card/40 backdrop-blur-sm border-border/30 hover:border-border/60 hover:bg-card/70"
+                  >
+                    <div className="flex items-baseline justify-between mb-2">
+                      <span className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">{item.format}</span>
+                      <span className="text-xs text-muted-foreground">{item.size}</span>
+                    </div>
+                    <div className="pt-2 border-t border-border/20">
+                      <span className="text-lg font-semibold text-emerald-400">{item.price}</span>
+                    </div>
+                  </div>
                 ))}
               </div>
             </TabsContent>
