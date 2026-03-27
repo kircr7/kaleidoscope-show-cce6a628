@@ -17,6 +17,14 @@ const colorPrices = [
   { format: "A0", size: "841×1189 мм", under100: "110 ₽", over100: "88 ₽" },
 ];
 
+const scanPrices = [
+  { format: "A4", size: "210×297 мм", price: "10 ₽" },
+  { format: "A3", size: "297×420 мм", price: "20 ₽" },
+  { format: "A2", size: "420×594 мм", price: "90 ₽" },
+  { format: "A1", size: "594×841 мм", price: "120 ₽" },
+  { format: "A0", size: "841×1189 мм", price: "160 ₽" },
+];
+
 const foldingPrices = [
   { format: "A3", price: "5 ₽" },
   { format: "A2", price: "8 ₽" },
