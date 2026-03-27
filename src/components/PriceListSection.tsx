@@ -221,6 +221,25 @@ const PriceListSection = () => {
               </div>
             </TabsContent>
 
+            <TabsContent value="scan" className="mt-0">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 items-start">
+                {scanPrices.map((item) => (
+                  <div
+                    key={item.format}
+                    className="group relative rounded-2xl border p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 bg-card/40 backdrop-blur-sm border-border/30 hover:border-border/60 hover:bg-card/70"
+                  >
+                    <div className="flex items-baseline justify-between mb-2">
+                      <span className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">{item.format}</span>
+                      <span className="text-xs text-muted-foreground">{item.size}</span>
+                    </div>
+                    <div className="pt-2 border-t border-border/20">
+                      <span className="text-lg font-semibold text-emerald-400">{item.price}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+
             <TabsContent value="services" className="mt-0">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 items-start">
                 {services.map((item) => (
