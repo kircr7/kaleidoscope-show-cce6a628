@@ -226,17 +226,24 @@ const OrderSection = () => {
 
           {/* Main card body */}
           <div
-            className="relative overflow-hidden rounded-2xl border border-white/20"
+            className="relative overflow-hidden rounded-3xl"
             style={{
-              backgroundColor: 'hsla(240,15%,9%,0.55)',
-              backdropFilter: 'blur(24px)',
-              WebkitBackdropFilter: 'blur(24px)',
+              backgroundColor: 'hsla(240,15%,12%,0.35)',
+              backdropFilter: 'blur(60px) saturate(1.6)',
+              WebkitBackdropFilter: 'blur(60px) saturate(1.6)',
               backgroundImage: `
-                radial-gradient(at 0% 64%, hsla(263,93%,56%,0.15) 0px, transparent 85%),
-                radial-gradient(at 41% 94%, hsla(284,100%,84%,0.1) 0px, transparent 85%),
-                radial-gradient(at 100% 99%, hsla(306,100%,57%,0.1) 0px, transparent 85%)
+                linear-gradient(170deg, hsla(0,0%,100%,0.12) 0%, hsla(0,0%,100%,0.02) 40%, transparent 60%),
+                radial-gradient(at 0% 64%, hsla(263,93%,56%,0.12) 0px, transparent 85%),
+                radial-gradient(at 41% 94%, hsla(284,100%,84%,0.08) 0px, transparent 85%),
+                radial-gradient(at 100% 99%, hsla(306,100%,57%,0.08) 0px, transparent 85%)
               `,
-              boxShadow: '0px -16px 24px 0px rgba(255,255,255,0.1) inset, 0 8px 32px rgba(0,0,0,0.2)',
+              border: '1px solid hsla(0,0%,100%,0.18)',
+              boxShadow: `
+                inset 0 1px 1px 0 hsla(0,0%,100%,0.15),
+                inset 0 -1px 1px 0 hsla(0,0%,0%,0.1),
+                0 8px 40px -8px hsla(0,0%,0%,0.3),
+                0 2px 12px -2px hsla(0,0%,0%,0.15)
+              `,
             }}
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 lg:items-start">
