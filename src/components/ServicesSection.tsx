@@ -1,10 +1,10 @@
 import { Printer, ScanLine, FoldVertical, BookOpenCheck, BookLock, ShieldCheck } from 'lucide-react';
-import scannerImg from '@/assets/scanner.png';
-import falcovkaImg from '@/assets/falcovka.png';
-import broshyurovkaImg from '@/assets/broshyurovka.png';
-import perepletImg from '@/assets/pereplet.png';
-import laminationImg from '@/assets/lamination.png';
-import printerImg from '@/assets/printer.png';
+import scannerImg from '@/assets/scanner.jpg';
+import falcovkaImg from '@/assets/falcovka.jpg';
+import broshyurovkaImg from '@/assets/broshyurovka.jpg';
+import perepletImg from '@/assets/pereplet.jpg';
+import laminationImg from '@/assets/lamination.jpg';
+import printerImg from '@/assets/printer.jpg';
 
 const splitTitle = (title: string) => {
   const words = title.split(' ');
