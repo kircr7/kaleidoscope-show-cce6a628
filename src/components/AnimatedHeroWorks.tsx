@@ -81,7 +81,7 @@ const AnimatedHeroWorks = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <section id="works" className="relative w-full bg-black overflow-hidden" style={{ minHeight: '100vh' }}>
+    <section id="works" className="relative w-full bg-black overflow-hidden" style={{ minHeight: '80vh' }}>
       <style>{`
         @keyframes recedeIntoDistance {
           0% {

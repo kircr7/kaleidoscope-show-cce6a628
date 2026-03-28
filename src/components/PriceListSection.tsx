@@ -171,16 +171,16 @@ const PriceListSection = () => {
           style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 250ms forwards" }}
         >
           <Tabs defaultValue="bw" className="w-full">
-            <TabsList className="w-full bg-secondary/60 backdrop-blur-sm border border-border/30 rounded-xl h-12 p-1 mb-8">
+            <TabsList className="w-full bg-secondary/60 backdrop-blur-sm border border-border/30 rounded-xl h-auto sm:h-12 p-1 mb-8 grid grid-cols-2 sm:grid-cols-4 gap-1">
               <TabsTrigger
                 value="bw"
-                className="flex-1 rounded-lg text-sm data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-md transition-all"
+                className="rounded-lg text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-md transition-all"
               >
                 Черно-белая
               </TabsTrigger>
               <TabsTrigger
                 value="color"
-                className="flex-1 rounded-lg text-sm color-tab-trigger data-[state=active]:text-white data-[state=active]:shadow-md transition-all [&[data-state=active]]:border-0"
+                className="rounded-lg text-xs sm:text-sm color-tab-trigger data-[state=active]:text-white data-[state=active]:shadow-md transition-all [&[data-state=active]]:border-0"
               >
                 <style>{`
                   .color-tab-trigger[data-state="active"] {
@@ -193,13 +193,13 @@ const PriceListSection = () => {
               </TabsTrigger>
               <TabsTrigger
                 value="scan"
-                className="flex-1 rounded-lg text-sm data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md transition-all"
+                className="rounded-lg text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md transition-all"
               >
                 Сканирование
               </TabsTrigger>
               <TabsTrigger
                 value="services"
-                className="flex-1 rounded-lg text-sm data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md transition-all"
+                className="rounded-lg text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md transition-all"
               >
                 Сборка
               </TabsTrigger>
