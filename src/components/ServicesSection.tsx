@@ -8,6 +8,10 @@ import printerImg from '@/assets/printer.png';
 
 const splitTitle = (title: string) => {
   const words = title.split(' ');
+  if (words.length === 1) {
+    const mid = Math.ceil(title.length / 2);
+    return { left: title.slice(0, mid), right: title.slice(mid) };
+  }
   const mid = Math.ceil(words.length / 2);
   return {
     left: words.slice(0, mid).join(' '),
@@ -99,20 +103,15 @@ const ServicesSection = () => {
                   />
                   {/* Dark overlay for text readability */}
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500" />
-                  {/* Title centered on image, splits on hover */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight text-center whitespace-nowrap">
-                      <span className="inline-block transition-transform duration-500 ease-out group-hover:-translate-x-3">
+                  {/* Title centered on image, splits and flies out on hover */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+                    <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight text-center whitespace-nowrap flex">
+                      <span className="inline-block transition-all duration-700 ease-in-out group-hover:-translate-x-[200px] group-hover:opacity-0">
                         {left}
                       </span>
-                      {right && (
-                        <>
-                          {' '}
-                          <span className="inline-block transition-transform duration-500 ease-out group-hover:translate-x-3">
-                            {right}
-                          </span>
-                        </>
-                      )}
+                      <span className="inline-block transition-all duration-700 ease-in-out group-hover:translate-x-[200px] group-hover:opacity-0">
+                        {right}
+                      </span>
                     </h3>
                   </div>
                 </div>
