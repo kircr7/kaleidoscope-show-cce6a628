@@ -137,6 +137,7 @@ const AnimatedHeroWorks = () => {
             key={img.id}
             src={img.src}
             alt={img.alt}
+            loading="lazy"
             className="absolute rounded-2xl object-cover shadow-2xl"
             style={{
               width: `${img.size}px`,
