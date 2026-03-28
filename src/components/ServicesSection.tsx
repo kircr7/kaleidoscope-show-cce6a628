@@ -1,4 +1,5 @@
 import { Printer, ScanLine, FoldVertical, BookOpenCheck, BookLock, ShieldCheck } from 'lucide-react';
+import scannerImg from '@/assets/scanner.png';
 
 const ServicesSection = () => {
   const services = [
@@ -13,6 +14,7 @@ const ServicesSection = () => {
       title: 'Сканирование',
       description: 'Оцифровка проектной документации и архивов в высоком разрешении. Сканирование длинномерных и нестандартных форматов.',
       icon: ScanLine,
+      image: scannerImg,
     },
     {
       id: 3,
