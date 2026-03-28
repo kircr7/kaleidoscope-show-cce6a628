@@ -46,6 +46,7 @@ const ServicesSection = () => {
       title: 'Ламинирование',
       description: 'Покрытие документов глянцевой пленкой. Защита важных схем и генпланов от влаги, грязи и износа на стройплощадке.',
       icon: ShieldCheck,
+      image: laminationImg,
     }
   ];
 
