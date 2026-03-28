@@ -113,6 +113,7 @@ const Footer = () => {
                 <div className="relative bg-[hsl(var(--card))] p-3">
                   <p className="text-xs font-semibold text-[hsl(var(--foreground))] mb-2">ПринтПро</p>
                   <iframe
+                    loading="lazy"
                     src="https://yandex.ru/map-widget/v1/?display-text=%D0%A2%D0%B8%D0%BF%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F&ll=37.456444%2C55.843636&mode=search&oid=150374193660&ol=biz&sctx=ZAAAAAgBEAAaKAoSCTav6qwWukJAEQgfSrTk60tAEhIJdM%2B6RsuBXj8RWwuz0M5pRj8iBgABAgMEBSgKOABAv5IHSAFqAnJ1nQHNzMw9oAEAqAEAvQG%2FbA92wgEG%2FLOAmLAEggIbKChjYXRlZ29yeV9pZDooMTg0MTA3MTM0KSkpigIJMTg0MTA3MTM0kgIAmgIMZGVza3RvcC1tYXBzqgJRMjA1NzI4ODUyNjA4LDQ1NDMyNDAzNDEsNjAwMjE0NiwxNDkxMzY5Nzk3OTEsMTA2MzU5MzcxNjM3LDkwNzIxODI1MTY4LDM4MDM4NzQ1NDUx&sll=37.453837%2C55.843636&source=serp_navig&sspn=0.013146%2C0.004829&text=%7B%22text%22%3A%22%D0%A2%D0%B8%D0%BF%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F%22%2C%22what%22%3A%5B%7B%22attr_name%22%3A%22category_id%22%2C%22attr_values%22%3A%5B%22184107134%22%5D%7D%5D%7D&z=16.66"
                     width="100%"
                     height="180"
