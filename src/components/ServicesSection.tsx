@@ -8,6 +8,10 @@ import printerImg from '@/assets/printer.png';
 
 const splitTitle = (title: string) => {
   const words = title.split(' ');
+  if (words.length === 1) {
+    const mid = Math.ceil(title.length / 2);
+    return { left: title.slice(0, mid), right: title.slice(mid) };
+  }
   const mid = Math.ceil(words.length / 2);
   return {
     left: words.slice(0, mid).join(' '),
