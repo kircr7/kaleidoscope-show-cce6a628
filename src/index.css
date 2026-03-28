@@ -169,6 +169,11 @@
 .animate-carousel-to-right {
   animation: carousel-to-right 120s linear infinite;
 }
+
+.animate-carousel-from-center {
+  animation: carousel-from-center 95s linear infinite;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .animate-carousel-to-right:hover {
     animation-play-state: paused;
