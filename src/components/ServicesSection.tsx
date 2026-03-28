@@ -10,7 +10,7 @@ const ServicesSection = () => {
   const services = [
     {
       id: 1,
-      title: 'Широкоформатная печать',
+      title: 'Печать проектов',
       description: 'Печать чертежей, схем и графиков от А4 до А0+. Точная цветопередача и идеальное соблюдение масштабов (1:1) строго по ГОСТ.',
       icon: Printer,
       image: printerImg,
