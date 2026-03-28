@@ -1,6 +1,7 @@
 import { Printer, ScanLine, FoldVertical, BookOpenCheck, BookLock, ShieldCheck } from 'lucide-react';
 import scannerImg from '@/assets/scanner.png';
 import falcovkaImg from '@/assets/falcovka.png';
+import broshyurovkaImg from '@/assets/broshyurovka.png';
 
 const ServicesSection = () => {
   const services = [
