@@ -2,6 +2,7 @@ import { Printer, ScanLine, FoldVertical, BookOpenCheck, BookLock, ShieldCheck }
 import scannerImg from '@/assets/scanner.png';
 import falcovkaImg from '@/assets/falcovka.png';
 import broshyurovkaImg from '@/assets/broshyurovka.png';
+import perepletImg from '@/assets/pereplet.png';
 
 const ServicesSection = () => {
   const services = [
