@@ -10,12 +10,13 @@ const splitTitle = (title: string) => {
   const words = title.split(' ');
   if (words.length === 1) {
     const mid = Math.ceil(title.length / 2);
-    return { left: title.slice(0, mid), right: title.slice(mid) };
+    return { left: title.slice(0, mid), right: title.slice(mid), singleWord: true };
   }
   const mid = Math.ceil(words.length / 2);
   return {
     left: words.slice(0, mid).join(' '),
     right: words.slice(mid).join(' '),
+    singleWord: false,
   };
 };
 
