@@ -81,7 +81,7 @@ const AnimatedHeroWorks = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <section id="works" className="relative w-full bg-black overflow-hidden" style={{ minHeight: '100vh' }}>
+    <section id="works" className="relative w-full bg-black overflow-hidden" style={{ minHeight: '80vh' }}>
       <style>{`
         @keyframes recedeIntoDistance {
           0% {
@@ -137,6 +137,7 @@ const AnimatedHeroWorks = () => {
             key={img.id}
             src={img.src}
             alt={img.alt}
+            loading="lazy"
             className="absolute rounded-2xl object-cover shadow-2xl"
             style={{
               width: `${img.size}px`,
@@ -159,7 +160,7 @@ const AnimatedHeroWorks = () => {
       </div>
 
       {/* Central text content */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-3 sm:px-4" style={{ minHeight: '100vh' }}>
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-3 sm:px-4" style={{ minHeight: '80vh' }}>
         <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.1]">
           <span>Профессиональный подход к</span>{' '}
           <span className="relative inline-block">

@@ -100,6 +100,7 @@ const ServicesSection = () => {
                   <img
                     src={service.image}
                     alt={service.title}
+                    loading="lazy"
                     className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                   />
                   {/* Dark overlay for text readability */}
