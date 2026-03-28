@@ -1,5 +1,6 @@
 import { Printer, ScanLine, FoldVertical, BookOpenCheck, BookLock, ShieldCheck } from 'lucide-react';
 import scannerImg from '@/assets/scanner.png';
+import falcovkaImg from '@/assets/falcovka.png';
 
 const ServicesSection = () => {
   const services = [
@@ -21,6 +22,7 @@ const ServicesSection = () => {
       title: 'Фальцовка (сложение)',
       description: 'Автоматическое сложение широкоформатных листов (А0, А1, А2, А3) до формата А4 или А3 для последующей подшивки в тома или папки.',
       icon: FoldVertical,
+      image: falcovkaImg,
     },
     {
       id: 4,
