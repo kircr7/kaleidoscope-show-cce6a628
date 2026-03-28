@@ -56,7 +56,11 @@ const CentralIcon = () => {
       {/* Center word */}
       <div className="absolute inset-0 flex items-center justify-center z-20">
         <span
-          className="text-base md:text-xl font-black tracking-[0.08em] text-white transition-all duration-700 ease-in-out"
+          className={`font-black text-white transition-all duration-700 ease-in-out ${
+            WORDS[wordIndex].length > 7
+              ? 'text-base md:text-xl tracking-[0.08em]'
+              : 'text-lg md:text-2xl tracking-[0.12em]'
+          }`}
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0) scale(1)" : "translateY(6px) scale(0.95)",
