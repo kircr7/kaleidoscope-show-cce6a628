@@ -4,6 +4,7 @@ import falcovkaImg from '@/assets/falcovka.png';
 import broshyurovkaImg from '@/assets/broshyurovka.png';
 import perepletImg from '@/assets/pereplet.png';
 import laminationImg from '@/assets/lamination.png';
+import printerImg from '@/assets/printer.png';
 
 const ServicesSection = () => {
   const services = [
@@ -12,6 +13,7 @@ const ServicesSection = () => {
       title: 'Широкоформатная печать',
       description: 'Печать чертежей, схем и графиков от А4 до А0+. Точная цветопередача и идеальное соблюдение масштабов (1:1) строго по ГОСТ.',
       icon: Printer,
+      image: printerImg,
     },
     {
       id: 2,
