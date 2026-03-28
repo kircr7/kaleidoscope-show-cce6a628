@@ -159,7 +159,7 @@ const AnimatedHeroWorks = () => {
       </div>
 
       {/* Central text content */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-3 sm:px-4" style={{ minHeight: '100vh' }}>
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-3 sm:px-4" style={{ minHeight: '80vh' }}>
         <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.1]">
           <span>Профессиональный подход к</span>{' '}
           <span className="relative inline-block">
