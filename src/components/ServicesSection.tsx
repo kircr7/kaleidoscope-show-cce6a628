@@ -10,12 +10,13 @@ const splitTitle = (title: string) => {
   const words = title.split(' ');
   if (words.length === 1) {
     const mid = Math.ceil(title.length / 2);
-    return { left: title.slice(0, mid), right: title.slice(mid) };
+    return { left: title.slice(0, mid), right: title.slice(mid), singleWord: true };
   }
   const mid = Math.ceil(words.length / 2);
   return {
     left: words.slice(0, mid).join(' '),
     right: words.slice(mid).join(' '),
+    singleWord: false,
   };
 };
 
@@ -88,7 +89,7 @@ const ServicesSection = () => {
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {services.map((service) => {
-            const { left, right } = splitTitle(service.title);
+            const { left, right, singleWord } = splitTitle(service.title);
             return (
               <div
                 key={service.id}
@@ -105,7 +106,7 @@ const ServicesSection = () => {
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500" />
                   {/* Title centered on image, splits and flies out on hover */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-                    <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight text-center whitespace-nowrap flex gap-2">
+                    <h3 className={`text-xl sm:text-2xl font-black text-white tracking-tight text-center whitespace-nowrap flex ${singleWord ? '' : 'gap-2'}`}>
                       <span className="inline-block transition-all duration-700 ease-in-out group-hover:-translate-x-[200px] group-hover:opacity-0">
                         {left}
                       </span>
