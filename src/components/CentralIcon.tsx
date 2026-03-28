@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const WORDS = ["КАЧЕСТВО", "ЦЕНА", "СРОКИ", "ГАРАНТИЯ", "ОПЫТ"];
+const WORDS = ["КАЧЕСТВО", "ЦЕНА", "СРОКИ", "ГАРАНТИЯ", "ОПЫТ", "НАДЕЖНОСТЬ"];
 
 const CentralIcon = () => {
   const [wordIndex, setWordIndex] = useState(0);
