@@ -30,6 +30,7 @@ const ServicesSection = () => {
       title: 'Брошюровка',
       description: 'Сборка рабочей и проектной документации на пластиковую пружину. Аккуратный вид и удобство использования.',
       icon: BookOpenCheck,
+      image: broshyurovkaImg,
     },
     {
       id: 5,
