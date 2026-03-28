@@ -6,6 +6,15 @@ import perepletImg from '@/assets/pereplet.png';
 import laminationImg from '@/assets/lamination.png';
 import printerImg from '@/assets/printer.png';
 
+const splitTitle = (title: string) => {
+  const words = title.split(' ');
+  const mid = Math.ceil(words.length / 2);
+  return {
+    left: words.slice(0, mid).join(' '),
+    right: words.slice(mid).join(' '),
+  };
+};
+
 const ServicesSection = () => {
   const services = [
     {
@@ -74,45 +83,48 @@ const ServicesSection = () => {
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {services.map((service) => (
-            <div
-              key={service.id}
-              className={`group relative rounded-2xl bg-neutral-900 border border-neutral-800 transition-all duration-400 ease-out hover:-translate-y-1.5 hover:border-amber-500/40 hover:shadow-[0_8px_40px_-12px_rgba(245,158,11,0.15)] overflow-hidden flex flex-col ${service.image ? '' : 'p-6 sm:p-8'}`}
-            >
-              {service.image ? (
-                <>
-                  <div className="w-full h-40 sm:h-48 overflow-hidden">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                    />
-                  </div>
-                  <div className="p-6 sm:p-8 pt-4 sm:pt-5">
-                    <h3 className="text-lg sm:text-xl font-bold text-white mb-3 tracking-tight">
-                      {service.title}
+          {services.map((service) => {
+            const { left, right } = splitTitle(service.title);
+            return (
+              <div
+                key={service.id}
+                className="group relative rounded-2xl bg-neutral-900 border border-neutral-800 transition-all duration-400 ease-out hover:-translate-y-1.5 hover:border-amber-500/40 hover:shadow-[0_8px_40px_-12px_rgba(245,158,11,0.15)] overflow-hidden flex flex-col"
+              >
+                {/* Image with centered title overlay */}
+                <div className="relative w-full h-40 sm:h-48 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                  />
+                  {/* Dark overlay for text readability */}
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500" />
+                  {/* Title centered on image, splits on hover */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight text-center whitespace-nowrap">
+                      <span className="inline-block transition-transform duration-500 ease-out group-hover:-translate-x-3">
+                        {left}
+                      </span>
+                      {right && (
+                        <>
+                          {' '}
+                          <span className="inline-block transition-transform duration-500 ease-out group-hover:translate-x-3">
+                            {right}
+                          </span>
+                        </>
+                      )}
                     </h3>
-                    <p className="text-sm text-gray-400 leading-relaxed font-light">
-                      {service.description}
-                    </p>
                   </div>
-                </>
-              ) : (
-                <>
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-amber-500/15 group-hover:border-amber-500/30 transition-all duration-400">
-                    <service.icon className="w-7 h-7 sm:w-8 sm:h-8 text-amber-400" strokeWidth={1.8} />
-                    <div className="absolute inset-0 rounded-xl bg-amber-400/10 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-white mb-3 tracking-tight">
-                    {service.title}
-                  </h3>
+                </div>
+                {/* Description */}
+                <div className="p-6 sm:p-8 pt-4 sm:pt-5">
                   <p className="text-sm text-gray-400 leading-relaxed font-light">
                     {service.description}
                   </p>
-                </>
-              )}
-            </div>
-          ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* CTA */}
