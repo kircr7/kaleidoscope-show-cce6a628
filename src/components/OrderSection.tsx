@@ -758,17 +758,17 @@ const OrderSection = () => {
                               boxShadow: 'inset 0 -2px 25px -4px rgba(255,255,255,0.15), 0 8px 32px rgba(94,58,238,0.3)',
                             }}
                           >
-                            <div>
+                            <div className="text-center sm:text-left">
                               {stats.discountApplicable ? (
-                                <div className="flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase mb-2 w-fit tracking-wider">
+                                <div className="flex items-center justify-center sm:justify-start gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase mb-2 w-fit mx-auto sm:mx-0 tracking-wider">
                                   Скидка 20% на первый заказ
                                 </div>
                               ) : (
-                                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-bold mb-2 w-fit tracking-wider" style={{ backgroundColor: 'hsla(45,100%,50%,0.2)', color: 'hsl(45,100%,85%)' }}>
+                                <div className="flex items-center justify-center sm:justify-start gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-2 w-fit mx-auto sm:mx-0 tracking-wide" style={{ backgroundColor: 'hsla(45,100%,50%,0.2)', color: 'hsl(45,100%,85%)' }}>
                                   Закажите от 1 000 ₽ для скидки 20%
                                 </div>
                               )}
-                              <div className="flex items-baseline gap-2">
+                              <div className="flex items-baseline justify-center sm:justify-start gap-2">
                                 <span className="text-2xl font-black">{Math.round(stats.total)} ₽</span>
                                 {stats.discountApplicable && (
                                   <span className="text-white/40 line-through font-semibold text-sm">{Math.round(stats.subtotal)} ₽</span>
