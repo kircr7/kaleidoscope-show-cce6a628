@@ -114,8 +114,9 @@ const OrderSection = () => {
 
   const stats = useMemo(() => {
     const subtotal = cart.reduce((acc, item) => acc + getItemTotal(item), 0);
-    const discount = subtotal * 0.20;
-    return { subtotal, discount, total: subtotal - discount };
+    const discountApplicable = subtotal >= 1000;
+    const discount = discountApplicable ? subtotal * 0.20 : 0;
+    return { subtotal, discount, total: subtotal - discount, discountApplicable };
   }, [cart, foldingEnabled]);
 
   const sendOrder = async (e: React.FormEvent) => {
@@ -758,12 +759,20 @@ const OrderSection = () => {
                             }}
                           >
                             <div>
-                              <div className="flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase mb-2 w-fit tracking-wider">
-                                Скидка 20% на первый заказ
-                              </div>
+                              {stats.discountApplicable ? (
+                                <div className="flex items-center gap-1.5 bg-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase mb-2 w-fit tracking-wider">
+                                  Скидка 20% на первый заказ
+                                </div>
+                              ) : (
+                                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-bold mb-2 w-fit tracking-wider" style={{ backgroundColor: 'hsla(45,100%,50%,0.2)', color: 'hsl(45,100%,85%)' }}>
+                                  Закажите от 1 000 ₽ для скидки 20%
+                                </div>
+                              )}
                               <div className="flex items-baseline gap-2">
                                 <span className="text-2xl font-black">{Math.round(stats.total)} ₽</span>
-                                <span className="text-white/40 line-through font-semibold text-sm">{Math.round(stats.subtotal)} ₽</span>
+                                {stats.discountApplicable && (
+                                  <span className="text-white/40 line-through font-semibold text-sm">{Math.round(stats.subtotal)} ₽</span>
+                                )}
                               </div>
                             </div>
                             <button
