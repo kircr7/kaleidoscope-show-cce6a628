@@ -20,7 +20,7 @@ import execDoc4 from "@/assets/exec-doc-4.jpg";
 import execDoc5 from "@/assets/exec-doc-5.jpg";
 import execDoc6 from "@/assets/exec-doc-6.jpg";
 import projDoc1 from "@/assets/proj-doc-1.jpg";
-import projDoc2 from "@/assets/proj-doc-2.webp";
+import projDoc2 from "@/assets/proj-doc-2.jpg";
 import projDoc3 from "@/assets/proj-doc-3.webp";
 import projDoc4 from "@/assets/proj-doc-4.webp";
 import projDoc5 from "@/assets/proj-doc-5.webp";
