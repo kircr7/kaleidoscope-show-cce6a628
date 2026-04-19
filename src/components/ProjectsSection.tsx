@@ -59,7 +59,7 @@ const projects: Project[] = [
   { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
   { images: [drawings1, drawings2, drawings3, drawings4, drawings5, drawings6, drawings7], title: "Печать чертежей", tags: ["А1", "Цвет"] },
   { images: [binding1, binding2, binding3, binding4, binding5, binding6, binding7, binding8], title: "Брошюровка на пластиковую пружину", tags: ["А4", "Пружина"] },
-  { images: [work6], title: "Генеральный план", tags: ["А0", "Цвет"] },
+  { images: [work6], title: "Фальцовка чертежей", tags: ["А0", "Фальцовка"] },
 ];
 
 const SWIPE_THRESHOLD = 40;
