@@ -12,7 +12,7 @@ const bwPrices = [
 ];
 
 const colorPrices = [
-  { format: "A4", size: "210×297 мм", threshold: 20, retail: "20 ₽", wholesale: "10 ₽" },
+  { format: "A4", size: "210×297 мм", threshold: 50, retail: "20 ₽", wholesale: "10 ₽" },
   { format: "A3", size: "297×420 мм", threshold: 20, retail: "48 ₽", wholesale: "24 ₽" },
   { format: "A2", size: "420×594 мм", threshold: 5, retail: "80 ₽", wholesale: "40 ₽" },
   { format: "A1", size: "594×841 мм", threshold: 5, retail: "140 ₽", wholesale: "70 ₽" },
