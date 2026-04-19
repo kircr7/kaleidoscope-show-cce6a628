@@ -7,10 +7,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import CookieBanner from "./components/CookieBanner";
 import FloatingTelegram from "./components/FloatingTelegram";
+import { useMetrika } from "./hooks/use-metrika";
 
 const queryClient = new QueryClient();
 
 const App = () => {
+  useMetrika();
+
   useEffect(() => {
     let lenisInstance: import("lenis").default | null = null;
     let rafId: number | null = null;
