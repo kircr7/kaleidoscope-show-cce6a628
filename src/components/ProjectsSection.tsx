@@ -26,6 +26,14 @@ import projDoc4 from "@/assets/proj-doc-4.webp";
 import projDoc5 from "@/assets/proj-doc-5.webp";
 import projDoc6 from "@/assets/proj-doc-6.webp";
 import projDoc7 from "@/assets/proj-doc-7.webp";
+import binding1 from "@/assets/binding-1.jpg";
+import binding2 from "@/assets/binding-2.jpg";
+import binding3 from "@/assets/binding-3.jpg";
+import binding4 from "@/assets/binding-4.jpg";
+import binding5 from "@/assets/binding-5.jpg";
+import binding6 from "@/assets/binding-6.jpg";
+import binding7 from "@/assets/binding-7.jpg";
+import binding8 from "@/assets/binding-8.jpg";
 
 interface Project {
   images: string[];
@@ -38,7 +46,7 @@ const projects: Project[] = [
   { images: [work2, work8, work9], title: "Печать рабочей документации", tags: ["А0", "ЧБ"] },
   { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
   { images: [work4, work11], title: "Архитектурные планы", tags: ["А1", "Цвет"] },
-  { images: [work5, work12], title: "Брошюровка на пластиковую пружину", tags: ["А4", "Пружина"] },
+  { images: [binding1, binding2, binding3, binding4, binding5, binding6, binding7, binding8], title: "Брошюровка на пластиковую пружину", tags: ["А4", "Пружина"] },
   { images: [work6], title: "Генеральный план", tags: ["А0", "Цвет"] },
 ];
 
