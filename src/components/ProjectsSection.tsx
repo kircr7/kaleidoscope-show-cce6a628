@@ -285,7 +285,10 @@ const ProjectCard = ({
   project: Project;
   onOpen: (project: Project, index: number) => void;
 }) => (
-  <article className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] flex-shrink-0 w-[72vw] max-w-[360px] sm:w-auto sm:max-w-none snap-center">
+  <article
+    data-project-card
+    className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] flex-shrink-0 w-[80%] max-w-[360px] sm:w-auto sm:max-w-none snap-center"
+  >
     <ImageSlider
       images={project.images}
       title={project.title}
