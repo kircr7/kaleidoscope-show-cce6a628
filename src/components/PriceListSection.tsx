@@ -82,19 +82,19 @@ const PriceCard = ({
 
       <div className={`pt-2 space-y-1.5 border-t ${isBw ? "border-border/20" : "border-white/20"}`}>
         <div className="flex justify-between items-center">
-          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>обычная цена</span>
+          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>розница (×2)</span>
           <span className={`text-sm font-semibold ${isBw ? "text-foreground" : "text-white"}`}>
-            {item.under100}
+            {item.retail}
           </span>
         </div>
         <div className="flex justify-between items-center">
-          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>от 100 листов</span>
+          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>опт от {item.threshold} шт</span>
           <span
             className={`text-sm font-semibold ${
               isBw ? "text-emerald-400" : "text-yellow-200 drop-shadow-sm"
             }`}
           >
-            {item.over100}
+            {item.wholesale}
           </span>
         </div>
       </div>
