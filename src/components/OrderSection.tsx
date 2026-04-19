@@ -87,7 +87,7 @@ const OrderSection = () => {
   }, []);
 
   const addPrintToCart = () => {
-    const unitPrice = isColor ? PRICES[format].color : PRICES[format].bw;
+    const unitPrice = getTierUnitPrice(format, isColor, quantity);
     setCart(prev => [...prev, {
       id: Date.now(),
       label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
@@ -95,6 +95,7 @@ const OrderSection = () => {
       unitPrice,
       quantity,
       isService: false,
+      isColor,
     }]);
     setQuantity(1);
   };
@@ -113,9 +114,15 @@ const OrderSection = () => {
   const removeItem = (id: number) => setCart(cart.filter(item => item.id !== id));
 
   const updateQuantity = (id: number, delta: number) => {
-    setCart(prev => prev.map(item =>
-      item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
-    ));
+    setCart(prev => prev.map(item => {
+      if (item.id !== id) return item;
+      const newQty = Math.max(1, item.quantity + delta);
+      // Recalculate tiered price for print items
+      const newUnitPrice = !item.isService
+        ? getTierUnitPrice(item.format, !!item.isColor, newQty)
+        : item.unitPrice;
+      return { ...item, quantity: newQty, unitPrice: newUnitPrice };
+    }));
   };
 
   const getFoldingPrice = (item: CartItem) => {
@@ -127,6 +134,10 @@ const OrderSection = () => {
     const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
     return (item.unitPrice + folding) * item.quantity;
   };
+
+  // Live unit price for current selector state (shown above "В корзину")
+  const currentUnitPrice = getTierUnitPrice(format, isColor, quantity);
+  const wholesalePrice = isColor ? PRICES[format].color : PRICES[format].bw;
 
   const stats = useMemo(() => {
     const subtotal = cart.reduce((acc, item) => acc + getItemTotal(item), 0);
