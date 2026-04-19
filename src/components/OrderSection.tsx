@@ -88,13 +88,14 @@ const OrderSection = () => {
   }, []);
 
   const addPrintToCart = () => {
-    const unitPrice = getTierUnitPrice(format, isColor, quantity);
+    const qty = Math.max(1, quantity || 1);
+    const unitPrice = getTierUnitPrice(format, isColor, qty);
     setCart(prev => [...prev, {
       id: Date.now(),
       label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
       format,
       unitPrice,
-      quantity,
+      quantity: qty,
       isService: false,
       isColor,
     }]);
