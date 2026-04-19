@@ -34,10 +34,40 @@ const Index = () => {
   }, [location.hash]);
   return (
     <div className="min-h-screen bg-black overflow-x-hidden relative">
-      <SEO 
-        title="Печать чертежей и проектной документации А0-А4 | ПринтПРО" 
+      <SEO
+        title="Печать чертежей и проектной документации А0-А4 | ПринтПРО"
         description="Срочно распечатать проект, исполнительную, рабочую и техническую документацию. Печать форматов А0, А1, А2, А3, А4. Строго по ГОСТ. Типография ПринтПРО."
         keywords="печать чертежей, печать проектной документации, печать проектов, печать исполнительной документации, печать рабочей документации, печать технической документации, печать А4, печать А3, печать А2, печать А1, печать А0, распечатать проект, распечатать чертежи"
+        canonicalPath="/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "@id": "https://printprro.ru/#business",
+          name: "Типография ПринтПРО",
+          url: "https://printprro.ru",
+          image: "https://printprro.ru/og-image.jpg",
+          description:
+            "Срочная инженерная печать чертежей и проектной документации форматов А0–А4. Фальцовка и переплёт по ГОСТ.",
+          priceRange: "₽₽",
+          areaServed: { "@type": "City", name: "Москва" },
+          address: {
+            "@type": "PostalAddress",
+            addressCountry: "RU",
+            addressLocality: "Москва",
+          },
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "Услуги инженерной печати",
+            itemListElement: [
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Печать чертежей А0–А4" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Печать проектной документации" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Печать рабочей документации" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Печать исполнительной документации" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Фальцовка чертежей по ГОСТ" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Брошюровка и переплёт" } },
+            ],
+          },
+        }}
       />
       <Navbar />
 
