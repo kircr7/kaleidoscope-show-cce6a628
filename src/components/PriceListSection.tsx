@@ -252,6 +252,18 @@ const PriceListSection = () => {
           </Tabs>
         </div>
 
+        <div
+          className="mt-8 mx-auto max-w-2xl rounded-2xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm px-5 py-4 text-center opacity-0"
+          style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 350ms forwards" }}
+        >
+          <p className="text-base sm:text-lg font-bold text-white">
+            🎉 Скидка 20% на первый заказ!
+          </p>
+          <p className="text-xs sm:text-sm text-white/70 mt-1">
+            Применяется автоматически при оформлении через калькулятор.
+          </p>
+        </div>
+
         <p
           className="text-center text-sm text-muted-foreground/70 mt-6 opacity-0"
           style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 400ms forwards" }}
