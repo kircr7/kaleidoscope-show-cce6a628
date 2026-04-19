@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://printprro.ru/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://printprro.ru/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Articles -->
+  <url><loc>https://printprro.ru/blog/pechat-proektnoy-dokumentacii-moskva</loc><priority>0.7</priority></url>
+  <url><loc>https://printprro.ru/blog/pechat-rabochey-dokumentacii</loc><priority>0.7</priority></url>
+  <url><loc>https://printprro.ru/blog/ispolnitelnaya-dokumentaciya-pechat</loc><priority>0.7</priority></url>
+  <url><loc>https://printprro.ru/blog/pechat-chertezhey-a0-a1-a2</loc><priority>0.7</priority></url>
+  <url><loc>https://printprro.ru/blog/falcovka-i-pereplet-chertezhey</loc><priority>0.7</priority></url>
+
+  <!-- Legacy blog posts -->
+  <url><loc>https://printprro.ru/blog/trebovaniya-gost-k-pechati-chertezhey</loc><priority>0.6</priority></url>
+
+  <!-- Legal -->
+  <url><loc>https://printprro.ru/privacy</loc><priority>0.3</priority></url>
+  <url><loc>https://printprro.ru/terms</loc><priority>0.3</priority></url>
+</urlset>
