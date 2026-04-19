@@ -115,13 +115,16 @@ const OrderSection = () => {
 
   const removeItem = (id: number) => setCart(cart.filter(item => item.id !== id));
 
-  const setItemQuantity = (id: number, qty: number) => {
-    const newQty = Math.max(1, Math.min(9999, Math.floor(qty) || 1));
+  const setItemQuantity = (id: number, qty: number, allowZero = false) => {
+    const min = allowZero ? 0 : 1;
+    const newQty = Math.max(min, Math.min(9999, Math.floor(qty)));
     setCart(prev => prev.map(item => {
       if (item.id !== id) return item;
+      const effectiveQty = newQty < 1 ? item.quantity : newQty;
       const newUnitPrice = !item.isService
-        ? getTierUnitPrice(item.format, !!item.isColor, newQty)
+        ? getTierUnitPrice(item.format, !!item.isColor, Math.max(1, newQty))
         : item.unitPrice;
+      // Store newQty as-is (may be 0 for empty input); used for display only
       return { ...item, quantity: newQty, unitPrice: newUnitPrice };
     }));
   };
