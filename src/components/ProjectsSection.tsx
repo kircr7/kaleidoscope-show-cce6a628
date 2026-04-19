@@ -46,6 +46,10 @@ import drawings4 from "@/assets/drawings-4.jpg";
 import drawings5 from "@/assets/drawings-5.jpg";
 import drawings6 from "@/assets/drawings-6.jpg";
 import drawings7 from "@/assets/drawings-7.jpg";
+import folding1 from "@/assets/folding-1.jpg";
+import folding2 from "@/assets/folding-2.jpg";
+import folding3 from "@/assets/folding-3.jpg";
+import folding4 from "@/assets/folding-4.jpg";
 
 interface Project {
   images: string[];
@@ -59,7 +63,7 @@ const projects: Project[] = [
   { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
   { images: [drawings1, drawings2, drawings3, drawings4, drawings5, drawings6, drawings7], title: "Печать чертежей", tags: ["А1", "Цвет"] },
   { images: [binding1, binding2, binding3, binding4, binding5, binding6, binding7, binding8], title: "Брошюровка на пластиковую пружину", tags: ["А4", "Пружина"] },
-  { images: [work6], title: "Фальцовка чертежей", tags: ["А0", "Фальцовка"] },
+  { images: [folding1, folding2, folding3, folding4], title: "Фальцовка чертежей", tags: ["А0", "Фальцовка"] },
 ];
 
 const SWIPE_THRESHOLD = 40;
