@@ -668,14 +668,27 @@ const OrderSection = () => {
                             >
                               <div className="flex-1 min-w-0">
                                 <div className="text-sm font-semibold text-white">{item.label}</div>
-                                <div className="text-[10px] mt-0.5 font-medium" style={{ color: 'hsl(0,0%,50%)' }}>
-                                  {folding > 0 ? (
-                                    <span>
-                                      {item.unitPrice} ₽ + {folding} ₽ <span style={{ color: 'hsl(266,92%,68%)' }}>(фальцовка)</span> = {unitWithFolding} ₽ за шт.
-                                    </span>
-                                  ) : (
-                                    <span>{item.unitPrice} ₽ за шт.</span>
-                                  )}
+                                <div className="text-[10px] mt-0.5 font-medium flex items-center gap-1.5 flex-wrap" style={{ color: 'hsl(0,0%,50%)' }}>
+                                  {(() => {
+                                    const base = !item.isService
+                                      ? (item.isColor ? PRICES[item.format].color : PRICES[item.format].bw)
+                                      : item.unitPrice;
+                                    const showStrike = !item.isService && item.unitPrice > base;
+                                    return (
+                                      <>
+                                        {showStrike && (
+                                          <span className="line-through text-white">{base} ₽</span>
+                                        )}
+                                        {folding > 0 ? (
+                                          <span>
+                                            {item.unitPrice} ₽ + {folding} ₽ <span style={{ color: 'hsl(266,92%,68%)' }}>(фальцовка)</span> = {unitWithFolding} ₽ за шт.
+                                          </span>
+                                        ) : (
+                                          <span>{item.unitPrice} ₽ за шт.</span>
+                                        )}
+                                      </>
+                                    );
+                                  })()}
                                 </div>
                                 {!item.isService && itemRemaining > 0 && (
                                   <div className="text-[10px] mt-0.5 font-semibold" style={{ color: 'hsl(266,92%,78%)' }}>
