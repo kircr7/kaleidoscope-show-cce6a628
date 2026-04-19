@@ -19,6 +19,13 @@ import execDoc3 from "@/assets/exec-doc-3.jpg";
 import execDoc4 from "@/assets/exec-doc-4.jpg";
 import execDoc5 from "@/assets/exec-doc-5.jpg";
 import execDoc6 from "@/assets/exec-doc-6.jpg";
+import projDoc1 from "@/assets/proj-doc-1.jpg";
+import projDoc2 from "@/assets/proj-doc-2.webp";
+import projDoc3 from "@/assets/proj-doc-3.webp";
+import projDoc4 from "@/assets/proj-doc-4.webp";
+import projDoc5 from "@/assets/proj-doc-5.webp";
+import projDoc6 from "@/assets/proj-doc-6.webp";
+import projDoc7 from "@/assets/proj-doc-7.webp";
 
 interface Project {
   images: string[];
@@ -27,7 +34,7 @@ interface Project {
 }
 
 const projects: Project[] = [
-  { images: [work1, work7], title: "Печать проектной документации", tags: ["А1", "Фальцовка"] },
+  { images: [projDoc1, projDoc2, projDoc3, projDoc4, projDoc5, projDoc6, projDoc7], title: "Печать проектной документации", tags: ["А1", "Фальцовка"] },
   { images: [work2, work8, work9], title: "Печать рабочей документации", tags: ["А0", "ЧБ"] },
   { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
   { images: [work4, work11], title: "Архитектурные планы", tags: ["А1", "Цвет"] },
