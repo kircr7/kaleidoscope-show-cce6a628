@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
+Allow: /assets/
 
 Sitemap: https://printprro.ru/sitemap.xml
-Host: https://printprro.ru

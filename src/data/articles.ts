@@ -17,19 +17,6 @@ import articleExecDocs from "@/assets/blog/article-exec-docs.jpg";
 import articleBlueprints from "@/assets/blog/article-blueprints.jpg";
 import articleBinding from "@/assets/blog/article-binding.jpg";
 
-export interface Article {
-  id: number;
-  slug: string;
-  seoTitle: string;
-  seoDescription: string;
-  h1: string;
-  content: string;
-  image: string;
-  category: string;
-  date: string;
-  excerpt: string;
-}
-
 export const articles: Article[] = [
   {
     id: 1,
