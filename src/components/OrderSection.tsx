@@ -657,6 +657,8 @@ const OrderSection = () => {
                           const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
                           const unitWithFolding = item.unitPrice + folding;
                           const lineTotal = unitWithFolding * item.quantity;
+                          const itemThreshold = !item.isService ? getWholesaleThreshold(item.format) : 0;
+                          const itemRemaining = !item.isService ? Math.max(0, itemThreshold - item.quantity) : 0;
 
                           return (
                             <div
@@ -675,6 +677,11 @@ const OrderSection = () => {
                                     <span>{item.unitPrice} ₽ за шт.</span>
                                   )}
                                 </div>
+                                {!item.isService && itemRemaining > 0 && (
+                                  <div className="text-[10px] mt-0.5 font-semibold" style={{ color: 'hsl(266,92%,78%)' }}>
+                                    Добавьте {itemRemaining} шт. для оптовой цены
+                                  </div>
+                                )}
                               </div>
                               <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
                                 <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
