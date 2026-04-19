@@ -39,6 +39,13 @@ import workDoc2 from "@/assets/work-doc-2.jpg";
 import workDoc3 from "@/assets/work-doc-3.jpg";
 import workDoc4 from "@/assets/work-doc-4.jpg";
 import workDoc5 from "@/assets/work-doc-5.jpg";
+import drawings1 from "@/assets/drawings-1.jpg";
+import drawings2 from "@/assets/drawings-2.jpg";
+import drawings3 from "@/assets/drawings-3.jpg";
+import drawings4 from "@/assets/drawings-4.jpg";
+import drawings5 from "@/assets/drawings-5.jpg";
+import drawings6 from "@/assets/drawings-6.jpg";
+import drawings7 from "@/assets/drawings-7.jpg";
 
 interface Project {
   images: string[];
@@ -50,7 +57,7 @@ const projects: Project[] = [
   { images: [projDoc2, projDoc3, projDoc4, projDoc1, projDoc5, projDoc6, projDoc7], title: "Печать проектной документации", tags: ["А1", "Фальцовка"] },
   { images: [workDoc1, workDoc2, workDoc3, workDoc4, workDoc5], title: "Печать рабочей документации", tags: ["А0", "ЧБ"] },
   { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
-  { images: [work4, work11], title: "Печать чертежей", tags: ["А1", "Цвет"] },
+  { images: [drawings1, drawings2, drawings3, drawings4, drawings5, drawings6, drawings7], title: "Печать чертежей", tags: ["А1", "Цвет"] },
   { images: [binding1, binding2, binding3, binding4, binding5, binding6, binding7, binding8], title: "Брошюровка на пластиковую пружину", tags: ["А4", "Пружина"] },
   { images: [work6], title: "Генеральный план", tags: ["А0", "Цвет"] },
 ];
