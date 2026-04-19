@@ -13,7 +13,23 @@ interface CartItem {
   unitPrice: number;
   quantity: number;
   isService: boolean;
+  isColor?: boolean;
 }
+
+// Tier pricing: base price in PRICES = wholesale (50+ items)
+// 1-9 шт: +30% (round up to integer)
+// 10-49 шт: ~+16% (midpoint, round up)
+// 50+ шт: base price
+const getTierMultiplier = (qty: number) => {
+  if (qty >= 50) return 1;
+  if (qty >= 10) return 1.16;
+  return 1.3;
+};
+
+const getTierUnitPrice = (format: string, isColor: boolean, qty: number) => {
+  const base = isColor ? PRICES[format].color : PRICES[format].bw;
+  return Math.ceil(base * getTierMultiplier(qty));
+};
 
 const PRICES: Record<string, { bw: number; color: number; label: string }> = {
   A4: { bw: 5, color: 10, label: 'A4 (210×297 мм)' },
@@ -71,7 +87,7 @@ const OrderSection = () => {
   }, []);
 
   const addPrintToCart = () => {
-    const unitPrice = isColor ? PRICES[format].color : PRICES[format].bw;
+    const unitPrice = getTierUnitPrice(format, isColor, quantity);
     setCart(prev => [...prev, {
       id: Date.now(),
       label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
@@ -79,6 +95,7 @@ const OrderSection = () => {
       unitPrice,
       quantity,
       isService: false,
+      isColor,
     }]);
     setQuantity(1);
   };
@@ -97,9 +114,15 @@ const OrderSection = () => {
   const removeItem = (id: number) => setCart(cart.filter(item => item.id !== id));
 
   const updateQuantity = (id: number, delta: number) => {
-    setCart(prev => prev.map(item =>
-      item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
-    ));
+    setCart(prev => prev.map(item => {
+      if (item.id !== id) return item;
+      const newQty = Math.max(1, item.quantity + delta);
+      // Recalculate tiered price for print items
+      const newUnitPrice = !item.isService
+        ? getTierUnitPrice(item.format, !!item.isColor, newQty)
+        : item.unitPrice;
+      return { ...item, quantity: newQty, unitPrice: newUnitPrice };
+    }));
   };
 
   const getFoldingPrice = (item: CartItem) => {
@@ -111,6 +134,10 @@ const OrderSection = () => {
     const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
     return (item.unitPrice + folding) * item.quantity;
   };
+
+  // Live unit price for current selector state (shown above "В корзину")
+  const currentUnitPrice = getTierUnitPrice(format, isColor, quantity);
+  const wholesalePrice = isColor ? PRICES[format].color : PRICES[format].bw;
 
   const stats = useMemo(() => {
     const subtotal = cart.reduce((acc, item) => acc + getItemTotal(item), 0);
@@ -429,7 +456,7 @@ const OrderSection = () => {
                             color: 'hsl(0,0%,83%)',
                           }}
                         >
-                          <span>{PRICES[format].label} · {isColor ? PRICES[format].color : PRICES[format].bw} ₽</span>
+                          <span>{PRICES[format].label} — от {isColor ? PRICES[format].color : PRICES[format].bw} ₽</span>
                           <svg
                             className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}
                             style={{ color: 'hsl(0,0%,60%)' }}
@@ -467,7 +494,7 @@ const OrderSection = () => {
                                 }}
                               >
                                 <span>{PRICES[k].label}</span>
-                                <span style={{ color: 'hsl(0,0%,50%)' }}>{isColor ? PRICES[k].color : PRICES[k].bw} ₽</span>
+                                <span style={{ color: 'hsl(0,0%,50%)' }}>от {isColor ? PRICES[k].color : PRICES[k].bw} ₽</span>
                               </button>
                             ))}
                           </div>
@@ -495,6 +522,27 @@ const OrderSection = () => {
                         >Цвет</button>
                       </div>
                     </div>
+                  </div>
+
+                  {/* Live unit price hint based on current quantity tier */}
+                  <div className="flex items-baseline justify-between mb-2 px-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsl(0,0%,60%)' }}>
+                      Цена за 1 шт:
+                    </span>
+                    <span className="flex items-baseline gap-2">
+                      {currentUnitPrice > wholesalePrice && (
+                        <span className="text-xs line-through" style={{ color: 'hsl(0,0%,45%)' }}>
+                          {wholesalePrice} ₽
+                        </span>
+                      )}
+                      <span
+                        key={currentUnitPrice}
+                        className="text-base font-black animate-fade-in"
+                        style={{ color: currentUnitPrice === wholesalePrice ? 'hsl(142,71%,55%)' : 'hsl(266,92%,78%)' }}
+                      >
+                        {currentUnitPrice} ₽
+                      </span>
+                    </span>
                   </div>
 
                   <div className="flex gap-2 sm:gap-3 mb-4">
