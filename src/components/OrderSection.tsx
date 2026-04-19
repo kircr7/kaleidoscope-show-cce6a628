@@ -152,7 +152,7 @@ const OrderSection = () => {
 
   const stats = useMemo(() => {
     const subtotal = cart.reduce((acc, item) => acc + getItemTotal(item), 0);
-    const discountApplicable = subtotal >= 1000;
+    const discountApplicable = subtotal >= 2000;
     const discount = discountApplicable ? subtotal * 0.20 : 0;
     return { subtotal, discount, total: subtotal - discount, discountApplicable };
   }, [cart, foldingEnabled]);
@@ -876,7 +876,7 @@ const OrderSection = () => {
                                 </div>
                               ) : (
                                 <div className="flex items-center justify-center sm:justify-start gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-2 w-fit mx-auto sm:mx-0 tracking-wide" style={{ backgroundColor: 'hsla(45,100%,50%,0.2)', color: 'hsl(45,100%,85%)' }}>
-                                  Закажите от 1 000 ₽ для скидки 20%
+                                  Закажите от 2 000 ₽ для скидки 20%
                                 </div>
                               )}
                               <div className="flex items-baseline justify-center sm:justify-start gap-2">
