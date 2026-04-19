@@ -494,7 +494,7 @@ const OrderSection = () => {
                                 }}
                               >
                                 <span>{PRICES[k].label}</span>
-                                <span style={{ color: 'hsl(0,0%,50%)' }}>{isColor ? PRICES[k].color : PRICES[k].bw} ₽</span>
+                                <span style={{ color: 'hsl(0,0%,50%)' }}>от {isColor ? PRICES[k].color : PRICES[k].bw} ₽</span>
                               </button>
                             ))}
                           </div>
