@@ -57,7 +57,8 @@ const AnimatedHeroWorks = () => {
 
   const floatingImages = useMemo(() => {
     const count = 12;
-    const isMobile = window.innerWidth < 640;
+    // SSR-safe: default to desktop sizes; window check only at runtime
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
     const sizes = isMobile
       ? [180, 220, 200, 250, 190, 230, 210, 260, 195, 240, 215, 225]
       : [320, 450, 380, 520, 340, 480, 400, 560, 360, 500, 420, 470];
