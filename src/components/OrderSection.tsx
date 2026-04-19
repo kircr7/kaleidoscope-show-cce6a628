@@ -680,11 +680,11 @@ const OrderSection = () => {
                                           <span className="line-through text-white">{base} ₽</span>
                                         )}
                                         {folding > 0 ? (
-                                          <span>
+                                          <span style={{ color: 'hsl(266,92%,78%)' }}>
                                             {item.unitPrice} ₽ + {folding} ₽ <span style={{ color: 'hsl(266,92%,68%)' }}>(фальцовка)</span> = {unitWithFolding} ₽ за шт.
                                           </span>
                                         ) : (
-                                          <span>{item.unitPrice} ₽ за шт.</span>
+                                          <span style={{ color: 'hsl(266,92%,78%)' }}>{item.unitPrice} ₽ за шт.</span>
                                         )}
                                       </>
                                     );
