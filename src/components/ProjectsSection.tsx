@@ -13,6 +13,12 @@ import work9 from "@/assets/work-9.jpg";
 import work10 from "@/assets/work-10.jpg";
 import work11 from "@/assets/work-11.jpg";
 import work12 from "@/assets/work-12.jpg";
+import execDoc1 from "@/assets/exec-doc-1.jpg";
+import execDoc2 from "@/assets/exec-doc-2.jpg";
+import execDoc3 from "@/assets/exec-doc-3.jpg";
+import execDoc4 from "@/assets/exec-doc-4.jpg";
+import execDoc5 from "@/assets/exec-doc-5.jpg";
+import execDoc6 from "@/assets/exec-doc-6.jpg";
 
 interface Project {
   images: string[];
@@ -23,7 +29,7 @@ interface Project {
 const projects: Project[] = [
   { images: [work1, work7], title: "Печать проектной и рабочей документации", tags: ["А1", "Фальцовка"] },
   { images: [work2, work8, work9], title: "Рабочие чертежи", tags: ["А0", "ЧБ"] },
-  { images: [work3, work10], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
+  { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
   { images: [work4, work11], title: "Архитектурные планы", tags: ["А1", "Цвет"] },
   { images: [work5, work12], title: "Инженерные схемы", tags: ["А2", "Фальцовка"] },
   { images: [work6], title: "Генеральный план", tags: ["А0", "Цвет"] },
