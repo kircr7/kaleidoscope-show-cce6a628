@@ -285,12 +285,13 @@ const ProjectCard = ({
   project: Project;
   onOpen: (project: Project, index: number) => void;
 }) => (
-  <article className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] flex-shrink-0 w-[78vw] sm:w-auto snap-center">
+  <article className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] flex-shrink-0 w-[72vw] max-w-[360px] sm:w-auto sm:max-w-none snap-center">
     <ImageSlider
       images={project.images}
       title={project.title}
       altBase={project.altBase}
       onImageClick={(i) => onOpen(project, i)}
+      aspect="aspect-[4/3] sm:aspect-[16/10]"
     />
     <div className="p-4 sm:p-5">
       <h3 className="text-base sm:text-lg font-semibold text-foreground leading-snug">
@@ -329,7 +330,7 @@ const ProjectsSection = () => {
         </div>
 
         <div
-          className="flex md:grid md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-3 sm:-mx-4 px-3 sm:px-4 md:mx-0 md:px-0 pb-2 md:pb-0 scrollbar-hide opacity-0"
+          className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-3 sm:mx-0 px-3 sm:px-0 pb-2 sm:pb-0 scrollbar-hide opacity-0"
           style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards" }}
         >
           {projects.map((project) => (
