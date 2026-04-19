@@ -538,7 +538,7 @@ const OrderSection = () => {
                           </span>
                           <span className="flex items-baseline gap-2">
                             {currentUnitPrice > wholesalePrice && (
-                              <span className="text-xs line-through" style={{ color: 'hsl(0,0%,45%)' }}>
+                              <span className="text-xs line-through text-white">
                                 {wholesalePrice} ₽
                               </span>
                             )}
