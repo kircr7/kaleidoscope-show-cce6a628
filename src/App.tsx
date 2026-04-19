@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HelmetProvider } from "react-helmet-async";
 
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -17,7 +16,6 @@ const App = () => {
     let rafId: number | null = null;
     let cleanupClick: (() => void) | null = null;
 
-    // Dynamic import to keep Lenis out of SSR/SSG bundle entirely
     import("lenis").then(({ default: Lenis }) => {
       lenisInstance = new Lenis({
         duration: 1.2,
@@ -57,17 +55,15 @@ const App = () => {
   }, []);
 
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <Outlet />
-          <CookieBanner />
-          <FloatingTelegram />
-        </TooltipProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <Outlet />
+        <CookieBanner />
+        <FloatingTelegram />
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 };
 
