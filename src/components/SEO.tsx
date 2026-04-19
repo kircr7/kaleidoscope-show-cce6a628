@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { Head } from 'vite-react-ssg';
 import { useLocation } from 'react-router-dom';
 
 const SITE_URL = 'https://printprro.ru';
@@ -32,15 +32,10 @@ const SEO = ({
   const canonical = `${SITE_URL}${path === '/' ? '' : path}`.replace(/\/$/, '') || SITE_URL;
   const ogImage = image.startsWith('http') ? image : `${SITE_URL}${image}`;
 
-  const jsonLdArray = jsonLd
-    ? Array.isArray(jsonLd)
-      ? jsonLd
-      : [jsonLd]
-    : [];
+  const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
   return (
-    <Helmet>
-      <html lang="ru" />
+    <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
@@ -67,7 +62,7 @@ const SEO = ({
           {JSON.stringify(data)}
         </script>
       ))}
-    </Helmet>
+    </Head>
   );
 };
 
