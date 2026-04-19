@@ -48,8 +48,8 @@ import drawings6 from "@/assets/drawings-6.webp";
 import drawings7 from "@/assets/drawings-7.webp";
 import folding1 from "@/assets/folding-1.webp";
 import folding2 from "@/assets/folding-2.webp";
-import folding3 from "@/assets/folding-3.jpg";
-import folding4 from "@/assets/folding-4.jpg";
+import folding3 from "@/assets/folding-3.webp";
+import folding4 from "@/assets/folding-4.webp";
 
 interface Project {
   images: string[];
