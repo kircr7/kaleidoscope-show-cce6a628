@@ -557,7 +557,7 @@ const OrderSection = () => {
                           </p>
                         ) : (
                           <p className="text-[11px] animate-fade-in" style={{ color: 'hsl(266,92%,78%)' }}>
-                            Добавьте ещё {remaining} шт., чтобы цена за лист стала в 2 раза ниже!
+                            Добавьте {remaining} шт. для оптовой цены
                           </p>
                         )}
                       </div>
