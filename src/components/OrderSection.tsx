@@ -152,7 +152,7 @@ const OrderSection = () => {
 
   const stats = useMemo(() => {
     const subtotal = cart.reduce((acc, item) => acc + getItemTotal(item), 0);
-    const discountApplicable = subtotal >= 1000;
+    const discountApplicable = subtotal >= 2000;
     const discount = discountApplicable ? subtotal * 0.20 : 0;
     return { subtotal, discount, total: subtotal - discount, discountApplicable };
   }, [cart, foldingEnabled]);
