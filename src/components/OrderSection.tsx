@@ -711,7 +711,21 @@ const OrderSection = () => {
                                   <button onClick={() => updateQuantity(item.id, -1)} className="p-1 sm:p-1.5 transition-colors rounded-l-lg hover:bg-white/5">
                                     <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
                                   </button>
-                                  <span className="px-1.5 sm:px-2.5 text-xs sm:text-sm font-bold min-w-[24px] text-center text-white">{item.quantity}</span>
+                                  <input
+                                    type="number"
+                                    min={1}
+                                    max={9999}
+                                    value={item.quantity}
+                                    onChange={(e) => {
+                                      const v = parseInt(e.target.value, 10);
+                                      if (!isNaN(v)) setItemQuantity(item.id, v);
+                                      else setItemQuantity(item.id, 1);
+                                    }}
+                                    onBlur={(e) => {
+                                      if (!e.target.value) setItemQuantity(item.id, 1);
+                                    }}
+                                    className="w-10 sm:w-12 bg-transparent px-1 text-xs sm:text-sm font-bold text-center text-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:bg-white/5"
+                                  />
                                   <button onClick={() => updateQuantity(item.id, 1)} className="p-1 sm:p-1.5 transition-colors rounded-r-lg hover:bg-white/5">
                                     <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
                                   </button>
