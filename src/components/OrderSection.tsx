@@ -533,7 +533,7 @@ const OrderSection = () => {
                     return (
                       <div className="mb-2 px-1 space-y-1">
                         <div className="flex items-baseline justify-between">
-                          <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsl(0,0%,60%)' }}>
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-white">
                             Текущая цена за 1 шт:
                           </span>
                           <span className="flex items-baseline gap-2">
