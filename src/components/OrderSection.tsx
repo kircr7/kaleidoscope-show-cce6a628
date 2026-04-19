@@ -13,7 +13,23 @@ interface CartItem {
   unitPrice: number;
   quantity: number;
   isService: boolean;
+  isColor?: boolean;
 }
+
+// Tier pricing: base price in PRICES = wholesale (50+ items)
+// 1-9 шт: +30% (round up to integer)
+// 10-49 шт: ~+16% (midpoint, round up)
+// 50+ шт: base price
+const getTierMultiplier = (qty: number) => {
+  if (qty >= 50) return 1;
+  if (qty >= 10) return 1.16;
+  return 1.3;
+};
+
+const getTierUnitPrice = (format: string, isColor: boolean, qty: number) => {
+  const base = isColor ? PRICES[format].color : PRICES[format].bw;
+  return Math.ceil(base * getTierMultiplier(qty));
+};
 
 const PRICES: Record<string, { bw: number; color: number; label: string }> = {
   A4: { bw: 5, color: 10, label: 'A4 (210×297 мм)' },
