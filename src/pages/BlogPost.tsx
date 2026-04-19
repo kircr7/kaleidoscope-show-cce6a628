@@ -70,12 +70,45 @@ const BlogPost = () => {
   const image = article ? article.image : legacyPost!.image;
   const h1 = article ? article.h1 : legacyPost!.title;
 
+  const SUFFIX = " | ПринтПРО";
+  const fullTitle = `${title}${SUFFIX}`;
+  const finalTitle = fullTitle.length > 60 ? title : fullTitle;
+
+  const absImage = image.startsWith("http") ? image : `https://printprro.ru${image}`;
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: h1,
+    datePublished: date,
+    image: absImage,
+    author: { "@type": "Organization", name: "PrintPRO" },
+    publisher: {
+      "@type": "Organization",
+      name: "PrintPRO",
+      logo: { "@type": "ImageObject", url: "https://printprro.ru/og-image.jpg" },
+    },
+    mainEntityOfPage: `https://printprro.ru/blog/${slug}`,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://printprro.ru/" },
+      { "@type": "ListItem", position: 2, name: "Блог", item: "https://printprro.ru/blog" },
+      { "@type": "ListItem", position: 3, name: h1, item: `https://printprro.ru/blog/${slug}` },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-black overflow-x-hidden">
       <SEO
-        title={`${title} | ПринтПРО`}
+        title={finalTitle}
         description={description}
-        keywords={`${category}, печать чертежей, проектная документация`}
+        type="article"
+        image={absImage}
+        jsonLd={[articleJsonLd, breadcrumbJsonLd]}
       />
       <Navbar />
 
