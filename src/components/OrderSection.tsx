@@ -88,13 +88,14 @@ const OrderSection = () => {
   }, []);
 
   const addPrintToCart = () => {
-    const unitPrice = getTierUnitPrice(format, isColor, quantity);
+    const qty = Math.max(1, quantity || 1);
+    const unitPrice = getTierUnitPrice(format, isColor, qty);
     setCart(prev => [...prev, {
       id: Date.now(),
       label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
       format,
       unitPrice,
-      quantity,
+      quantity: qty,
       isService: false,
       isColor,
     }]);
@@ -114,13 +115,16 @@ const OrderSection = () => {
 
   const removeItem = (id: number) => setCart(cart.filter(item => item.id !== id));
 
-  const setItemQuantity = (id: number, qty: number) => {
-    const newQty = Math.max(1, Math.min(9999, Math.floor(qty) || 1));
+  const setItemQuantity = (id: number, qty: number, allowZero = false) => {
+    const min = allowZero ? 0 : 1;
+    const newQty = Math.max(min, Math.min(9999, Math.floor(qty)));
     setCart(prev => prev.map(item => {
       if (item.id !== id) return item;
+      const effectiveQty = newQty < 1 ? item.quantity : newQty;
       const newUnitPrice = !item.isService
-        ? getTierUnitPrice(item.format, !!item.isColor, newQty)
+        ? getTierUnitPrice(item.format, !!item.isColor, Math.max(1, newQty))
         : item.unitPrice;
+      // Store newQty as-is (may be 0 for empty input); used for display only
       return { ...item, quantity: newQty, unitPrice: newUnitPrice };
     }));
   };
@@ -584,12 +588,14 @@ const OrderSection = () => {
                         type="number"
                         min={1}
                         max={9999}
-                        value={quantity}
+                        value={quantity === 0 ? '' : quantity}
                         onChange={(e) => {
-                          const val = parseInt(e.target.value, 10);
-                          if (!isNaN(val) && val >= 1 && val <= 9999) setQuantity(val);
-                          else if (e.target.value === '') setQuantity(1);
+                          const raw = e.target.value;
+                          if (raw === '') { setQuantity(0); return; }
+                          const val = parseInt(raw, 10);
+                          if (!isNaN(val) && val >= 0 && val <= 9999) setQuantity(val);
                         }}
+                        onBlur={() => { if (!quantity || quantity < 1) setQuantity(1); }}
                         className="w-12 text-center font-bold text-sm outline-none bg-transparent text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       />
                       <button onClick={() => setQuantity(quantity + 1)} className="text-xl font-light p-2 transition-colors" style={{ color: 'hsl(0,0%,60%)' }}>+</button>
@@ -715,14 +721,15 @@ const OrderSection = () => {
                                     type="number"
                                     min={1}
                                     max={9999}
-                                    value={item.quantity}
+                                    value={item.quantity === 0 ? '' : item.quantity}
                                     onChange={(e) => {
-                                      const v = parseInt(e.target.value, 10);
-                                      if (!isNaN(v)) setItemQuantity(item.id, v);
-                                      else setItemQuantity(item.id, 1);
+                                      const raw = e.target.value;
+                                      if (raw === '') { setItemQuantity(item.id, 0, true); return; }
+                                      const v = parseInt(raw, 10);
+                                      if (!isNaN(v) && v >= 0 && v <= 9999) setItemQuantity(item.id, v, true);
                                     }}
-                                    onBlur={(e) => {
-                                      if (!e.target.value) setItemQuantity(item.id, 1);
+                                    onBlur={() => {
+                                      if (!item.quantity || item.quantity < 1) setItemQuantity(item.id, 1);
                                     }}
                                     className="w-10 sm:w-12 bg-transparent px-1 text-xs sm:text-sm font-bold text-center text-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:bg-white/5"
                                   />
