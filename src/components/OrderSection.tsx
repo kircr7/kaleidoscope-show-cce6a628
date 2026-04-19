@@ -16,19 +16,19 @@ interface CartItem {
   isColor?: boolean;
 }
 
-// Tier pricing: base price in PRICES = wholesale (50+ items)
-// 1-9 шт: +30% (round up to integer)
-// 10-49 шт: ~+16% (midpoint, round up)
-// 50+ шт: base price
-const getTierMultiplier = (qty: number) => {
-  if (qty >= 50) return 1;
-  if (qty >= 10) return 1.16;
-  return 1.3;
-};
+// Wholesale threshold by format:
+// Big formats (A0, A1, A2): below 5 шт → ×2, 5+ → base
+// Small formats (A3, A4): below 20 шт → ×2, 20+ → base
+const LARGE_FORMATS = ['A0', 'A1', 'A2'];
+const getWholesaleThreshold = (format: string) =>
+  LARGE_FORMATS.includes(format) ? 5 : 20;
+
+const getTierMultiplier = (format: string, qty: number) =>
+  qty >= getWholesaleThreshold(format) ? 1 : 2;
 
 const getTierUnitPrice = (format: string, isColor: boolean, qty: number) => {
   const base = isColor ? PRICES[format].color : PRICES[format].bw;
-  return Math.ceil(base * getTierMultiplier(qty));
+  return base * getTierMultiplier(format, qty);
 };
 
 const PRICES: Record<string, { bw: number; color: number; label: string }> = {
@@ -525,25 +525,43 @@ const OrderSection = () => {
                   </div>
 
                   {/* Live unit price hint based on current quantity tier */}
-                  <div className="flex items-baseline justify-between mb-2 px-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsl(0,0%,60%)' }}>
-                      Цена за 1 шт:
-                    </span>
-                    <span className="flex items-baseline gap-2">
-                      {currentUnitPrice > wholesalePrice && (
-                        <span className="text-xs line-through" style={{ color: 'hsl(0,0%,45%)' }}>
-                          {wholesalePrice} ₽
-                        </span>
-                      )}
-                      <span
-                        key={currentUnitPrice}
-                        className="text-base font-black animate-fade-in"
-                        style={{ color: currentUnitPrice === wholesalePrice ? 'hsl(142,71%,55%)' : 'hsl(266,92%,78%)' }}
-                      >
-                        {currentUnitPrice} ₽
-                      </span>
-                    </span>
-                  </div>
+                  {(() => {
+                    const threshold = getWholesaleThreshold(format);
+                    const remaining = Math.max(0, threshold - quantity);
+                    const atWholesale = currentUnitPrice === wholesalePrice;
+                    return (
+                      <div className="mb-2 px-1 space-y-1">
+                        <div className="flex items-baseline justify-between">
+                          <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: 'hsl(0,0%,60%)' }}>
+                            Текущая цена за 1 шт:
+                          </span>
+                          <span className="flex items-baseline gap-2">
+                            {currentUnitPrice > wholesalePrice && (
+                              <span className="text-xs line-through" style={{ color: 'hsl(0,0%,45%)' }}>
+                                {wholesalePrice} ₽
+                              </span>
+                            )}
+                            <span
+                              key={currentUnitPrice}
+                              className="text-base font-black animate-fade-in"
+                              style={{ color: atWholesale ? 'hsl(142,71%,55%)' : 'hsl(266,92%,78%)' }}
+                            >
+                              {currentUnitPrice} ₽
+                            </span>
+                          </span>
+                        </div>
+                        {atWholesale ? (
+                          <p className="text-[11px] font-semibold animate-fade-in" style={{ color: 'hsl(142,71%,55%)' }}>
+                            ✓ Применена оптовая цена!
+                          </p>
+                        ) : (
+                          <p className="text-[11px] animate-fade-in" style={{ color: 'hsl(266,92%,78%)' }}>
+                            Добавьте ещё {remaining} шт., чтобы цена за лист стала в 2 раза ниже!
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })()}
 
                   <div className="flex gap-2 sm:gap-3 mb-4">
                     <div
