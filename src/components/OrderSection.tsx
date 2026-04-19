@@ -17,11 +17,12 @@ interface CartItem {
 }
 
 // Wholesale threshold by format:
-// Big formats (A0, A1, A2): below 5 шт → ×2, 5+ → base
-// Small formats (A3, A4): below 20 шт → ×2, 20+ → base
-const LARGE_FORMATS = ['A0', 'A1', 'A2'];
+// A0, A1, A2 → 5 шт; A3 → 20 шт; A4 → 50 шт. Ниже порога цена ×2.
+const WHOLESALE_THRESHOLDS: Record<string, number> = {
+  A0: 5, A1: 5, A2: 5, A3: 20, A4: 50,
+};
 const getWholesaleThreshold = (format: string) =>
-  LARGE_FORMATS.includes(format) ? 5 : 20;
+  WHOLESALE_THRESHOLDS[format] ?? 20;
 
 const getTierMultiplier = (format: string, qty: number) =>
   qty >= getWholesaleThreshold(format) ? 1 : 2;

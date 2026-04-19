@@ -4,7 +4,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 // Розница = базовая цена × 2 (тираж ниже порога).
 // Опт = базовая цена. Порог: А0–А2 — от 5 шт, А3–А4 — от 20 шт.
 const bwPrices = [
-  { format: "A4", size: "210×297 мм", threshold: 20, retail: "10 ₽", wholesale: "5 ₽" },
+  { format: "A4", size: "210×297 мм", threshold: 50, retail: "10 ₽", wholesale: "5 ₽" },
   { format: "A3", size: "297×420 мм", threshold: 20, retail: "28 ₽", wholesale: "14 ₽" },
   { format: "A2", size: "420×594 мм", threshold: 5, retail: "60 ₽", wholesale: "30 ₽" },
   { format: "A1", size: "594×841 мм", threshold: 5, retail: "100 ₽", wholesale: "50 ₽" },
@@ -12,7 +12,7 @@ const bwPrices = [
 ];
 
 const colorPrices = [
-  { format: "A4", size: "210×297 мм", threshold: 20, retail: "20 ₽", wholesale: "10 ₽" },
+  { format: "A4", size: "210×297 мм", threshold: 50, retail: "20 ₽", wholesale: "10 ₽" },
   { format: "A3", size: "297×420 мм", threshold: 20, retail: "48 ₽", wholesale: "24 ₽" },
   { format: "A2", size: "420×594 мм", threshold: 5, retail: "80 ₽", wholesale: "40 ₽" },
   { format: "A1", size: "594×841 мм", threshold: 5, retail: "140 ₽", wholesale: "70 ₽" },
