@@ -50,7 +50,7 @@ const projects: Project[] = [
   { images: [projDoc2, projDoc3, projDoc4, projDoc1, projDoc5, projDoc6, projDoc7], title: "Печать проектной документации", tags: ["А1", "Фальцовка"] },
   { images: [workDoc1, workDoc2, workDoc3, workDoc4, workDoc5], title: "Печать рабочей документации", tags: ["А0", "ЧБ"] },
   { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
-  { images: [work4, work11], title: "Архитектурные планы", tags: ["А1", "Цвет"] },
+  { images: [work4, work11], title: "Печать чертежей", tags: ["А1", "Цвет"] },
   { images: [binding1, binding2, binding3, binding4, binding5, binding6, binding7, binding8], title: "Брошюровка на пластиковую пружину", tags: ["А4", "Пружина"] },
   { images: [work6], title: "Генеральный план", tags: ["А0", "Цвет"] },
 ];
