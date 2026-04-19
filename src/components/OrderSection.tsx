@@ -721,14 +721,15 @@ const OrderSection = () => {
                                     type="number"
                                     min={1}
                                     max={9999}
-                                    value={item.quantity}
+                                    value={item.quantity === 0 ? '' : item.quantity}
                                     onChange={(e) => {
-                                      const v = parseInt(e.target.value, 10);
-                                      if (!isNaN(v)) setItemQuantity(item.id, v);
-                                      else setItemQuantity(item.id, 1);
+                                      const raw = e.target.value;
+                                      if (raw === '') { setItemQuantity(item.id, 0, true); return; }
+                                      const v = parseInt(raw, 10);
+                                      if (!isNaN(v) && v >= 0 && v <= 9999) setItemQuantity(item.id, v, true);
                                     }}
-                                    onBlur={(e) => {
-                                      if (!e.target.value) setItemQuantity(item.id, 1);
+                                    onBlur={() => {
+                                      if (!item.quantity || item.quantity < 1) setItemQuantity(item.id, 1);
                                     }}
                                     className="w-10 sm:w-12 bg-transparent px-1 text-xs sm:text-sm font-bold text-center text-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:bg-white/5"
                                   />
