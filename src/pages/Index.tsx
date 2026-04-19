@@ -78,15 +78,15 @@ const Index = () => {
             className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-balance text-foreground opacity-0"
             style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0ms forwards" }}
           >
-            Инженерная печать
+            Печать проектной
             <br />
-            чертежей и документации
+            и рабочей документации
           </h1>
           <p
             className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto opacity-0 px-2"
             style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 150ms forwards" }}
           >
-            Печать проектной, рабочей и исполнительной документации любого формата — от A4 до A0
+            Срочно распечатать чертежи форматов А4, А3, А2, А3, А1 (цвет/чб) с фальцовкой по ГОСТ
           </p>
         </div>
         <CarouselSection />
