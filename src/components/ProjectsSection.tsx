@@ -55,15 +55,16 @@ interface Project {
   images: string[];
   title: string;
   tags: string[];
+  altBase: string;
 }
 
 const projects: Project[] = [
-  { images: [projDoc2, projDoc3, projDoc4, projDoc1, projDoc5, projDoc6, projDoc7], title: "Печать проектной документации", tags: ["А1", "Фальцовка"] },
-  { images: [workDoc1, workDoc2, workDoc3, workDoc4, workDoc5], title: "Печать рабочей документации", tags: ["А0", "ЧБ"] },
-  { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
-  { images: [drawings1, drawings2, drawings3, drawings4, drawings5, drawings6, drawings7], title: "Печать чертежей", tags: ["А1", "Цвет"] },
-  { images: [binding1, binding2, binding3, binding4, binding5, binding6, binding7, binding8], title: "Брошюровка на пластиковую пружину", tags: ["А4", "Пружина"] },
-  { images: [folding1, folding2, folding3, folding4], title: "Фальцовка чертежей", tags: ["А0", "Фальцовка"] },
+  { images: [projDoc2, projDoc3, projDoc4, projDoc1, projDoc5, projDoc6, projDoc7], title: "Печать проектной документации", tags: ["А1", "Фальцовка"], altBase: "Печать проектной документации А1 с фальцовкой — распечатать проектную документацию" },
+  { images: [workDoc1, workDoc2, workDoc3, workDoc4, workDoc5], title: "Печать рабочей документации", tags: ["А0", "ЧБ"], altBase: "Печать рабочей документации А0 чб — распечатать рабочую документацию (рабочку)" },
+  { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"], altBase: "Печать исполнительной документации А3 с брошюровкой — распечатать исполнительную" },
+  { images: [drawings1, drawings2, drawings3, drawings4, drawings5, drawings6, drawings7], title: "Печать чертежей", tags: ["А1", "Цвет"], altBase: "Цветная печать чертежа А1 — распечатать чертеж в типографии" },
+  { images: [binding1, binding2, binding3, binding4, binding5, binding6, binding7, binding8], title: "Брошюровка на пластиковую пружину", tags: ["А4", "Пружина"], altBase: "Брошюровка документации А4 на пластиковую пружину — печать А4 чб и цвет" },
+  { images: [folding1, folding2, folding3, folding4], title: "Фальцовка чертежей", tags: ["А0", "Фальцовка"], altBase: "Фальцовка чертежа А0 по ГОСТ — печать А0 и фальцовка" },
 ];
 
 const SWIPE_THRESHOLD = 40;
@@ -71,6 +72,7 @@ const SWIPE_THRESHOLD = 40;
 interface ImageSliderProps {
   images: string[];
   title: string;
+  altBase: string;
   onImageClick: (index: number) => void;
   rounded?: string;
   aspect?: string;
@@ -80,6 +82,7 @@ interface ImageSliderProps {
 const ImageSlider = ({
   images,
   title,
+  altBase,
   onImageClick,
   rounded = "",
   aspect = "aspect-[4/3]",
@@ -122,7 +125,7 @@ const ImageSlider = ({
           >
             <img
               src={src}
-              alt={`${title} — фото ${i + 1}`}
+              alt={`${altBase} — фото ${i + 1}`}
               loading="lazy"
               className="w-full h-full object-cover"
               draggable={false}
@@ -236,7 +239,7 @@ const Lightbox = ({ project, startIndex, onClose }: LightboxProps) => {
           >
             <img
               src={project.images[index]}
-              alt={`${project.title} — фото ${index + 1}`}
+              alt={`${project.altBase} — фото ${index + 1}`}
               className="w-full max-h-[85vh] object-contain"
             />
 
@@ -286,6 +289,7 @@ const ProjectCard = ({
     <ImageSlider
       images={project.images}
       title={project.title}
+      altBase={project.altBase}
       onImageClick={(i) => onOpen(project, i)}
     />
     <div className="p-4 sm:p-5">
