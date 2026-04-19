@@ -54,7 +54,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "kak-podgotovit-fayly-dlya-pechati",
-    title: "Как подготовить файлы для печати чертежей: советы инженерам",
+    title: "Как подготовить PDF и DWG для печати чертежей",
     excerpt: "Практические рекомендации по подготовке PDF, DWG и других форматов для качественной широкоформатной печати.",
     category: "Советы",
     image: blogFilePrep,
@@ -90,7 +90,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "vidy-pereplyota-dlya-proektnoy-dokumentacii",
-    title: "Виды переплёта для проектной документации: что выбрать?",
+    title: "Виды переплета проектной документации: что выбрать",
     excerpt: "Сравниваем пластиковую пружину, металлический переплёт и твёрдый канальный переплёт для разных типов документации.",
     category: "Обзоры",
     image: blogBindingTypes,
