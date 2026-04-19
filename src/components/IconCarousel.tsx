@@ -23,6 +23,7 @@ interface SmallItem {
 interface LargeItem {
   image: string;
   label: string;
+  alt: string;
 }
 
 const smallItems: SmallItem[] = [
@@ -42,11 +43,11 @@ const smallItems: SmallItem[] = [
 // Чтобы изменить картинку — поменяйте image
 // =============================================
 const largeItems: LargeItem[] = [
-  { image: outputBlueprint, label: "Чертежи" },
-  { image: outputPoster, label: "Проектная" },
-  { image: outputSpec, label: "Рабочая" },
-  { image: outputSection, label: "Исполнительная" },
-  { image: outputDocs, label: "Документы" },
+  { image: outputBlueprint, label: "Чертежи", alt: "Печать чертежа А1 — распечатать чертеж в типографии ПринтПРО" },
+  { image: outputPoster, label: "Проектная", alt: "Печать проектной документации — распечатать проектную документацию А1, А2, А3" },
+  { image: outputSpec, label: "Рабочая", alt: "Печать рабочей документации — распечатать рабочую документацию (рабочку) формата А3, А2" },
+  { image: outputSection, label: "Исполнительная", alt: "Печать исполнительной документации — распечатать исполнительную документацию А3, А4" },
+  { image: outputDocs, label: "Документы", alt: "Печать документации А4 чб и цвет — распечатка документации формата А4" },
 ];
 
 interface Props {
@@ -119,7 +120,8 @@ const IconCarousel = ({ side }: Props) => {
             <div className="flex-1 overflow-hidden">
               <img
                 src={item.image}
-                alt={item.label}
+                alt={item.alt}
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
