@@ -38,7 +38,7 @@ const projects: Project[] = [
   { images: [work2, work8, work9], title: "Печать рабочей документации", tags: ["А0", "ЧБ"] },
   { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
   { images: [work4, work11], title: "Архитектурные планы", tags: ["А1", "Цвет"] },
-  { images: [work5, work12], title: "Инженерные схемы", tags: ["А2", "Фальцовка"] },
+  { images: [work5, work12], title: "Брошюровка на пластиковую пружину", tags: ["А4", "Пружина"] },
   { images: [work6], title: "Генеральный план", tags: ["А0", "Цвет"] },
 ];
 
