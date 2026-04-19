@@ -21,7 +21,7 @@ interface Project {
 }
 
 const projects: Project[] = [
-  { images: [work1, work7], title: "Печать проектной документации", tags: ["А1", "Фальцовка"] },
+  { images: [work1, work7], title: "Печать проектной и рабочей документации", tags: ["А1", "Фальцовка"] },
   { images: [work2, work8, work9], title: "Рабочие чертежи", tags: ["А0", "ЧБ"] },
   { images: [work3, work10], title: "Исполнительная документация", tags: ["А3", "Брошюровка"] },
   { images: [work4, work11], title: "Архитектурные планы", tags: ["А1", "Цвет"] },
