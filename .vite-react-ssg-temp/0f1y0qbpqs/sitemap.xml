@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://printprro.ru/</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://printprro.ru/blog</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Articles -->
+  <url><loc>https://printprro.ru/blog/pechat-proektnoy-dokumentacii-moskva</loc><lastmod>2026-04-19</lastmod><priority>0.7</priority></url>
+  <url><loc>https://printprro.ru/blog/pechat-rabochey-dokumentacii</loc><lastmod>2026-04-19</lastmod><priority>0.7</priority></url>
+  <url><loc>https://printprro.ru/blog/ispolnitelnaya-dokumentaciya-pechat</loc><lastmod>2026-04-19</lastmod><priority>0.7</priority></url>
+  <url><loc>https://printprro.ru/blog/pechat-chertezhey-a0-a1-a2</loc><lastmod>2026-04-19</lastmod><priority>0.7</priority></url>
+  <url><loc>https://printprro.ru/blog/falcovka-i-pereplet-chertezhey</loc><lastmod>2026-04-19</lastmod><priority>0.7</priority></url>
+
+  <!-- Legacy blog posts -->
+  <url><loc>https://printprro.ru/blog/trebovaniya-gost-k-pechati-chertezhey</loc><lastmod>2026-04-19</lastmod><priority>0.6</priority></url>
+
+  <!-- Legal -->
+  <url><loc>https://printprro.ru/privacy</loc><lastmod>2026-04-19</lastmod><priority>0.3</priority></url>
+  <url><loc>https://printprro.ru/terms</loc><lastmod>2026-04-19</lastmod><priority>0.3</priority></url>
+</urlset>
