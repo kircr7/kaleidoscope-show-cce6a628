@@ -114,11 +114,21 @@ const OrderSection = () => {
 
   const removeItem = (id: number) => setCart(cart.filter(item => item.id !== id));
 
+  const setItemQuantity = (id: number, qty: number) => {
+    const newQty = Math.max(1, Math.min(9999, Math.floor(qty) || 1));
+    setCart(prev => prev.map(item => {
+      if (item.id !== id) return item;
+      const newUnitPrice = !item.isService
+        ? getTierUnitPrice(item.format, !!item.isColor, newQty)
+        : item.unitPrice;
+      return { ...item, quantity: newQty, unitPrice: newUnitPrice };
+    }));
+  };
+
   const updateQuantity = (id: number, delta: number) => {
     setCart(prev => prev.map(item => {
       if (item.id !== id) return item;
       const newQty = Math.max(1, item.quantity + delta);
-      // Recalculate tiered price for print items
       const newUnitPrice = !item.isService
         ? getTierUnitPrice(item.format, !!item.isColor, newQty)
         : item.unitPrice;
