@@ -316,12 +316,43 @@ const ProjectCard = ({
 
 const ProjectsSection = () => {
   const [active, setActive] = useState<{ project: Project; index: number } | null>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [activeCard, setActiveCard] = useState(0);
+
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const cards = Array.from(scroller.querySelectorAll<HTMLElement>("[data-project-card]"));
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) {
+          const idx = cards.indexOf(visible.target as HTMLElement);
+          if (idx >= 0) setActiveCard(idx);
+        }
+      },
+      { root: scroller, threshold: [0.5, 0.75, 1] }
+    );
+    cards.forEach((c) => observer.observe(c));
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollToCard = (idx: number) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const cards = scroller.querySelectorAll<HTMLElement>("[data-project-card]");
+    cards[idx]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  };
 
   return (
     <section className="py-12 sm:py-16 md:py-24 px-3 sm:px-4">
       <div className="container max-w-6xl mx-auto">
         <div
-          className="mb-8 sm:mb-12 opacity-0"
+          className="mb-6 sm:mb-12 opacity-0"
           style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 100ms forwards" }}
         >
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-foreground">
@@ -330,19 +361,47 @@ const ProjectsSection = () => {
           <p className="mt-3 text-muted-foreground text-base sm:text-lg max-w-2xl">
             Примеры работ, которые мы напечатали для наших клиентов
           </p>
+          <p className="mt-3 text-sm text-primary/80 font-medium flex items-center gap-2 sm:hidden">
+            <ChevronLeft className="w-4 h-4" />
+            <span>Смахните, чтобы увидеть все {projects.length}</span>
+            <ChevronRight className="w-4 h-4" />
+          </p>
         </div>
 
-        <div
-          className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-3 sm:mx-0 px-3 sm:px-0 pb-2 sm:pb-0 scrollbar-hide opacity-0"
-          style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards" }}
-        >
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              onOpen={(p, i) => setActive({ project: p, index: i })}
-            />
-          ))}
+        <div className="relative">
+          <div
+            ref={scrollerRef}
+            className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-3 sm:mx-0 px-3 sm:px-0 pb-2 sm:pb-0 scrollbar-hide opacity-0"
+            style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards" }}
+          >
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                onOpen={(p, i) => setActive({ project: p, index: i })}
+              />
+            ))}
+          </div>
+
+          {/* Mobile-only: dots + counter */}
+          <div className="mt-4 flex items-center justify-center gap-3 sm:hidden">
+            <div className="flex gap-1.5">
+              {projects.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => scrollToCard(i)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === activeCard ? "w-6 bg-primary" : "w-1.5 bg-white/30 hover:bg-white/50"
+                  }`}
+                  aria-label={`Перейти к проекту ${i + 1}`}
+                />
+              ))}
+            </div>
+            <span className="text-xs text-muted-foreground tabular-nums">
+              {activeCard + 1} / {projects.length}
+            </span>
+          </div>
         </div>
       </div>
 
