@@ -1,20 +1,22 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
+// Розница = базовая цена × 2 (тираж ниже порога).
+// Опт = базовая цена. Порог: А0–А2 — от 5 шт, А3–А4 — от 20 шт.
 const bwPrices = [
-  { format: "A4", size: "210×297 мм", under100: "5 ₽", over100: "4 ₽" },
-  { format: "A3", size: "297×420 мм", under100: "14 ₽", over100: "11 ₽" },
-  { format: "A2", size: "420×594 мм", under100: "30 ₽", over100: "24 ₽" },
-  { format: "A1", size: "594×841 мм", under100: "50 ₽", over100: "40 ₽" },
-  { format: "A0", size: "841×1189 мм", under100: "100 ₽", over100: "80 ₽" },
+  { format: "A4", size: "210×297 мм", threshold: 20, retail: "10 ₽", wholesale: "5 ₽" },
+  { format: "A3", size: "297×420 мм", threshold: 20, retail: "28 ₽", wholesale: "14 ₽" },
+  { format: "A2", size: "420×594 мм", threshold: 5, retail: "60 ₽", wholesale: "30 ₽" },
+  { format: "A1", size: "594×841 мм", threshold: 5, retail: "100 ₽", wholesale: "50 ₽" },
+  { format: "A0", size: "841×1189 мм", threshold: 5, retail: "200 ₽", wholesale: "100 ₽" },
 ];
 
 const colorPrices = [
-  { format: "A4", size: "210×297 мм", under100: "10 ₽", over100: "8 ₽" },
-  { format: "A3", size: "297×420 мм", under100: "24 ₽", over100: "19 ₽" },
-  { format: "A2", size: "420×594 мм", under100: "40 ₽", over100: "32 ₽" },
-  { format: "A1", size: "594×841 мм", under100: "70 ₽", over100: "56 ₽" },
-  { format: "A0", size: "841×1189 мм", under100: "110 ₽", over100: "88 ₽" },
+  { format: "A4", size: "210×297 мм", threshold: 20, retail: "20 ₽", wholesale: "10 ₽" },
+  { format: "A3", size: "297×420 мм", threshold: 20, retail: "48 ₽", wholesale: "24 ₽" },
+  { format: "A2", size: "420×594 мм", threshold: 5, retail: "80 ₽", wholesale: "40 ₽" },
+  { format: "A1", size: "594×841 мм", threshold: 5, retail: "140 ₽", wholesale: "70 ₽" },
+  { format: "A0", size: "841×1189 мм", threshold: 5, retail: "220 ₽", wholesale: "110 ₽" },
 ];
 
 const scanPrices = [
@@ -80,19 +82,19 @@ const PriceCard = ({
 
       <div className={`pt-2 space-y-1.5 border-t ${isBw ? "border-border/20" : "border-white/20"}`}>
         <div className="flex justify-between items-center">
-          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>обычная цена</span>
+          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>розница (×2)</span>
           <span className={`text-sm font-semibold ${isBw ? "text-foreground" : "text-white"}`}>
-            {item.under100}
+            {item.retail}
           </span>
         </div>
         <div className="flex justify-between items-center">
-          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>от 100 листов</span>
+          <span className={`text-xs ${isBw ? "text-muted-foreground/60" : "text-white/50"}`}>опт от {item.threshold} шт</span>
           <span
             className={`text-sm font-semibold ${
               isBw ? "text-emerald-400" : "text-yellow-200 drop-shadow-sm"
             }`}
           >
-            {item.over100}
+            {item.wholesale}
           </span>
         </div>
       </div>
