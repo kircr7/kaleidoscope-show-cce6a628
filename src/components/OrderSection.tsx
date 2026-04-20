@@ -710,9 +710,9 @@ const OrderSection = () => {
                                   <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
                                     <button
                                       onClick={() => updateQuantity(item.id, -1)}
-                                      className="p-1 transition-all duration-150 rounded-l-lg hover:bg-red-500/15 hover:shadow-[0_0_12px_hsla(0,84%,60%,0.55)] active:bg-red-500/25 active:shadow-[0_0_18px_hsla(0,84%,60%,0.8)] group/minus"
+                                      className="p-1 rounded-l-lg group/minus"
                                     >
-                                      <Minus className="w-3 h-3 transition-colors group-hover/minus:text-red-400 group-active/minus:text-red-300" style={{ color: 'hsl(0,0%,60%)' }} />
+                                      <Minus className="w-3 h-3 transition-all duration-150 group-hover/minus:text-red-400 group-hover/minus:drop-shadow-[0_0_6px_hsla(0,84%,60%,0.9)] group-active/minus:text-red-300 group-active/minus:drop-shadow-[0_0_10px_hsla(0,84%,60%,1)]" style={{ color: 'hsl(0,0%,60%)' }} />
                                     </button>
                                     <input
                                       type="number"
