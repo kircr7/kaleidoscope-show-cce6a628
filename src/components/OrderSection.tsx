@@ -598,7 +598,7 @@ const OrderSection = () => {
                         onBlur={() => { if (!quantity || quantity < 1) setQuantity(1); }}
                         className="w-12 text-center font-bold text-sm outline-none bg-transparent text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       />
-                      <button onClick={() => setQuantity(quantity + 1)} className="text-xl font-light p-2 transition-colors" style={{ color: 'hsl(0,0%,60%)' }}>+</button>
+                      <button onClick={() => setQuantity(quantity + 1)} className="text-xl font-light p-2 transition-all duration-150 text-[hsl(0,0%,60%)] hover:text-[hsl(140,100%,55%)] hover:[text-shadow:0_0_6px_hsl(140_100%_50%/0.9)] active:text-[hsl(140,100%,48%)]">+</button>
                     </div>
                     <button
                       onClick={addPrintToCart}
