@@ -32,12 +32,12 @@ const getTierUnitPrice = (format: string, isColor: boolean, qty: number) => {
   return base * getTierMultiplier(format, qty);
 };
 
-const PRICES: Record<string, { bw: number; color: number; label: string }> = {
-  A4: { bw: 5, color: 10, label: 'A4 (210×297 мм)' },
-  A3: { bw: 14, color: 24, label: 'A3 (297×420 мм)' },
-  A2: { bw: 30, color: 40, label: 'A2 (420×594 мм)' },
-  A1: { bw: 50, color: 70, label: 'A1 (594×841 мм)' },
-  A0: { bw: 100, color: 110, label: 'A0 (841×1189 мм)' },
+const PRICES: Record<string, { bw: number; color: number; label: string; size: string }> = {
+  A4: { bw: 5, color: 10, label: 'A4', size: '210×297 мм' },
+  A3: { bw: 14, color: 24, label: 'A3', size: '297×420 мм' },
+  A2: { bw: 30, color: 40, label: 'A2', size: '420×594 мм' },
+  A1: { bw: 50, color: 70, label: 'A1', size: '594×841 мм' },
+  A0: { bw: 100, color: 110, label: 'A0', size: '841×1189 мм' },
 };
 
 const FOLDING_PRICES: Record<string, number> = {
