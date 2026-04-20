@@ -61,7 +61,7 @@ const Navbar = () => {
             key={link.name}
             href={link.href}
             onClick={(e) => handleNavClick(e, link.href)}
-            className="px-3 lg:px-5 py-2 rounded-full text-xs font-medium text-white/50 hover:text-white hover:bg-white/[0.06] transition-all duration-300 active:scale-95 whitespace-nowrap"
+            className="px-3 lg:px-5 py-2 rounded-full text-sm font-medium text-white/50 hover:text-white hover:bg-white/[0.06] transition-all duration-300 active:scale-95 whitespace-nowrap"
           >
             {link.name}
           </a>
@@ -75,7 +75,7 @@ const Navbar = () => {
           style={{ background: 'linear-gradient(to right, #22d3ee, #3b82f6, #ec4899)' }}
         >
           <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-pink-500 blur-md opacity-0 cta-glow" />
-          <span className="relative block px-4 lg:px-6 py-2.5 rounded-full text-xs font-bold text-white whitespace-nowrap" style={{ background: 'hsl(0, 0%, 8%)' }}>
+          <span className="relative block px-4 lg:px-6 py-2.5 rounded-full text-sm font-bold text-white whitespace-nowrap" style={{ background: 'hsl(0, 0%, 8%)' }}>
             Сделать заказ
           </span>
         </a>
