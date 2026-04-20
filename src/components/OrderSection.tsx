@@ -679,12 +679,12 @@ const OrderSection = () => {
                           return (
                             <div
                               key={item.id}
-                              className="flex justify-between items-center gap-2 p-2.5 rounded-xl group transition-all duration-200 hover:bg-[hsla(240,15%,18%,0.7)] hover:border-[hsl(240,9%,25%)]"
+                              className="p-2.5 rounded-xl group transition-all duration-200 hover:bg-[hsla(240,15%,18%,0.7)] hover:border-[hsl(240,9%,25%)]"
                               style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
                             >
-                              <div className="flex-1 min-w-0">
-                                <div className="text-sm font-semibold text-white leading-tight break-words">{item.label}</div>
-                                <div className="text-[10px] mt-0.5 font-medium flex items-center gap-1.5 flex-wrap" style={{ color: 'hsl(0,0%,50%)' }}>
+                              <div className="text-sm font-semibold text-white leading-tight">{item.label}</div>
+                              <div className="flex items-center justify-between gap-2 mt-1.5 flex-wrap">
+                                <div className="text-[10px] font-medium flex items-center gap-1.5 flex-wrap min-w-0" style={{ color: 'hsl(0,0%,50%)' }}>
                                   {(() => {
                                     const base = !item.isService
                                       ? (item.isColor ? PRICES[item.format].color : PRICES[item.format].bw)
@@ -706,42 +706,42 @@ const OrderSection = () => {
                                     );
                                   })()}
                                 </div>
-                                {!item.isService && itemRemaining > 0 && (
-                                  <div className="text-[10px] mt-0.5 font-semibold" style={{ color: 'hsl(266,92%,78%)' }}>
-                                    Добавьте {itemRemaining} шт. для оптовой цены
+                                <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 ml-auto">
+                                  <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
+                                    <button onClick={() => updateQuantity(item.id, -1)} className="p-1 transition-colors rounded-l-lg hover:bg-white/5">
+                                      <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                    </button>
+                                    <input
+                                      type="number"
+                                      min={1}
+                                      max={9999}
+                                      value={item.quantity === 0 ? '' : item.quantity}
+                                      onChange={(e) => {
+                                        const raw = e.target.value;
+                                        if (raw === '') { setItemQuantity(item.id, 0, true); return; }
+                                        const v = parseInt(raw, 10);
+                                        if (!isNaN(v) && v >= 0 && v <= 9999) setItemQuantity(item.id, v, true);
+                                      }}
+                                      onBlur={() => {
+                                        if (!item.quantity || item.quantity < 1) setItemQuantity(item.id, 1);
+                                      }}
+                                      className="w-8 sm:w-10 bg-transparent px-0.5 text-xs font-bold text-center text-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:bg-white/5"
+                                    />
+                                    <button onClick={() => updateQuantity(item.id, 1)} className="p-1 transition-colors rounded-r-lg hover:bg-white/5">
+                                      <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                    </button>
                                   </div>
-                                )}
-                              </div>
-                              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-                                <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
-                                  <button onClick={() => updateQuantity(item.id, -1)} className="p-1 transition-colors rounded-l-lg hover:bg-white/5">
-                                    <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
-                                  </button>
-                                  <input
-                                    type="number"
-                                    min={1}
-                                    max={9999}
-                                    value={item.quantity === 0 ? '' : item.quantity}
-                                    onChange={(e) => {
-                                      const raw = e.target.value;
-                                      if (raw === '') { setItemQuantity(item.id, 0, true); return; }
-                                      const v = parseInt(raw, 10);
-                                      if (!isNaN(v) && v >= 0 && v <= 9999) setItemQuantity(item.id, v, true);
-                                    }}
-                                    onBlur={() => {
-                                      if (!item.quantity || item.quantity < 1) setItemQuantity(item.id, 1);
-                                    }}
-                                    className="w-8 sm:w-10 bg-transparent px-0.5 text-xs font-bold text-center text-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:bg-white/5"
-                                  />
-                                  <button onClick={() => updateQuantity(item.id, 1)} className="p-1 transition-colors rounded-r-lg hover:bg-white/5">
-                                    <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                  <span className="text-xs sm:text-sm font-bold text-white min-w-[2.5rem] text-right">{lineTotal} ₽</span>
+                                  <button onClick={() => removeItem(item.id)} className="p-1 sm:p-1.5 hover:bg-red-500/10 rounded-full transition-colors">
+                                    <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-400/70" />
                                   </button>
                                 </div>
-                                <span className="text-xs sm:text-sm font-bold text-white w-10 sm:w-14 text-right">{lineTotal} ₽</span>
-                                <button onClick={() => removeItem(item.id)} className="p-1 sm:p-1.5 hover:bg-red-500/10 rounded-full transition-colors">
-                                  <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-400/70" />
-                                </button>
                               </div>
+                              {!item.isService && itemRemaining > 0 && (
+                                <div className="text-[10px] mt-1.5 font-semibold" style={{ color: 'hsl(266,92%,78%)' }}>
+                                  Добавьте {itemRemaining} шт. для оптовой цены
+                                </div>
+                              )}
                             </div>
                           );
                         })}
