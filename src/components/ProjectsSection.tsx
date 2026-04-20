@@ -351,11 +351,6 @@ const ProjectsSection = () => {
           <p className="mt-3 text-muted-foreground text-base sm:text-lg max-w-2xl">
             Примеры работ, которые мы напечатали для наших клиентов
           </p>
-          <p className="mt-3 text-sm text-primary/80 font-medium flex items-center gap-2 sm:hidden">
-            <ChevronLeft className="w-4 h-4" />
-            <span>Смахните, чтобы увидеть все {projects.length}</span>
-            <ChevronRight className="w-4 h-4" />
-          </p>
         </div>
 
         <div className="relative">
