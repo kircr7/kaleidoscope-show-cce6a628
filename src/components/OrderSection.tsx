@@ -734,7 +734,7 @@ const OrderSection = () => {
                                       onClick={() => updateQuantity(item.id, 1)}
                                       className="p-1 transition-all duration-150 rounded-r-lg hover:bg-emerald-500/15 hover:shadow-[0_0_12px_hsla(152,76%,50%,0.55)] active:bg-emerald-500/25 active:shadow-[0_0_18px_hsla(152,76%,50%,0.8)] group/plus"
                                     >
-                                      <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                      <Plus className="w-3 h-3 transition-colors group-hover/plus:text-emerald-400 group-active/plus:text-emerald-300" style={{ color: 'hsl(0,0%,60%)' }} />
                                     </button>
                                   </div>
                                   <span className="text-xs sm:text-sm font-bold text-white min-w-[2.5rem] text-right">{lineTotal} ₽</span>
