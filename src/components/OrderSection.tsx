@@ -518,23 +518,43 @@ const OrderSection = () => {
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] font-bold uppercase ml-1" style={{ color: 'hsl(0,0%,60%)' }}>Цветность</label>
-                      <div className="flex p-1 rounded-lg" style={{ backgroundColor: 'hsla(240,15%,15%,0.6)', border: '1px solid hsl(240,9%,17%)' }}>
+                      <div className="flex gap-2">
                         <button
                           onClick={() => setIsColor(false)}
-                          className="flex-1 py-2 rounded-lg text-xs font-bold transition-all"
-                          style={{
-                            backgroundColor: !isColor ? 'hsla(266,92%,58%,0.2)' : 'transparent',
-                            color: !isColor ? 'hsl(266,92%,58%)' : 'hsl(0,0%,60%)',
-                          }}
-                        >ЧБ</button>
+                          className="flex-1 py-2.5 rounded-full text-xs font-bold transition-all duration-200 active:scale-[0.97]"
+                          style={
+                            !isColor
+                              ? {
+                                  backgroundColor: 'hsl(0,0%,4%)',
+                                  border: '1px solid hsl(0,0%,75%)',
+                                  color: 'hsl(0,0%,96%)',
+                                  boxShadow: '0 0 0 1px hsl(0,0%,30%) inset',
+                                }
+                              : {
+                                  backgroundColor: 'hsla(240,15%,15%,0.6)',
+                                  border: '1px solid hsl(240,9%,17%)',
+                                  color: 'hsl(0,0%,60%)',
+                                }
+                          }
+                        >Черно-белая</button>
                         <button
                           onClick={() => setIsColor(true)}
-                          className="flex-1 py-2 rounded-lg text-xs font-bold transition-all"
-                          style={{
-                            backgroundColor: isColor ? 'hsla(266,92%,58%,0.2)' : 'transparent',
-                            color: isColor ? 'hsl(266,92%,58%)' : 'hsl(0,0%,60%)',
-                          }}
-                        >Цвет</button>
+                          className="flex-1 py-2.5 rounded-full text-xs font-bold transition-all duration-200 active:scale-[0.97]"
+                          style={
+                            isColor
+                              ? {
+                                  backgroundImage: 'linear-gradient(90deg, hsl(266,92%,45%) 0%, hsl(320,85%,55%) 100%)',
+                                  border: '1px solid hsla(320,85%,70%,0.6)',
+                                  color: 'hsl(0,0%,100%)',
+                                  boxShadow: '0 0 18px hsla(320,85%,55%,0.45), inset 0 -2px 12px hsla(0,0%,100%,0.15)',
+                                }
+                              : {
+                                  backgroundColor: 'hsla(240,15%,15%,0.6)',
+                                  border: '1px solid hsl(240,9%,17%)',
+                                  color: 'hsl(0,0%,60%)',
+                                }
+                          }
+                        >Цветная</button>
                       </div>
                     </div>
                   </div>
