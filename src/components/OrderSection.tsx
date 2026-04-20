@@ -620,7 +620,7 @@ const OrderSection = () => {
                         <button
                           key={service.id}
                           onClick={() => addServiceToCart(service)}
-                          className="text-left p-2.5 sm:p-3 rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 active:scale-[0.97] flex justify-between items-center hover:bg-[hsla(266,92%,58%,0.1)] hover:border-[hsl(266,92%,58%,0.4)] hover:scale-[1.02]"
+                          className="group/add text-left p-2.5 sm:p-3 rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 active:scale-[0.97] flex justify-between items-center hover:bg-[hsla(266,92%,58%,0.1)] hover:border-[hsl(266,92%,58%,0.4)] hover:scale-[1.02]"
                           style={{
                             backgroundColor: 'hsla(240,15%,15%,0.5)',
                             border: '1px solid hsl(240,9%,17%)',
@@ -631,7 +631,7 @@ const OrderSection = () => {
                             {service.label}
                             <span className="block opacity-60">{service.price} ₽</span>
                           </div>
-                          <Plus className="w-4 h-4 flex-shrink-0" style={{ color: 'hsl(266,92%,68%)' }} />
+                          <Plus className="w-4 h-4 flex-shrink-0 transition-all duration-150 text-[hsl(266,92%,68%)] group-hover/add:text-[hsl(140,100%,55%)] group-hover/add:[filter:drop-shadow(0_0_3px_hsl(140_100%_50%/0.9))] group-active/add:text-[hsl(140,100%,48%)]" />
                         </button>
                       ))}
                     </div>
