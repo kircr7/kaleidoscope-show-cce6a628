@@ -508,7 +508,7 @@ const OrderSection = () => {
                                   e.currentTarget.style.backgroundColor = format === k ? 'hsla(266,92%,58%,0.15)' : 'transparent';
                                 }}
                               >
-                                <span>{PRICES[k].label}</span>
+                                <span>{PRICES[k].label} <span style={{ color: 'hsl(0,0%,50%)' }}>({PRICES[k].size})</span></span>
                                 <span style={{ color: 'hsl(0,0%,50%)' }}>от {isColor ? PRICES[k].color : PRICES[k].bw} ₽</span>
                               </button>
                             ))}
