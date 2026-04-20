@@ -92,7 +92,7 @@ const OrderSection = () => {
     const unitPrice = getTierUnitPrice(format, isColor, qty);
     setCart(prev => [...prev, {
       id: Date.now(),
-      label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
+      label: `${PRICES[format].label} ${isColor ? 'Цвет' : 'ЧБ'} · ${PRICES[format].size}`,
       format,
       unitPrice,
       quantity: qty,
