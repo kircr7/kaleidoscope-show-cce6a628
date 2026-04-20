@@ -295,7 +295,7 @@ const ProjectCard = ({
       altBase={project.altBase}
       onImageClick={(i) => onOpen(project, i)}
       rounded="rounded-2xl"
-      aspect="aspect-[3/4] sm:aspect-[4/5]"
+      aspect="aspect-[4/3]"
     />
   </article>
 );
