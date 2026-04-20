@@ -221,10 +221,10 @@ const Lightbox = ({ project, startIndex, onClose }: LightboxProps) => {
           <button
             type="button"
             onClick={onClose}
-            className="absolute -top-2 right-0 sm:-top-12 sm:right-0 z-10 w-10 h-10 rounded-full bg-black/70 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center hover:bg-black/90 transition"
+            className="absolute top-2 right-2 sm:-top-12 sm:right-0 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/40 sm:bg-black/70 backdrop-blur-sm border border-white/10 sm:border-white/20 text-white/80 sm:text-white flex items-center justify-center hover:bg-black/70 transition"
             aria-label="Закрыть"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
 
           <div
@@ -248,21 +248,21 @@ const Lightbox = ({ project, startIndex, onClose }: LightboxProps) => {
                 <button
                   type="button"
                   onClick={() => go(-1)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center hover:bg-black/80 transition"
+                  className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-11 sm:h-11 rounded-full bg-black/30 sm:bg-black/60 backdrop-blur-sm border border-white/10 sm:border-white/20 text-white/70 sm:text-white flex items-center justify-center hover:bg-black/80 transition"
                   aria-label="Предыдущее фото"
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                 </button>
                 <button
                   type="button"
                   onClick={() => go(1)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center hover:bg-black/80 transition"
+                  className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-11 sm:h-11 rounded-full bg-black/30 sm:bg-black/60 backdrop-blur-sm border border-white/10 sm:border-white/20 text-white/70 sm:text-white flex items-center justify-center hover:bg-black/80 transition"
                   aria-label="Следующее фото"
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                 </button>
 
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-medium">
+                <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-black/50 sm:bg-black/60 backdrop-blur-sm text-white/90 text-[11px] sm:text-xs font-medium">
                   {index + 1} / {project.images.length}
                 </div>
               </>
