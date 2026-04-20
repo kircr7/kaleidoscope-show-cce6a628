@@ -679,11 +679,11 @@ const OrderSection = () => {
                           return (
                             <div
                               key={item.id}
-                              className="flex justify-between items-center p-3 rounded-xl group transition-all duration-200 hover:bg-[hsla(240,15%,18%,0.7)] hover:border-[hsl(240,9%,25%)]"
+                              className="flex justify-between items-center gap-2 p-2.5 rounded-xl group transition-all duration-200 hover:bg-[hsla(240,15%,18%,0.7)] hover:border-[hsl(240,9%,25%)]"
                               style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
                             >
                               <div className="flex-1 min-w-0">
-                                <div className="text-sm font-semibold text-white">{item.label}</div>
+                                <div className="text-sm font-semibold text-white truncate">{item.label}</div>
                                 <div className="text-[10px] mt-0.5 font-medium flex items-center gap-1.5 flex-wrap" style={{ color: 'hsl(0,0%,50%)' }}>
                                   {(() => {
                                     const base = !item.isService
