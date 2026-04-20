@@ -712,7 +712,7 @@ const OrderSection = () => {
                                       onClick={() => updateQuantity(item.id, -1)}
                                       className="p-1 rounded-l-lg group/minus"
                                     >
-                                      <Minus className="w-3 h-3 transition-colors duration-150 group-hover/minus:text-red-500 group-active/minus:text-red-600" style={{ color: 'hsl(0,0%,60%)' }} />
+                                      <Minus className="w-3 h-3 transition-all duration-150 text-[hsl(0,0%,60%)] group-hover/minus:text-[hsl(0,100%,62%)] group-hover/minus:[filter:drop-shadow(0_0_3px_hsl(0_100%_55%/0.9))] group-active/minus:text-[hsl(0,100%,55%)]" />
                                     </button>
                                     <input
                                       type="number"
@@ -734,7 +734,7 @@ const OrderSection = () => {
                                       onClick={() => updateQuantity(item.id, 1)}
                                       className="p-1 rounded-r-lg group/plus"
                                     >
-                                      <Plus className="w-3 h-3 transition-colors duration-150 group-hover/plus:text-emerald-500 group-active/plus:text-emerald-600" style={{ color: 'hsl(0,0%,60%)' }} />
+                                      <Plus className="w-3 h-3 transition-all duration-150 text-[hsl(0,0%,60%)] group-hover/plus:text-[hsl(140,100%,55%)] group-hover/plus:[filter:drop-shadow(0_0_3px_hsl(140_100%_50%/0.9))] group-active/plus:text-[hsl(140,100%,48%)]" />
                                     </button>
                                   </div>
                                   <span className="text-xs sm:text-sm font-bold text-white min-w-[2.5rem] text-right">{lineTotal} ₽</span>
