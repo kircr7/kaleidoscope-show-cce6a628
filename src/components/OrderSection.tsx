@@ -32,12 +32,12 @@ const getTierUnitPrice = (format: string, isColor: boolean, qty: number) => {
   return base * getTierMultiplier(format, qty);
 };
 
-const PRICES: Record<string, { bw: number; color: number; label: string }> = {
-  A4: { bw: 5, color: 10, label: 'A4 (210×297 мм)' },
-  A3: { bw: 14, color: 24, label: 'A3 (297×420 мм)' },
-  A2: { bw: 30, color: 40, label: 'A2 (420×594 мм)' },
-  A1: { bw: 50, color: 70, label: 'A1 (594×841 мм)' },
-  A0: { bw: 100, color: 110, label: 'A0 (841×1189 мм)' },
+const PRICES: Record<string, { bw: number; color: number; label: string; size: string }> = {
+  A4: { bw: 5, color: 10, label: 'A4', size: '210×297 мм' },
+  A3: { bw: 14, color: 24, label: 'A3', size: '297×420 мм' },
+  A2: { bw: 30, color: 40, label: 'A2', size: '420×594 мм' },
+  A1: { bw: 50, color: 70, label: 'A1', size: '594×841 мм' },
+  A0: { bw: 100, color: 110, label: 'A0', size: '841×1189 мм' },
 };
 
 const FOLDING_PRICES: Record<string, number> = {
@@ -92,7 +92,7 @@ const OrderSection = () => {
     const unitPrice = getTierUnitPrice(format, isColor, qty);
     setCart(prev => [...prev, {
       id: Date.now(),
-      label: `${PRICES[format].label} (${isColor ? 'Цвет' : 'ЧБ'})`,
+      label: `${PRICES[format].label} ${isColor ? 'Цвет' : 'ЧБ'} · ${PRICES[format].size}`,
       format,
       unitPrice,
       quantity: qty,
@@ -471,7 +471,7 @@ const OrderSection = () => {
                             color: 'hsl(0,0%,83%)',
                           }}
                         >
-                          <span>{PRICES[format].label} — от {isColor ? PRICES[format].color : PRICES[format].bw} ₽</span>
+                          <span>{PRICES[format].label} ({PRICES[format].size}) — от {isColor ? PRICES[format].color : PRICES[format].bw} ₽</span>
                           <svg
                             className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}
                             style={{ color: 'hsl(0,0%,60%)' }}
@@ -508,7 +508,7 @@ const OrderSection = () => {
                                   e.currentTarget.style.backgroundColor = format === k ? 'hsla(266,92%,58%,0.15)' : 'transparent';
                                 }}
                               >
-                                <span>{PRICES[k].label}</span>
+                                <span>{PRICES[k].label} <span style={{ color: 'hsl(0,0%,50%)' }}>({PRICES[k].size})</span></span>
                                 <span style={{ color: 'hsl(0,0%,50%)' }}>от {isColor ? PRICES[k].color : PRICES[k].bw} ₽</span>
                               </button>
                             ))}
@@ -679,11 +679,11 @@ const OrderSection = () => {
                           return (
                             <div
                               key={item.id}
-                              className="flex justify-between items-center p-3 rounded-xl group transition-all duration-200 hover:bg-[hsla(240,15%,18%,0.7)] hover:border-[hsl(240,9%,25%)]"
+                              className="flex justify-between items-center gap-2 p-2.5 rounded-xl group transition-all duration-200 hover:bg-[hsla(240,15%,18%,0.7)] hover:border-[hsl(240,9%,25%)]"
                               style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
                             >
                               <div className="flex-1 min-w-0">
-                                <div className="text-sm font-semibold text-white">{item.label}</div>
+                                <div className="text-sm font-semibold text-white truncate">{item.label}</div>
                                 <div className="text-[10px] mt-0.5 font-medium flex items-center gap-1.5 flex-wrap" style={{ color: 'hsl(0,0%,50%)' }}>
                                   {(() => {
                                     const base = !item.isService
@@ -712,9 +712,9 @@ const OrderSection = () => {
                                   </div>
                                 )}
                               </div>
-                              <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+                              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                                 <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
-                                  <button onClick={() => updateQuantity(item.id, -1)} className="p-1 sm:p-1.5 transition-colors rounded-l-lg hover:bg-white/5">
+                                  <button onClick={() => updateQuantity(item.id, -1)} className="p-1 transition-colors rounded-l-lg hover:bg-white/5">
                                     <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
                                   </button>
                                   <input
@@ -731,14 +731,14 @@ const OrderSection = () => {
                                     onBlur={() => {
                                       if (!item.quantity || item.quantity < 1) setItemQuantity(item.id, 1);
                                     }}
-                                    className="w-10 sm:w-12 bg-transparent px-1 text-xs sm:text-sm font-bold text-center text-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:bg-white/5"
+                                    className="w-8 sm:w-10 bg-transparent px-0.5 text-xs font-bold text-center text-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:bg-white/5"
                                   />
-                                  <button onClick={() => updateQuantity(item.id, 1)} className="p-1 sm:p-1.5 transition-colors rounded-r-lg hover:bg-white/5">
+                                  <button onClick={() => updateQuantity(item.id, 1)} className="p-1 transition-colors rounded-r-lg hover:bg-white/5">
                                     <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
                                   </button>
                                 </div>
-                                <span className="text-xs sm:text-sm font-bold text-white w-12 sm:w-16 text-right">{lineTotal} ₽</span>
-                                <button onClick={() => removeItem(item.id)} className="p-1.5 sm:p-2 hover:bg-red-500/10 rounded-full transition-colors">
+                                <span className="text-xs sm:text-sm font-bold text-white w-10 sm:w-14 text-right">{lineTotal} ₽</span>
+                                <button onClick={() => removeItem(item.id)} className="p-1 sm:p-1.5 hover:bg-red-500/10 rounded-full transition-colors">
                                   <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-400/70" />
                                 </button>
                               </div>
