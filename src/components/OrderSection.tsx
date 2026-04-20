@@ -471,7 +471,7 @@ const OrderSection = () => {
                             color: 'hsl(0,0%,83%)',
                           }}
                         >
-                          <span>{PRICES[format].label} — от {isColor ? PRICES[format].color : PRICES[format].bw} ₽</span>
+                          <span>{PRICES[format].label} ({PRICES[format].size}) — от {isColor ? PRICES[format].color : PRICES[format].bw} ₽</span>
                           <svg
                             className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}
                             style={{ color: 'hsl(0,0%,60%)' }}
