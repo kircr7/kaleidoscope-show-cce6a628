@@ -583,7 +583,7 @@ const OrderSection = () => {
                       className="flex items-center rounded-lg px-2 transition-all duration-200 hover:border-[hsl(240,9%,25%)]"
                       style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                     >
-                      <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-xl font-light p-2 transition-colors" style={{ color: 'hsl(0,0%,60%)' }}>−</button>
+                      <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-xl font-light p-2 transition-all duration-150 text-[hsl(0,0%,60%)] hover:text-[hsl(0,100%,62%)] hover:[text-shadow:0_0_6px_hsl(0_100%_55%/0.9)] active:text-[hsl(0,100%,55%)]">−</button>
                       <input
                         type="number"
                         min={1}
@@ -598,7 +598,7 @@ const OrderSection = () => {
                         onBlur={() => { if (!quantity || quantity < 1) setQuantity(1); }}
                         className="w-12 text-center font-bold text-sm outline-none bg-transparent text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       />
-                      <button onClick={() => setQuantity(quantity + 1)} className="text-xl font-light p-2 transition-colors" style={{ color: 'hsl(0,0%,60%)' }}>+</button>
+                      <button onClick={() => setQuantity(quantity + 1)} className="text-xl font-light p-2 transition-all duration-150 text-[hsl(0,0%,60%)] hover:text-[hsl(140,100%,55%)] hover:[text-shadow:0_0_6px_hsl(140_100%_50%/0.9)] active:text-[hsl(140,100%,48%)]">+</button>
                     </div>
                     <button
                       onClick={addPrintToCart}
