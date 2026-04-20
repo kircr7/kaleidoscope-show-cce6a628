@@ -683,7 +683,7 @@ const OrderSection = () => {
                               style={{ backgroundColor: 'hsla(240,15%,15%,0.5)', border: '1px solid hsl(240,9%,17%)' }}
                             >
                               <div className="flex-1 min-w-0">
-                                <div className="text-sm font-semibold text-white truncate">{item.label}</div>
+                                <div className="text-sm font-semibold text-white leading-tight break-words">{item.label}</div>
                                 <div className="text-[10px] mt-0.5 font-medium flex items-center gap-1.5 flex-wrap" style={{ color: 'hsl(0,0%,50%)' }}>
                                   {(() => {
                                     const base = !item.isService
