@@ -294,9 +294,13 @@ const ProjectCard = ({
       title={project.title}
       altBase={project.altBase}
       onImageClick={(i) => onOpen(project, i)}
-      rounded="rounded-2xl"
-      aspect="aspect-[3/4] sm:aspect-[4/5]"
+      aspect="aspect-[4/3] sm:aspect-[4/5]"
     />
+    <div className="p-4 sm:p-5">
+      <h3 className="text-base sm:text-lg font-semibold text-foreground leading-snug">
+        {project.title}
+      </h3>
+    </div>
   </article>
 );
 
