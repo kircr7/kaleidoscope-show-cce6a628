@@ -712,7 +712,7 @@ const OrderSection = () => {
                                       onClick={() => updateQuantity(item.id, -1)}
                                       className="p-1 rounded-l-lg group/minus"
                                     >
-                                      <Minus className="w-3 h-3 transition-all duration-150 group-hover/minus:text-red-400 group-hover/minus:drop-shadow-[0_0_6px_hsla(0,84%,60%,0.9)] group-active/minus:text-red-300 group-active/minus:drop-shadow-[0_0_10px_hsla(0,84%,60%,1)]" style={{ color: 'hsl(0,0%,60%)' }} />
+                                      <Minus className="w-3 h-3 transition-colors duration-150 group-hover/minus:text-red-500 group-active/minus:text-red-600" style={{ color: 'hsl(0,0%,60%)' }} />
                                     </button>
                                     <input
                                       type="number"
@@ -734,7 +734,7 @@ const OrderSection = () => {
                                       onClick={() => updateQuantity(item.id, 1)}
                                       className="p-1 rounded-r-lg group/plus"
                                     >
-                                      <Plus className="w-3 h-3 transition-all duration-150 group-hover/plus:text-emerald-400 group-hover/plus:drop-shadow-[0_0_6px_hsla(152,76%,50%,0.9)] group-active/plus:text-emerald-300 group-active/plus:drop-shadow-[0_0_10px_hsla(152,76%,50%,1)]" style={{ color: 'hsl(0,0%,60%)' }} />
+                                      <Plus className="w-3 h-3 transition-colors duration-150 group-hover/plus:text-emerald-500 group-active/plus:text-emerald-600" style={{ color: 'hsl(0,0%,60%)' }} />
                                     </button>
                                   </div>
                                   <span className="text-xs sm:text-sm font-bold text-white min-w-[2.5rem] text-right">{lineTotal} ₽</span>
