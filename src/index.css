@@ -265,31 +265,39 @@
   border-color: rgba(77, 175, 80, 1);
 }
 
-/* Inner multi-color glow for project cards */
-.card-inner-glow {
+/* Uiverse-style outer multi-color glow (Apple M2 style) */
+.card-glow {
   position: relative;
   isolation: isolate;
 }
-.card-inner-glow::before {
+.card-glow::before,
+.card-glow::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -5px;
   border-radius: inherit;
-  pointer-events: none;
-  z-index: 1;
   background:
-    radial-gradient(circle at 0% 0%, hsl(27deg 93% 60% / 0.55), transparent 45%),
-    radial-gradient(circle at 100% 0%, hsl(204deg 100% 50% / 0.5), transparent 45%),
-    radial-gradient(circle at 0% 100%, hsl(340deg 100% 52% / 0.5), transparent 45%),
-    radial-gradient(circle at 100% 100%, hsl(264deg 100% 50% / 0.55), transparent 45%);
-  mix-blend-mode: screen;
-  filter: blur(28px);
-  animation: card-inner-pulse 5s ease-in-out infinite alternate;
-  opacity: 0.85;
+    radial-gradient(circle at 0 0, hsl(27deg 93% 60%), transparent 60%),
+    radial-gradient(circle at 100% 0, #00a6ff, transparent 60%),
+    radial-gradient(circle at 0 100%, #ff0056, transparent 60%),
+    radial-gradient(circle at 100% 100%, #6500ff, transparent 60%);
+  pointer-events: none;
 }
-@keyframes card-inner-pulse {
-  0% { opacity: 0.65; transform: scale(0.98); }
-  100% { opacity: 1; transform: scale(1.04); }
+.card-glow::after {
+  inset: -2px;
+  z-index: -1;
+}
+.card-glow::before {
+  inset: -10px;
+  z-index: -2;
+  filter: blur(28px);
+  animation: card-blur-animation 3s ease-in-out alternate infinite;
+}
+@keyframes card-blur-animation {
+  to {
+    filter: blur(40px);
+    transform: scale(1.05);
+  }
 }
 
 /* Hide scrollbar utility */

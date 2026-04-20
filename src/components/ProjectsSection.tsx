@@ -287,7 +287,7 @@ const ProjectCard = ({
 }) => (
   <article
     data-project-card
-    className="card-inner-glow group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] flex-shrink-0 w-[80%] max-w-[360px] sm:w-auto sm:max-w-none snap-center"
+    className="card-glow group relative rounded-2xl border border-white/10 bg-[linear-gradient(135deg,#1e1e24_10%,#050505_60%)] transition-all duration-300 flex-shrink-0 w-[80%] max-w-[360px] sm:w-auto sm:max-w-none snap-center"
   >
     <ImageSlider
       images={project.images}
@@ -295,6 +295,7 @@ const ProjectCard = ({
       altBase={project.altBase}
       onImageClick={(i) => onOpen(project, i)}
       aspect="aspect-[4/3]"
+      rounded="rounded-t-2xl"
     />
     <div className="p-4 sm:p-5">
       <h3 className="text-base sm:text-lg font-semibold text-foreground">
