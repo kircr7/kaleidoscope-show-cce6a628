@@ -708,8 +708,11 @@ const OrderSection = () => {
                                 </div>
                                 <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 ml-auto">
                                   <div className="flex items-center rounded-lg" style={{ border: '1px solid hsl(240,9%,17%)' }}>
-                                    <button onClick={() => updateQuantity(item.id, -1)} className="p-1 transition-colors rounded-l-lg hover:bg-white/5">
-                                      <Minus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                    <button
+                                      onClick={() => updateQuantity(item.id, -1)}
+                                      className="p-1 transition-all duration-150 rounded-l-lg hover:bg-red-500/15 hover:shadow-[0_0_12px_hsla(0,84%,60%,0.55)] active:bg-red-500/25 active:shadow-[0_0_18px_hsla(0,84%,60%,0.8)] group/minus"
+                                    >
+                                      <Minus className="w-3 h-3 transition-colors group-hover/minus:text-red-400 group-active/minus:text-red-300" style={{ color: 'hsl(0,0%,60%)' }} />
                                     </button>
                                     <input
                                       type="number"
@@ -727,8 +730,11 @@ const OrderSection = () => {
                                       }}
                                       className="w-8 sm:w-10 bg-transparent px-0.5 text-xs font-bold text-center text-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:bg-white/5"
                                     />
-                                    <button onClick={() => updateQuantity(item.id, 1)} className="p-1 transition-colors rounded-r-lg hover:bg-white/5">
-                                      <Plus className="w-3 h-3" style={{ color: 'hsl(0,0%,60%)' }} />
+                                    <button
+                                      onClick={() => updateQuantity(item.id, 1)}
+                                      className="p-1 transition-all duration-150 rounded-r-lg hover:bg-emerald-500/15 hover:shadow-[0_0_12px_hsla(152,76%,50%,0.55)] active:bg-emerald-500/25 active:shadow-[0_0_18px_hsla(152,76%,50%,0.8)] group/plus"
+                                    >
+                                      <Plus className="w-3 h-3 transition-colors group-hover/plus:text-emerald-400 group-active/plus:text-emerald-300" style={{ color: 'hsl(0,0%,60%)' }} />
                                     </button>
                                   </div>
                                   <span className="text-xs sm:text-sm font-bold text-white min-w-[2.5rem] text-right">{lineTotal} ₽</span>
