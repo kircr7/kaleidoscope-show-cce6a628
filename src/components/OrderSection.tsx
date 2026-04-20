@@ -518,10 +518,10 @@ const OrderSection = () => {
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] font-bold uppercase ml-1" style={{ color: 'hsl(0,0%,60%)' }}>Цветность</label>
-                      <div className="flex gap-2">
+                      <div className="flex p-1 rounded-lg gap-1" style={{ backgroundColor: 'hsla(240,15%,15%,0.6)', border: '1px solid hsl(240,9%,17%)' }}>
                         <button
                           onClick={() => setIsColor(false)}
-                          className="flex-1 py-2.5 rounded-full text-xs font-bold transition-all duration-200 active:scale-[0.97]"
+                          className="flex-1 py-2 rounded-lg text-xs font-bold transition-all"
                           style={
                             !isColor
                               ? {
@@ -531,15 +531,14 @@ const OrderSection = () => {
                                   boxShadow: '0 0 0 1px hsl(0,0%,30%) inset',
                                 }
                               : {
-                                  backgroundColor: 'hsla(240,15%,15%,0.6)',
-                                  border: '1px solid hsl(240,9%,17%)',
+                                  backgroundColor: 'transparent',
                                   color: 'hsl(0,0%,60%)',
                                 }
                           }
-                        >Черно-белая</button>
+                        >ЧБ</button>
                         <button
                           onClick={() => setIsColor(true)}
-                          className="flex-1 py-2.5 rounded-full text-xs font-bold transition-all duration-200 active:scale-[0.97]"
+                          className="flex-1 py-2 rounded-lg text-xs font-bold transition-all"
                           style={
                             isColor
                               ? {
@@ -549,12 +548,11 @@ const OrderSection = () => {
                                   boxShadow: '0 0 18px hsla(320,85%,55%,0.45), inset 0 -2px 12px hsla(0,0%,100%,0.15)',
                                 }
                               : {
-                                  backgroundColor: 'hsla(240,15%,15%,0.6)',
-                                  border: '1px solid hsl(240,9%,17%)',
+                                  backgroundColor: 'transparent',
                                   color: 'hsl(0,0%,60%)',
                                 }
                           }
-                        >Цветная</button>
+                        >Цвет</button>
                       </div>
                     </div>
                   </div>
