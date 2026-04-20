@@ -287,7 +287,7 @@ const ProjectCard = ({
 }) => (
   <article
     data-project-card
-    className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] flex-shrink-0 w-[80%] max-w-[360px] sm:w-auto sm:max-w-none snap-center"
+    className="card-glow group relative rounded-2xl overflow-hidden transition-all duration-300 flex-shrink-0 w-[80%] max-w-[360px] sm:w-auto sm:max-w-none snap-center"
   >
     <ImageSlider
       images={project.images}
