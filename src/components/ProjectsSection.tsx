@@ -130,7 +130,7 @@ const ImageSlider = ({
       onMouseLeave={onMouseLeave}
     >
       <div
-        className="flex h-full transition-transform duration-300 ease-out"
+        className="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
         style={{ transform: `translateX(-${index * 100}%)` }}
       >
         {images.map((src, i) => (
