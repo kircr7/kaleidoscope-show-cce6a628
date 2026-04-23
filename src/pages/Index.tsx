@@ -138,7 +138,6 @@ const Index = () => {
       <OrderSection />
       <PriceListSection />
       <Footer />
-      <SliderTuner />
       
     </div>
   );
