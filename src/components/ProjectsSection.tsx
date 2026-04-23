@@ -111,29 +111,40 @@ const ImageSlider = ({
     touchStartX.current = null;
   };
 
-  // Плавная анимация к целевой позиции (easing через lerp в rAF)
-  useEffect(() => {
+  // Плавная анимация к целевой позиции: lerp с ease-out (затухание у цели)
+  // base = базовая «жёсткость» пружины (меньше = мягче старт)
+  // По мере приближения к цели множитель уменьшается → плавное замедление
+  const startTick = () => {
+    if (rafId.current !== null) return;
     const tick = () => {
       setProgress((prev) => {
         const diff = targetProgress.current - prev;
-        if (Math.abs(diff) < 0.001) {
+        const absDiff = Math.abs(diff);
+        if (absDiff < 0.0005) {
           rafId.current = null;
           return targetProgress.current;
         }
-        const next = prev + diff * 0.08; // меньше = плавнее/медленнее
+        const base = 0.05;
+        // ease-out: ближе к цели — меньше шаг (квадратичное затухание)
+        const proximity = Math.min(1, absDiff); // 0..1
+        const eased = base * (0.35 + 0.65 * proximity * proximity);
+        const next = prev + diff * eased;
         rafId.current = requestAnimationFrame(tick);
         return next;
       });
     };
-    if (rafId.current === null) {
-      rafId.current = requestAnimationFrame(tick);
-    }
+    rafId.current = requestAnimationFrame(tick);
+  };
+
+  useEffect(() => {
+    startTick();
     return () => {
       if (rafId.current !== null) {
         cancelAnimationFrame(rafId.current);
         rafId.current = null;
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -145,21 +156,7 @@ const ImageSlider = ({
     targetProgress.current = target;
     const newIndex = Math.round(target);
     if (newIndex !== index) setIndex(newIndex);
-    if (rafId.current === null) {
-      const tick = () => {
-        setProgress((prev) => {
-          const diff = targetProgress.current - prev;
-          if (Math.abs(diff) < 0.001) {
-            rafId.current = null;
-            return targetProgress.current;
-          }
-          const next = prev + diff * 0.08;
-          rafId.current = requestAnimationFrame(tick);
-          return next;
-        });
-      };
-      rafId.current = requestAnimationFrame(tick);
-    }
+    startTick();
   };
 
   const onMouseLeave = () => {
