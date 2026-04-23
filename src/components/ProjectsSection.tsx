@@ -89,12 +89,17 @@ const ImageSlider = ({
   showDots = true,
 }: ImageSliderProps) => {
   const [index, setIndex] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
+  const [progress, setProgress] = useState(0); // плавная позиция 0..images.length-1
+  const targetProgress = useRef(0);
+  const rafId = useRef<number | null>(null);
   const touchStartX = useRef<number | null>(null);
   const hasMultiple = images.length > 1;
 
-  const go = (delta: number) =>
-    setIndex((i) => (i + delta + images.length) % images.length);
+  const go = (delta: number) => {
+    const next = (index + delta + images.length) % images.length;
+    setIndex(next);
+    targetProgress.current = next;
+  };
 
   const onTouchStart = (e: TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -106,17 +111,59 @@ const ImageSlider = ({
     touchStartX.current = null;
   };
 
+  // Плавная анимация к целевой позиции (easing через lerp в rAF)
+  useEffect(() => {
+    const tick = () => {
+      setProgress((prev) => {
+        const diff = targetProgress.current - prev;
+        if (Math.abs(diff) < 0.001) {
+          rafId.current = null;
+          return targetProgress.current;
+        }
+        const next = prev + diff * 0.08; // меньше = плавнее/медленнее
+        rafId.current = requestAnimationFrame(tick);
+        return next;
+      });
+    };
+    if (rafId.current === null) {
+      rafId.current = requestAnimationFrame(tick);
+    }
+    return () => {
+      if (rafId.current !== null) {
+        cancelAnimationFrame(rafId.current);
+        rafId.current = null;
+      }
+    };
+  }, []);
+
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!hasMultiple) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const ratio = Math.max(0, Math.min(0.9999, x / rect.width));
-    const newIndex = Math.floor(ratio * images.length);
+    const target = ratio * (images.length - 1);
+    targetProgress.current = target;
+    const newIndex = Math.round(target);
     if (newIndex !== index) setIndex(newIndex);
+    if (rafId.current === null) {
+      const tick = () => {
+        setProgress((prev) => {
+          const diff = targetProgress.current - prev;
+          if (Math.abs(diff) < 0.001) {
+            rafId.current = null;
+            return targetProgress.current;
+          }
+          const next = prev + diff * 0.08;
+          rafId.current = requestAnimationFrame(tick);
+          return next;
+        });
+      };
+      rafId.current = requestAnimationFrame(tick);
+    }
   };
 
   const onMouseLeave = () => {
-    setIsHovering(false);
+    targetProgress.current = 0;
     setIndex(0);
   };
 
@@ -125,13 +172,12 @@ const ImageSlider = ({
       className={`relative ${aspect} overflow-hidden ${rounded} bg-black/40 group/slider`}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      onMouseEnter={() => setIsHovering(true)}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >
       <div
-        className="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
-        style={{ transform: `translateX(-${index * 100}%)` }}
+        className="flex h-full will-change-transform"
+        style={{ transform: `translate3d(-${progress * 100}%, 0, 0)` }}
       >
         {images.map((src, i) => (
           <button
