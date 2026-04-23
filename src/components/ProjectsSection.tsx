@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, TouchEvent } from "react";
+import React, { useState, useRef, useEffect, TouchEvent } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import work1 from "@/assets/work-1.jpg";
