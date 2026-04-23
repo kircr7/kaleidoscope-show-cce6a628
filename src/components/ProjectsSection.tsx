@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, TouchEvent } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { sliderTune } from "@/components/SliderTuner";
 import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
