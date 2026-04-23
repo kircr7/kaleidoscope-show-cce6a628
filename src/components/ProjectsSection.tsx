@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, TouchEvent } from "react";
+import React, { useState, useRef, useEffect, TouchEvent } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import work1 from "@/assets/work-1.jpg";
@@ -90,6 +90,10 @@ const ImageSlider = ({
 }: ImageSliderProps) => {
   const [index, setIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
+  const pointerStartX = useRef<number | null>(null);
+  const pointerDragged = useRef(false);
+  const [dragOffset, setDragOffset] = useState(0);
+  const containerWidth = useRef(0);
   const hasMultiple = images.length > 1;
 
   const go = (delta: number) =>
@@ -105,21 +109,61 @@ const ImageSlider = ({
     touchStartX.current = null;
   };
 
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!hasMultiple || e.pointerType === "touch") return;
+    pointerStartX.current = e.clientX;
+    pointerDragged.current = false;
+    containerWidth.current = e.currentTarget.clientWidth;
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (pointerStartX.current === null) return;
+    const diff = e.clientX - pointerStartX.current;
+    if (Math.abs(diff) > 5) pointerDragged.current = true;
+    setDragOffset(diff);
+  };
+  const onPointerEnd = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (pointerStartX.current === null) return;
+    const diff = e.clientX - pointerStartX.current;
+    pointerStartX.current = null;
+    setDragOffset(0);
+    if (Math.abs(diff) > SWIPE_THRESHOLD) go(diff < 0 ? 1 : -1);
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+  };
+
+  const dragPercent = containerWidth.current
+    ? (dragOffset / containerWidth.current) * 100
+    : 0;
+  const isDragging = pointerStartX.current !== null;
+
   return (
     <div
-      className={`relative ${aspect} overflow-hidden ${rounded} bg-black/40 group/slider`}
+      className={`relative ${aspect} overflow-hidden ${rounded} bg-black/40 group/slider ${hasMultiple ? "cursor-grab active:cursor-grabbing" : ""}`}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerEnd}
+      onPointerCancel={onPointerEnd}
     >
       <div
-        className="flex h-full transition-transform duration-500 ease-out"
-        style={{ transform: `translateX(-${index * 100}%)` }}
+        className={`flex h-full ${isDragging ? "" : "transition-transform duration-500 ease-out"}`}
+        style={{ transform: `translateX(calc(-${index * 100}% + ${dragPercent}%))` }}
       >
         {images.map((src, i) => (
           <button
             key={i}
             type="button"
-            onClick={() => onImageClick(i)}
+            onClick={(e) => {
+              if (pointerDragged.current) {
+                e.preventDefault();
+                pointerDragged.current = false;
+                return;
+              }
+              onImageClick(i);
+            }}
             className="w-full h-full flex-shrink-0 block cursor-zoom-in"
             aria-label={`Открыть фото ${i + 1}`}
           >
@@ -127,7 +171,7 @@ const ImageSlider = ({
               src={src}
               alt={`${altBase} — фото ${i + 1}`}
               loading="lazy"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover pointer-events-none select-none"
               draggable={false}
             />
           </button>
