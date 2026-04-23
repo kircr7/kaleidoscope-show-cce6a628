@@ -9,6 +9,7 @@ import SEO from "@/components/SEO";
 import ServicesSection from "@/components/ServicesSection";
 import PriceListSection from "@/components/PriceListSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import SliderTuner from "@/components/SliderTuner";
 import { Crosshair, FileCheck, Clock } from "lucide-react";
 
 const Index = () => {
