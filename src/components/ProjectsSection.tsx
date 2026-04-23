@@ -120,13 +120,13 @@ const ImageSlider = ({
       setProgress((prev) => {
         const diff = targetProgress.current - prev;
         const absDiff = Math.abs(diff);
-        if (absDiff < sliderTune.snapThreshold) {
+        if (absDiff < 0.0005) {
           rafId.current = null;
           return targetProgress.current;
         }
-        const proximity = Math.min(1, absDiff); // 0..1
-        const curveFactor = Math.pow(proximity, sliderTune.easeCurve);
-        const eased = sliderTune.base * (sliderTune.easeMin + (1 - sliderTune.easeMin) * curveFactor);
+        const base = 0.05;
+        const proximity = Math.min(1, absDiff);
+        const eased = base * (0.35 + 0.65 * proximity * proximity);
         const next = prev + diff * eased;
         rafId.current = requestAnimationFrame(tick);
         return next;
