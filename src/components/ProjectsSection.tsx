@@ -89,11 +89,8 @@ const ImageSlider = ({
   showDots = true,
 }: ImageSliderProps) => {
   const [index, setIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
   const touchStartX = useRef<number | null>(null);
-  const pointerStartX = useRef<number | null>(null);
-  const pointerDragged = useRef(false);
-  const [dragOffset, setDragOffset] = useState(0);
-  const containerWidth = useRef(0);
   const hasMultiple = images.length > 1;
 
   const go = (delta: number) =>
@@ -109,61 +106,38 @@ const ImageSlider = ({
     touchStartX.current = null;
   };
 
-  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!hasMultiple || e.pointerType === "touch") return;
-    pointerStartX.current = e.clientX;
-    pointerDragged.current = false;
-    containerWidth.current = e.currentTarget.clientWidth;
-    e.currentTarget.setPointerCapture(e.pointerId);
-  };
-  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (pointerStartX.current === null) return;
-    const diff = e.clientX - pointerStartX.current;
-    if (Math.abs(diff) > 5) pointerDragged.current = true;
-    setDragOffset(diff);
-  };
-  const onPointerEnd = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (pointerStartX.current === null) return;
-    const diff = e.clientX - pointerStartX.current;
-    pointerStartX.current = null;
-    setDragOffset(0);
-    if (Math.abs(diff) > SWIPE_THRESHOLD) go(diff < 0 ? 1 : -1);
-    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-      e.currentTarget.releasePointerCapture(e.pointerId);
-    }
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!hasMultiple) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const ratio = Math.max(0, Math.min(0.9999, x / rect.width));
+    const newIndex = Math.floor(ratio * images.length);
+    if (newIndex !== index) setIndex(newIndex);
   };
 
-  const dragPercent = containerWidth.current
-    ? (dragOffset / containerWidth.current) * 100
-    : 0;
-  const isDragging = pointerStartX.current !== null;
+  const onMouseLeave = () => {
+    setIsHovering(false);
+    setIndex(0);
+  };
 
   return (
     <div
-      className={`relative ${aspect} overflow-hidden ${rounded} bg-black/40 group/slider ${hasMultiple ? "cursor-grab active:cursor-grabbing" : ""}`}
+      className={`relative ${aspect} overflow-hidden ${rounded} bg-black/40 group/slider`}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerEnd}
-      onPointerCancel={onPointerEnd}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
     >
       <div
-        className={`flex h-full ${isDragging ? "" : "transition-transform duration-500 ease-out"}`}
-        style={{ transform: `translateX(calc(-${index * 100}% + ${dragPercent}%))` }}
+        className="flex h-full transition-transform duration-300 ease-out"
+        style={{ transform: `translateX(-${index * 100}%)` }}
       >
         {images.map((src, i) => (
           <button
             key={i}
             type="button"
-            onClick={(e) => {
-              if (pointerDragged.current) {
-                e.preventDefault();
-                pointerDragged.current = false;
-                return;
-              }
-              onImageClick(i);
-            }}
+            onClick={() => onImageClick(i)}
             className="w-full h-full flex-shrink-0 block cursor-zoom-in"
             aria-label={`Открыть фото ${i + 1}`}
           >
@@ -178,50 +152,17 @@ const ImageSlider = ({
         ))}
       </div>
 
-      {hasMultiple && (
-        <>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              go(-1);
-            }}
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/15 text-white flex items-center justify-center opacity-0 group-hover/slider:opacity-100 hover:bg-black/70 transition-opacity"
-            aria-label="Предыдущее фото"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              go(1);
-            }}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/15 text-white flex items-center justify-center opacity-0 group-hover/slider:opacity-100 hover:bg-black/70 transition-opacity"
-            aria-label="Следующее фото"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-
-          {showDots && (
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
-              {images.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIndex(i);
-                  }}
-                  className={`h-1.5 rounded-full transition-all ${
-                    i === index ? "w-5 bg-white" : "w-1.5 bg-white/50 hover:bg-white/70"
-                  }`}
-                  aria-label={`Перейти к фото ${i + 1}`}
-                />
-              ))}
-            </div>
-          )}
-        </>
+      {hasMultiple && showDots && (
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 pointer-events-none">
+          {images.map((_, i) => (
+            <span
+              key={i}
+              className={`h-1.5 rounded-full transition-all ${
+                i === index ? "w-5 bg-white" : "w-1.5 bg-white/50"
+              }`}
+            />
+          ))}
+        </div>
       )}
     </div>
   );
