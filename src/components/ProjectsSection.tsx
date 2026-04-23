@@ -121,14 +121,13 @@ const ImageSlider = ({
       setProgress((prev) => {
         const diff = targetProgress.current - prev;
         const absDiff = Math.abs(diff);
-        if (absDiff < 0.0005) {
+        if (absDiff < sliderTune.snapThreshold) {
           rafId.current = null;
           return targetProgress.current;
         }
-        const base = 0.05;
-        // ease-out: ближе к цели — меньше шаг (квадратичное затухание)
         const proximity = Math.min(1, absDiff); // 0..1
-        const eased = base * (0.35 + 0.65 * proximity * proximity);
+        const curveFactor = Math.pow(proximity, sliderTune.easeCurve);
+        const eased = sliderTune.base * (sliderTune.easeMin + (1 - sliderTune.easeMin) * curveFactor);
         const next = prev + diff * eased;
         rafId.current = requestAnimationFrame(tick);
         return next;
