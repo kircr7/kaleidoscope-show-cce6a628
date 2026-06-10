@@ -17,9 +17,9 @@ interface CartItem {
 }
 
 // Wholesale threshold by format:
-// A0, A1, A2 → 5 шт; A3 → 20 шт; A4 → 50 шт. Ниже порога цена ×2.
+// A0, A1, A2 → 10 шт; A3 → 60 шт; A4 → 100 шт. Ниже порога цена ×2.
 const WHOLESALE_THRESHOLDS: Record<string, number> = {
-  A0: 5, A1: 5, A2: 5, A3: 20, A4: 50,
+  A0: 10, A1: 10, A2: 10, A3: 60, A4: 100,
 };
 const getWholesaleThreshold = (format: string) =>
   WHOLESALE_THRESHOLDS[format] ?? 20;
@@ -156,7 +156,7 @@ const OrderSection = () => {
 
   const stats = useMemo(() => {
     const subtotal = cart.reduce((acc, item) => acc + getItemTotal(item), 0);
-    const discountApplicable = subtotal >= 2000;
+    const discountApplicable = subtotal >= 3000;
     const discount = discountApplicable ? subtotal * 0.20 : 0;
     return { subtotal, discount, total: subtotal - discount, discountApplicable };
   }, [cart, foldingEnabled]);
@@ -907,7 +907,7 @@ const OrderSection = () => {
                                 </div>
                               ) : (
                                 <div className="flex items-center justify-center sm:justify-start gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-2 w-fit mx-auto sm:mx-0 tracking-wide" style={{ backgroundColor: 'hsla(45,100%,50%,0.2)', color: 'hsl(45,100%,85%)' }}>
-                                  Закажите от 2 000 ₽ для скидки 20%
+                                  Закажите от 3 000 ₽ для скидки 20%
                                 </div>
                               )}
                               <div className="flex items-baseline justify-center sm:justify-start gap-2">
