@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo.svg';
 
@@ -52,9 +52,9 @@ const Navbar = () => {
           padding: '6px 6px 6px 8px',
         }}
       >
-        <a href="#" className="px-2 py-1 rounded-full flex items-center flex-shrink-0">
+        <Link to="/" aria-label="ПринтПРО — на главную" className="px-2 py-1 rounded-full flex items-center flex-shrink-0">
           <img src={logo} alt="ПринтПРО — печать чертежей" className="h-5 lg:h-6 brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
-        </a>
+        </Link>
 
         {navLinks.map((link) => (
           <a
@@ -93,9 +93,9 @@ const Navbar = () => {
             WebkitBackdropFilter: 'blur(20px)',
           }}
         >
-          <a href="#" className="px-1 py-0.5 flex items-center">
+          <Link to="/" aria-label="ПринтПРО — на главную" className="px-1 py-0.5 flex items-center">
             <img src={logo} alt="ПринтПРО" className="h-5 brightness-0 invert opacity-70" />
-          </a>
+          </Link>
 
           <div className="flex items-center gap-1">
             <a href="/#calculator" onClick={(e) => handleNavClick(e, '/#calculator')} className="relative group cta-glow-wrap">
