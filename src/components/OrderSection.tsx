@@ -68,8 +68,10 @@ const OrderSection = () => {
   const orderFormRef = useRef<HTMLFormElement>(null);
   const fileFormRef = useRef<HTMLFormElement>(null);
   const [fileCustomer, setFileCustomer] = useState({ name: '', phone: '' });
+  const [fileTask, setFileTask] = useState('');
   const [fileConsent, setFileConsent] = useState(true);
   const [fileStatus, setFileStatus] = useState('');
+  const [showCallModal, setShowCallModal] = useState(false);
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
