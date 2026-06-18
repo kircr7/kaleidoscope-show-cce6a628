@@ -387,7 +387,18 @@ const OrderSection = () => {
                               />
                             </div>
                           </div>
-                          <input type="hidden" name="order_details" value="Клиент отправил файлы через форму" />
+                          <div className="relative">
+                            <textarea
+                              name="order_details"
+                              placeholder="Опишите задание: что нужно напечатать, формат, количество, цветность, фальцовка, сроки и т.д."
+                              value={fileTask}
+                              onChange={e => setFileTask(e.target.value)}
+                              rows={4}
+                              maxLength={2000}
+                              className="w-full p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)] resize-none"
+                              style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                            />
+                          </div>
                           <input type="hidden" name="total_price" value="—" />
                           <label className="flex items-start gap-2.5 cursor-pointer select-none">
                             <input
