@@ -231,10 +231,7 @@ const OrderSection = () => {
         'ShGXdndtWKIL7zvcD',
       );
       setFileStatus('success');
-      showToast({
-        title: '✅ Файлы успешно отправлены!',
-        description: 'Мы свяжемся с вами в течение 5 минут.',
-      });
+      setShowCallModal(true);
     } catch (error) {
       console.error('Ошибка отправки файла:', error);
       showToast({ title: 'Ошибка отправки', description: 'Попробуйте ещё раз или напишите нам в Telegram.', variant: 'destructive' });
