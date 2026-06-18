@@ -966,6 +966,55 @@ const OrderSection = () => {
           </div>
         </div>
       </div>
+      {showCallModal && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-fade-in"
+          style={{ backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
+          onClick={() => setShowCallModal(false)}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            className="relative w-full max-w-md rounded-3xl p-6 sm:p-8 text-center animate-scale-in"
+            style={{
+              backgroundColor: 'hsla(240,15%,11%,0.98)',
+              border: '1px solid hsl(240,9%,20%)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px hsla(266,92%,58%,0.2)',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setShowCallModal(false)}
+              className="absolute right-4 top-4 text-white/50 hover:text-white transition-colors"
+              aria-label="Закрыть"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div
+              className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
+              style={{ backgroundImage: 'linear-gradient(135deg, hsl(263,93%,56%), hsl(306,100%,57%))' }}
+            >
+              <CheckCircle className="w-9 h-9 text-white" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black text-white mb-2">Заявка отправлена!</h3>
+            <p className="text-sm leading-relaxed mb-5" style={{ color: 'hsl(0,0%,80%)' }}>
+              Для быстрой обработки вашего заказа, пожалуйста, позвоните нам:
+            </p>
+            <a
+              href="tel:+79851547772"
+              className="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-full font-bold text-white text-base transition-all duration-200 active:scale-[0.97] hover:brightness-110 hover:shadow-[0_0_24px_hsla(266,92%,58%,0.5)]"
+              style={{
+                backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
+                boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
+              }}
+            >
+              <Phone className="w-4 h-4" /> +7 (985) 154-77-72
+            </a>
+            <p className="text-xs mt-4" style={{ color: 'hsl(0,0%,55%)' }}>
+              Или дождитесь звонка менеджера — мы свяжемся в ближайшее время.
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
