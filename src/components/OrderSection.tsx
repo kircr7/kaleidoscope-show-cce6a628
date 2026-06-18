@@ -932,6 +932,9 @@ const OrderSection = () => {
                                   Закажите от 3 000 ₽ для скидки 20%
                                 </div>
                               )}
+                              <p className="text-[11px] font-medium mb-2" style={{ color: 'hsl(45,100%,85%)' }}>
+                                Минимальный заказ — 500 ₽ (в связи с высокой загруженностью)
+                              </p>
                               <div className="flex items-baseline justify-center sm:justify-start gap-2">
                                 <span className="text-2xl font-black">{Math.round(stats.total)} ₽</span>
                                 {stats.discountApplicable && (
