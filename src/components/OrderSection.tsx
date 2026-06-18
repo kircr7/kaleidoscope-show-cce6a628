@@ -68,8 +68,10 @@ const OrderSection = () => {
   const orderFormRef = useRef<HTMLFormElement>(null);
   const fileFormRef = useRef<HTMLFormElement>(null);
   const [fileCustomer, setFileCustomer] = useState({ name: '', phone: '' });
+  const [fileTask, setFileTask] = useState('');
   const [fileConsent, setFileConsent] = useState(true);
   const [fileStatus, setFileStatus] = useState('');
+  const [showCallModal, setShowCallModal] = useState(false);
   const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -229,10 +231,7 @@ const OrderSection = () => {
         'ShGXdndtWKIL7zvcD',
       );
       setFileStatus('success');
-      showToast({
-        title: '✅ Файлы успешно отправлены!',
-        description: 'Мы свяжемся с вами в течение 5 минут.',
-      });
+      setShowCallModal(true);
     } catch (error) {
       console.error('Ошибка отправки файла:', error);
       showToast({ title: 'Ошибка отправки', description: 'Попробуйте ещё раз или напишите нам в Telegram.', variant: 'destructive' });
@@ -324,7 +323,7 @@ const OrderSection = () => {
                       <p className="text-xs mt-1" style={{ color: 'hsl(0,0%,60%)' }}>Мы свяжемся с вами в ближайшее время.</p>
                       <button
                         type="button"
-                        onClick={() => { setFileStatus(''); setFileLink(''); setFileCustomer({ name: '', phone: '' }); setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
+                        onClick={() => { setFileStatus(''); setFileLink(''); setFileCustomer({ name: '', phone: '' }); setFileTask(''); setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
                         className="mt-3 text-xs font-bold"
                         style={{ color: 'hsl(266,92%,68%)' }}
                       >
@@ -388,7 +387,18 @@ const OrderSection = () => {
                               />
                             </div>
                           </div>
-                          <input type="hidden" name="order_details" value="Клиент отправил файлы через форму" />
+                          <div className="relative">
+                            <textarea
+                              name="order_details"
+                              placeholder="Опишите задание: что нужно напечатать, формат, количество, цветность, фальцовка, сроки и т.д."
+                              value={fileTask}
+                              onChange={e => setFileTask(e.target.value)}
+                              rows={4}
+                              maxLength={2000}
+                              className="w-full p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)] resize-none"
+                              style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                            />
+                          </div>
                           <input type="hidden" name="total_price" value="—" />
                           <label className="flex items-start gap-2.5 cursor-pointer select-none">
                             <input
@@ -956,6 +966,55 @@ const OrderSection = () => {
           </div>
         </div>
       </div>
+      {showCallModal && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-fade-in"
+          style={{ backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
+          onClick={() => setShowCallModal(false)}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            className="relative w-full max-w-md rounded-3xl p-6 sm:p-8 text-center animate-scale-in"
+            style={{
+              backgroundColor: 'hsla(240,15%,11%,0.98)',
+              border: '1px solid hsl(240,9%,20%)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px hsla(266,92%,58%,0.2)',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setShowCallModal(false)}
+              className="absolute right-4 top-4 text-white/50 hover:text-white transition-colors"
+              aria-label="Закрыть"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div
+              className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
+              style={{ backgroundImage: 'linear-gradient(135deg, hsl(263,93%,56%), hsl(306,100%,57%))' }}
+            >
+              <CheckCircle className="w-9 h-9 text-white" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black text-white mb-2">Заявка отправлена!</h3>
+            <p className="text-sm leading-relaxed mb-5" style={{ color: 'hsl(0,0%,80%)' }}>
+              Для быстрой обработки вашего заказа, пожалуйста, позвоните нам:
+            </p>
+            <a
+              href="tel:+79851547772"
+              className="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-full font-bold text-white text-base transition-all duration-200 active:scale-[0.97] hover:brightness-110 hover:shadow-[0_0_24px_hsla(266,92%,58%,0.5)]"
+              style={{
+                backgroundImage: 'linear-gradient(0deg, rgba(94,58,238,1) 0%, rgba(197,107,240,1) 100%)',
+                boxShadow: 'inset 0 -2px 25px -4px hsl(0,0%,100%)',
+              }}
+            >
+              <Phone className="w-4 h-4" /> +7 (985) 154-77-72
+            </a>
+            <p className="text-xs mt-4" style={{ color: 'hsl(0,0%,55%)' }}>
+              Или дождитесь звонка менеджера — мы свяжемся в ближайшее время.
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
