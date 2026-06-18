@@ -311,6 +311,18 @@ const OrderSection = () => {
                     </svg>
                     Написать в Telegram
                   </a>
+
+                  <div
+                    className="mt-3 sm:mt-4 flex items-start gap-2 rounded-xl px-3.5 py-2.5"
+                    style={{
+                      backgroundColor: 'hsla(45,100%,50%,0.1)',
+                      border: '1px solid hsla(45,100%,50%,0.2)',
+                    }}
+                  >
+                    <span className="text-[11px] sm:text-xs font-medium leading-relaxed" style={{ color: 'hsl(45,100%,80%)' }}>
+                      Извините, в связи с высокой загруженностью минимальный заказ — 500 ₽.
+                    </span>
+                  </div>
                 </div>
 
                 {/* File upload form */}
@@ -920,6 +932,9 @@ const OrderSection = () => {
                                   Закажите от 3 000 ₽ для скидки 20%
                                 </div>
                               )}
+                              <p className="text-[11px] font-medium mb-2" style={{ color: 'hsl(45,100%,85%)' }}>
+                                Минимальный заказ — 500 ₽ (в связи с высокой загруженностью)
+                              </p>
                               <div className="flex items-baseline justify-center sm:justify-start gap-2">
                                 <span className="text-2xl font-black">{Math.round(stats.total)} ₽</span>
                                 {stats.discountApplicable && (

@@ -264,6 +264,15 @@ const PriceListSection = () => {
           </p>
         </div>
 
+        <div
+          className="mt-4 mx-auto max-w-2xl rounded-2xl border border-amber-500/30 bg-amber-500/10 backdrop-blur-sm px-5 py-3 text-center opacity-0"
+          style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 400ms forwards" }}
+        >
+          <p className="text-sm font-medium text-amber-200">
+            Извините, в связи с высокой загруженностью минимальный заказ — 500 ₽.
+          </p>
+        </div>
+
         <p
           className="text-center text-sm text-muted-foreground/70 mt-6 opacity-0"
           style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 400ms forwards" }}
