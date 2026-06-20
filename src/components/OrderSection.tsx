@@ -857,10 +857,23 @@ const OrderSection = () => {
                             </div>
                           </div>
 
+                          <div className="relative">
+                            <textarea
+                              required
+                              placeholder="Опишите задание: уточнения по печати, пожелания, сроки и т.д. *"
+                              value={orderTask}
+                              onChange={e => setOrderTask(e.target.value)}
+                              rows={3}
+                              maxLength={2000}
+                              className="w-full p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)] resize-none"
+                              style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                            />
+                          </div>
+
                           <input
                             type="hidden"
                             name="order_details"
-                            value={cart.map((item, index) => {
+                            value={`Описание задания:\n${orderTask}\n\nСостав заказа:\n` + cart.map((item, index) => {
                               const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
                               const perUnit = item.unitPrice + folding;
                               const foldingNote = folding > 0 ? ` (вкл. фальцовку ${folding} ₽)` : '';
