@@ -412,7 +412,8 @@ const OrderSection = () => {
                           <div className="relative">
                             <textarea
                               name="order_details"
-                              placeholder="Опишите задание: что нужно напечатать, формат, количество, цветность, фальцовка, сроки и т.д."
+                              required
+                              placeholder="Опишите задание: что нужно напечатать, формат, количество, цветность, фальцовка, сроки и т.д. *"
                               value={fileTask}
                               onChange={e => setFileTask(e.target.value)}
                               rows={4}
