@@ -73,6 +73,7 @@ const OrderSection = () => {
   const [fileStatus, setFileStatus] = useState('');
   const [showCallModal, setShowCallModal] = useState(false);
   const [consent, setConsent] = useState(true);
+  const [orderTask, setOrderTask] = useState('');
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [foldingEnabled, setFoldingEnabled] = useState(false);
