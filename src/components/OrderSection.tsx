@@ -222,6 +222,10 @@ const OrderSection = () => {
       showToast({ title: 'Ошибка', description: 'Прикрепите файл или укажите ссылку', variant: 'destructive' });
       return;
     }
+    if (!fileTask.trim()) {
+      showToast({ title: 'Ошибка', description: 'Пожалуйста, опишите задание', variant: 'destructive' });
+      return;
+    }
     if (fileCustomer.phone.replace(/\D/g, '').length < 11) {
       showToast({ title: 'Ошибка', description: 'Пожалуйста, введите полный номер телефона', variant: 'destructive' });
       return;
