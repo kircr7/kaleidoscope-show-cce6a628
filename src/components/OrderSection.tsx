@@ -73,6 +73,7 @@ const OrderSection = () => {
   const [fileStatus, setFileStatus] = useState('');
   const [showCallModal, setShowCallModal] = useState(false);
   const [consent, setConsent] = useState(true);
+  const [orderTask, setOrderTask] = useState('');
   const [status, setStatus] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [foldingEnabled, setFoldingEnabled] = useState(false);
@@ -177,6 +178,10 @@ const OrderSection = () => {
       alert('Необходимо согласие на обработку персональных данных');
       return;
     }
+    if (!orderTask.trim()) {
+      alert('Пожалуйста, опишите задание');
+      return;
+    }
     if (customer.phone.replace(/\D/g, '').length < 11) {
       alert('Пожалуйста, введите полный номер телефона');
       return;
@@ -197,6 +202,7 @@ const OrderSection = () => {
         'ShGXdndtWKIL7zvcD',
       );
       setStatus('success');
+      setShowCallModal(true);
     } catch (error) {
       console.error('Ошибка отправки:', error);
       alert('Упс! Произошла ошибка. Пожалуйста, напишите нам на printprro@gmail.com или в Telegram.');
@@ -214,6 +220,10 @@ const OrderSection = () => {
     }
     if (!fileLink && !uploadedFile) {
       showToast({ title: 'Ошибка', description: 'Прикрепите файл или укажите ссылку', variant: 'destructive' });
+      return;
+    }
+    if (!fileTask.trim()) {
+      showToast({ title: 'Ошибка', description: 'Пожалуйста, опишите задание', variant: 'destructive' });
       return;
     }
     if (fileCustomer.phone.replace(/\D/g, '').length < 11) {
@@ -402,7 +412,8 @@ const OrderSection = () => {
                           <div className="relative">
                             <textarea
                               name="order_details"
-                              placeholder="Опишите задание: что нужно напечатать, формат, количество, цветность, фальцовка, сроки и т.д."
+                              required
+                              placeholder="Опишите задание: что нужно напечатать, формат, количество, цветность, фальцовка, сроки и т.д. *"
                               value={fileTask}
                               onChange={e => setFileTask(e.target.value)}
                               rows={4}
@@ -846,10 +857,23 @@ const OrderSection = () => {
                             </div>
                           </div>
 
+                          <div className="relative">
+                            <textarea
+                              required
+                              placeholder="Опишите задание: уточнения по печати, пожелания, сроки и т.д. *"
+                              value={orderTask}
+                              onChange={e => setOrderTask(e.target.value)}
+                              rows={3}
+                              maxLength={2000}
+                              className="w-full p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)] resize-none"
+                              style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                            />
+                          </div>
+
                           <input
                             type="hidden"
                             name="order_details"
-                            value={cart.map((item, index) => {
+                            value={`Описание задания:\n${orderTask}\n\nСостав заказа:\n` + cart.map((item, index) => {
                               const folding = (!item.isService && foldingEnabled) ? getFoldingPrice(item) : 0;
                               const perUnit = item.unitPrice + folding;
                               const foldingNote = folding > 0 ? ` (вкл. фальцовку ${folding} ₽)` : '';
@@ -967,7 +991,7 @@ const OrderSection = () => {
                         Спасибо, <strong className="text-white">{customer.name}</strong>. Мы свяжемся с вами в течение 5 минут по номеру <strong className="text-white">{customer.phone}</strong>.
                       </p>
                       <button
-                        onClick={() => { setStatus(''); setCart([]); setCustomer({ name: '', phone: '' }); setFileLink(''); setUploadedFile(null); }}
+                        onClick={() => { setStatus(''); setCart([]); setCustomer({ name: '', phone: '' }); setOrderTask(''); setFileLink(''); setUploadedFile(null); }}
                         className="inline-block mt-8 text-sm font-bold transition-colors"
                         style={{ color: 'hsl(266,92%,68%)' }}
                       >
