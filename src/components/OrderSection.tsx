@@ -202,6 +202,7 @@ const OrderSection = () => {
         'ShGXdndtWKIL7zvcD',
       );
       setStatus('success');
+      setShowCallModal(true);
     } catch (error) {
       console.error('Ошибка отправки:', error);
       alert('Упс! Произошла ошибка. Пожалуйста, напишите нам на printprro@gmail.com или в Telegram.');
