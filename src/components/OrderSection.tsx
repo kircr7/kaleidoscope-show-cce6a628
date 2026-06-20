@@ -178,6 +178,10 @@ const OrderSection = () => {
       alert('Необходимо согласие на обработку персональных данных');
       return;
     }
+    if (!orderTask.trim()) {
+      alert('Пожалуйста, опишите задание');
+      return;
+    }
     if (customer.phone.replace(/\D/g, '').length < 11) {
       alert('Пожалуйста, введите полный номер телефона');
       return;
