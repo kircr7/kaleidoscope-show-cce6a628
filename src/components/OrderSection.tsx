@@ -67,7 +67,7 @@ const OrderSection = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const orderFormRef = useRef<HTMLFormElement>(null);
   const fileFormRef = useRef<HTMLFormElement>(null);
-  const [fileCustomer, setFileCustomer] = useState({ name: '', phone: '' });
+  const [fileCustomer, setFileCustomer] = useState({ name: '', phone: '', email: '' });
   const [fileTask, setFileTask] = useState('');
   const [fileConsent, setFileConsent] = useState(true);
   const [fileStatus, setFileStatus] = useState('');
