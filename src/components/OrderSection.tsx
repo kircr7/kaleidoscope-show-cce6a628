@@ -60,7 +60,7 @@ const OrderSection = () => {
   const [format, setFormat] = useState('A1');
   const [isColor, setIsColor] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [customer, setCustomer] = useState({ name: '', phone: '' });
+  const [customer, setCustomer] = useState({ name: '', phone: '', email: '' });
   const [fileLink, setFileLink] = useState('');
   const [orderFileLink, setOrderFileLink] = useState('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
