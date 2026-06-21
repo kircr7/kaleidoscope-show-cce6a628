@@ -186,6 +186,10 @@ const OrderSection = () => {
       alert('Пожалуйста, введите полный номер телефона');
       return;
     }
+    if (!customer.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
+      alert('Пожалуйста, введите корректный email');
+      return;
+    }
 
     if (!orderFormRef.current) {
       alert('Форма не готова к отправке. Обновите страницу и попробуйте снова.');
