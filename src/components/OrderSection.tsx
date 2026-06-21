@@ -234,6 +234,10 @@ const OrderSection = () => {
       showToast({ title: 'Ошибка', description: 'Пожалуйста, введите полный номер телефона', variant: 'destructive' });
       return;
     }
+    if (!fileCustomer.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fileCustomer.email)) {
+      showToast({ title: 'Ошибка', description: 'Пожалуйста, введите корректный email', variant: 'destructive' });
+      return;
+    }
     if (!fileFormRef.current) return;
 
     setFileStatus('sending');
