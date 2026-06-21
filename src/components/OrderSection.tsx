@@ -418,6 +418,19 @@ const OrderSection = () => {
                             </div>
                           </div>
                           <div className="relative">
+                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                            <input
+                              required
+                              name="customer_email"
+                              type="email"
+                              placeholder="Ваш email для ответа"
+                              value={fileCustomer.email}
+                              onChange={e => setFileCustomer({ ...fileCustomer, email: e.target.value })}
+                              className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
+                              style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                            />
+                          </div>
+                          <div className="relative">
                             <textarea
                               name="order_details"
                               required
