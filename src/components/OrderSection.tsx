@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Ruler, ShieldCheck, Truck, Plus, Minus, Link2, Paperclip, X } from 'lucide-react';
+import { Trash2, Printer, ShoppingCart, Send, Phone, User, CheckCircle, Ruler, ShieldCheck, Truck, Plus, Minus, Link2, Paperclip, X, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Switch } from '@/components/ui/switch';
 import emailjs from '@emailjs/browser';
@@ -60,14 +60,14 @@ const OrderSection = () => {
   const [format, setFormat] = useState('A1');
   const [isColor, setIsColor] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [customer, setCustomer] = useState({ name: '', phone: '' });
+  const [customer, setCustomer] = useState({ name: '', phone: '', email: '' });
   const [fileLink, setFileLink] = useState('');
   const [orderFileLink, setOrderFileLink] = useState('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const orderFormRef = useRef<HTMLFormElement>(null);
   const fileFormRef = useRef<HTMLFormElement>(null);
-  const [fileCustomer, setFileCustomer] = useState({ name: '', phone: '' });
+  const [fileCustomer, setFileCustomer] = useState({ name: '', phone: '', email: '' });
   const [fileTask, setFileTask] = useState('');
   const [fileConsent, setFileConsent] = useState(true);
   const [fileStatus, setFileStatus] = useState('');
@@ -186,6 +186,10 @@ const OrderSection = () => {
       alert('Пожалуйста, введите полный номер телефона');
       return;
     }
+    if (!customer.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
+      alert('Пожалуйста, введите корректный email');
+      return;
+    }
 
     if (!orderFormRef.current) {
       alert('Форма не готова к отправке. Обновите страницу и попробуйте снова.');
@@ -228,6 +232,10 @@ const OrderSection = () => {
     }
     if (fileCustomer.phone.replace(/\D/g, '').length < 11) {
       showToast({ title: 'Ошибка', description: 'Пожалуйста, введите полный номер телефона', variant: 'destructive' });
+      return;
+    }
+    if (!fileCustomer.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fileCustomer.email)) {
+      showToast({ title: 'Ошибка', description: 'Пожалуйста, введите корректный email', variant: 'destructive' });
       return;
     }
     if (!fileFormRef.current) return;
@@ -345,7 +353,7 @@ const OrderSection = () => {
                       <p className="text-xs mt-1" style={{ color: 'hsl(0,0%,60%)' }}>Мы свяжемся с вами в ближайшее время.</p>
                       <button
                         type="button"
-                        onClick={() => { setFileStatus(''); setFileLink(''); setFileCustomer({ name: '', phone: '' }); setFileTask(''); setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
+                        onClick={() => { setFileStatus(''); setFileLink(''); setFileCustomer({ name: '', phone: '', email: '' }); setFileTask(''); setUploadedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
                         className="mt-3 text-xs font-bold"
                         style={{ color: 'hsl(266,92%,68%)' }}
                       >
@@ -408,6 +416,19 @@ const OrderSection = () => {
                                 style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                               />
                             </div>
+                          </div>
+                          <div className="relative">
+                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                            <input
+                              required
+                              name="customer_email"
+                              type="email"
+                              placeholder="Ваш email для ответа"
+                              value={fileCustomer.email}
+                              onChange={e => setFileCustomer({ ...fileCustomer, email: e.target.value })}
+                              className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
+                              style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                            />
                           </div>
                           <div className="relative">
                             <textarea
@@ -858,6 +879,19 @@ const OrderSection = () => {
                           </div>
 
                           <div className="relative">
+                            <Mail className="absolute left-4 top-4 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
+                            <input
+                              required
+                              name="customer_email"
+                              type="email"
+                              placeholder="Ваш email для ответа"
+                              value={customer.email}
+                              onChange={e => setCustomer({ ...customer, email: e.target.value })}
+                              className="w-full pl-11 p-4 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
+                              style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
+                            />
+                          </div>
+                          <div className="relative">
                             <textarea
                               required
                               placeholder="Опишите задание: уточнения по печати, пожелания, сроки и т.д. *"
@@ -991,7 +1025,7 @@ const OrderSection = () => {
                         Спасибо, <strong className="text-white">{customer.name}</strong>. Мы свяжемся с вами в течение 5 минут по номеру <strong className="text-white">{customer.phone}</strong>.
                       </p>
                       <button
-                        onClick={() => { setStatus(''); setCart([]); setCustomer({ name: '', phone: '' }); setOrderTask(''); setFileLink(''); setUploadedFile(null); }}
+                        onClick={() => { setStatus(''); setCart([]); setCustomer({ name: '', phone: '', email: '' }); setOrderTask(''); setFileLink(''); setUploadedFile(null); }}
                         className="inline-block mt-8 text-sm font-bold transition-colors"
                         style={{ color: 'hsl(266,92%,68%)' }}
                       >
