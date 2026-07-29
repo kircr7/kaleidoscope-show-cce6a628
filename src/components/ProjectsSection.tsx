@@ -91,6 +91,8 @@ const ImageSlider = ({
   const [index, setIndex] = useState(0);
   const [progress, setProgress] = useState(0); // плавная позиция 0..images.length-1
   const targetProgress = useRef(0);
+  const velocity = useRef(0);
+
   const rafId = useRef<number | null>(null);
   const touchStartX = useRef<number | null>(null);
   const hasMultiple = images.length > 1;
