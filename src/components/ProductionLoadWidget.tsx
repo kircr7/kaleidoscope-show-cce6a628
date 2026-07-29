@@ -356,17 +356,24 @@ const ProductionLoadWidget = () => {
 
 
               <span className="text-sm text-muted-foreground">
-                {slot ? (
+                {slot === "before" ? (
                   <>
-                    Ближайшее окно для старта печати:{" "}
-                    <span className="font-semibold text-foreground tabular-nums">{slot}</span>
+                    Сейчас нерабочее время —{" "}
+                    <span className="font-semibold text-foreground">
+                      принимаем заказы с 10 утра
+                    </span>
                   </>
-                ) : (
+                ) : slot === "after" ? (
                   <>
                     Рабочий день завершён —{" "}
                     <span className="font-semibold text-foreground">
                       принимаем заказы на завтра
                     </span>
+                  </>
+                ) : (
+                  <>
+                    Ближайшее окно для старта печати:{" "}
+                    <span className="font-semibold text-foreground tabular-nums">{slot}</span>
                   </>
                 )}
               </span>
