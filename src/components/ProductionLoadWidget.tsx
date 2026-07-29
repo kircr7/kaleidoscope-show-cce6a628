@@ -230,9 +230,9 @@ const ProductionLoadWidget = () => {
 
   // Цвет: 65% и ниже — зелёный, 90% и выше — красный
   const ratio = Math.min(1, Math.max(0, (animatedLoad - 65) / (91 - 65)));
-  const hue = 145 - 145 * ratio;
-  const mainColor = `hsl(${hue} 75% 50%)`;
-  const lightColor = `hsl(${hue} 85% 65%)`;
+  const hue = 150 - 135 * ratio;
+  const mainColor = `hsl(${hue} 42% 52%)`;
+  const lightColor = `hsl(${hue} 38% 66%)`;
 
   return (
     <section className="px-3 sm:px-4 py-12 sm:py-20">
