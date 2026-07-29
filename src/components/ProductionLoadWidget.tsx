@@ -1,8 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 
-const TARGET_LOAD = 82;
-const TARGET_SQM = 1450;
-const NEXT_SLOT = "14:30";
+/** Базовая загрузка в зависимости от текущего часа */
+function baseLoadForHour(h: number, m: number) {
+  const t = h + m / 60;
+  if (t < 8) return 45;
+  if (t < 12) return 60 + ((t - 8) / 4) * 5; // 60 → 65
+  if (t < 16) return 65 + ((t - 12) / 4) * 15; // 65 → 80
+  if (t < 20) return 80 + ((t - 16) / 4) * 10; // 80 → 90
+  return 88;
+}
+
+/** Отпечатано за сегодня: минуты с 8:00 × 2.5 */
+function sqmForNow(now: Date) {
+  const minutes = (now.getHours() - 8) * 60 + now.getMinutes();
+  return Math.max(0, Math.round(minutes * 2.5));
+}
+
+/** Ближайшее окно: текущее время + 30 минут */
+function nextSlot(now: Date) {
+  const d = new Date(now.getTime() + 30 * 60 * 1000);
+  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+}
 
 /** Плавный счётчик с easing, стартует по появлению в вьюпорте */
 function useCountUp(target: number, active: boolean, duration = 1600) {
