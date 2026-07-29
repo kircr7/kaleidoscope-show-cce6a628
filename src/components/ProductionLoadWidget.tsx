@@ -225,7 +225,7 @@ const ProductionLoadWidget = () => {
   const offset = circumference * (1 - animatedLoad / 100);
 
   // Цвет: 65% и ниже — зелёный, 90% и выше — красный
-  const ratio = Math.min(1, Math.max(0, (animatedLoad - 65) / (90 - 65)));
+  const ratio = Math.min(1, Math.max(0, (animatedLoad - 65) / (91 - 65)));
   const hue = 145 - 145 * ratio;
   const mainColor = `hsl(${hue} 75% 50%)`;
   const lightColor = `hsl(${hue} 85% 65%)`;
