@@ -295,23 +295,25 @@ const ProductionLoadWidget = () => {
               <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 Отпечатано за сегодня, листов
               </p>
-              <div className="mt-4 grid grid-cols-3 sm:grid-cols-5 gap-5">
+              <div className="mt-4 grid grid-cols-3 sm:grid-cols-5 gap-3">
                 {FORMATS.map((f) => (
                   <FormatStat
                     key={f.key}
                     label={f.label}
                     target={sheets[f.key] ?? 0}
                     active={active}
+                    accent={FORMAT_ACCENTS[f.key]}
                   />
                 ))}
               </div>
             </div>
 
-            <div className="inline-flex items-center gap-3 rounded-full border border-border/60 bg-background/60 px-4 py-2">
+            <div className="inline-flex items-center gap-3 rounded-full border border-emerald-400/40 bg-gradient-to-r from-emerald-500/15 to-teal-400/10 px-4 py-2">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
+
               <span className="text-sm text-muted-foreground">
                 Ближайшее окно для старта печати:{" "}
                 <span className="font-semibold text-foreground tabular-nums">{slot}</span>
