@@ -7,9 +7,7 @@ const LoadStatusBadge = ({ className = "" }: { className?: string }) => {
       className={`group relative inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-white/50 transition-all duration-300 hover:bg-white/[0.06] hover:text-white active:scale-95 ${className}`}
     >
       <span className="whitespace-nowrap">Загруженность</span>
-      <span className="relative flex h-2 w-2 flex-shrink-0">
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-      </span>
+
 
 
       {/* Подсказка при наведении */}
