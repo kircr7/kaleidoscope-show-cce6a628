@@ -229,12 +229,21 @@ const ProductionLoadWidget = () => {
     <section className="px-3 sm:px-4 py-12 sm:py-20">
       <div
         ref={ref}
-        className="container max-w-5xl mx-auto rounded-2xl border border-border/60 bg-card/40 backdrop-blur-sm"
+        className="container max-w-5xl mx-auto relative overflow-hidden rounded-2xl border border-border/60 bg-card/40 backdrop-blur-sm"
       >
-        <div className="grid grid-cols-1 md:grid-cols-[auto,1fr] gap-10 md:gap-16 p-8 sm:p-12 items-center">
+        <div className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-sky-500/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-fuchsia-500/20 blur-3xl" />
+        <div className="grid grid-cols-1 md:grid-cols-[auto,1fr] gap-10 md:gap-16 p-8 sm:p-12 items-center relative">
           {/* Кольцевой индикатор */}
           <div className="relative mx-auto w-[200px] h-[200px]">
             <svg viewBox="0 0 200 200" className="w-full h-full -rotate-90">
+              <defs>
+                <linearGradient id="loadGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#38bdf8" />
+                  <stop offset="50%" stopColor="#a78bfa" />
+                  <stop offset="100%" stopColor="#f472b6" />
+                </linearGradient>
+              </defs>
               <circle
                 cx="100"
                 cy="100"
@@ -249,18 +258,18 @@ const ProductionLoadWidget = () => {
                 cy="100"
                 r={radius}
                 fill="none"
-                stroke="currentColor"
-                strokeWidth="6"
+                stroke="url(#loadGrad)"
+                strokeWidth="10"
                 strokeLinecap="round"
                 strokeDasharray={circumference}
                 strokeDashoffset={offset}
-                className="text-primary transition-[stroke-dashoffset] duration-1000 ease-out"
+                className="transition-[stroke-dashoffset] duration-1000 ease-out drop-shadow-[0_0_10px_rgba(56,189,248,0.5)]"
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-4xl sm:text-5xl font-bold tracking-tight tabular-nums text-foreground">
+              <span className="text-4xl sm:text-5xl font-bold tracking-tight tabular-nums bg-gradient-to-br from-sky-300 via-violet-300 to-pink-300 bg-clip-text text-transparent">
                 {Math.round(animatedLoad)}
-                <span className="text-xl align-top text-muted-foreground">%</span>
+                <span className="text-xl align-top">%</span>
               </span>
               <span className="mt-1 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 загрузка
@@ -274,12 +283,13 @@ const ProductionLoadWidget = () => {
               <p className="text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
                 Текущая загрузка производства
               </p>
-              <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+              <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-foreground via-sky-200 to-violet-200 bg-clip-text text-transparent">
                 Производство работает в штатном режиме
               </h2>
             </div>
 
-            <div className="h-px w-full bg-border/60" />
+            <div className="h-px w-full bg-gradient-to-r from-sky-500/50 via-violet-500/40 to-transparent" />
+
 
             <div>
               <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
