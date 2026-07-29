@@ -355,8 +355,19 @@ const ProductionLoadWidget = () => {
 
 
               <span className="text-sm text-muted-foreground">
-                Ближайшее окно для старта печати:{" "}
-                <span className="font-semibold text-foreground tabular-nums">{slot}</span>
+                {slot ? (
+                  <>
+                    Ближайшее окно для старта печати:{" "}
+                    <span className="font-semibold text-foreground tabular-nums">{slot}</span>
+                  </>
+                ) : (
+                  <>
+                    Рабочий день завершён —{" "}
+                    <span className="font-semibold text-foreground">
+                      принимаем заказы на завтра
+                    </span>
+                  </>
+                )}
               </span>
             </div>
           </div>
