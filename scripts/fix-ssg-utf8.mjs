@@ -1,23 +1,40 @@
 /**
- * vite-react-ssg concatenates SSR stream chunks with `chunk.toString()` per chunk.
- * React's stream splits at fixed byte boundaries, so multi-byte UTF-8 characters
- * (Cyrillic) get cut in half and become "" in the generated HTML — which also
- * breaks React hydration (mismatch errors) in the browser.
+ * Fixes two UTF-8 bugs in the vite-react-ssg SSG pipeline that corrupt Cyrillic
+ * text in the generated static HTML (visible as "" diamonds in alt-texts and
+ * as React hydration mismatches in the browser):
  *
- * This script patches the installed package to buffer chunks and decode once.
- * It is idempotent and runs automatically before `npm run build`.
+ *  1. SSR stream chunks were concatenated with `chunk.toString()` per chunk, so
+ *     multi-byte characters split across chunk boundaries were destroyed.
+ *  2. jsdom's parser corrupts multi-byte characters at internal chunk
+ *     boundaries on large pages; we feed it ASCII-only input (numeric character
+ *     references) so nothing can be split.
+ *
+ * The script patches the installed package in place, is idempotent, and runs
+ * automatically before `npm run build`.
  */
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const DIR = "node_modules/vite-react-ssg/dist/shared";
-const BROKEN = "this._output += chunk.toString();";
-const FIXED = "this._chunks = this._chunks || []; this._chunks.push(Buffer.from(chunk));";
-const BROKEN_END = "this._deferred.resolve(this._output);";
-const FIXED_END =
-  "this._deferred.resolve(Buffer.concat(this._chunks || []).toString('utf8') || this._output);";
 
-let patched = 0;
+const HELPER = `
+function __ssgAsciiSafe(html) {
+  return typeof html === "string"
+    ? html.replace(/[\\u0080-\\uFFFF]/g, (c) => "&#x" + c.charCodeAt(0).toString(16) + ";")
+    : html;
+}
+`;
+
+const REPLACEMENTS = [
+  ["this._output += chunk.toString();", "this.__chunks = this.__chunks || []; this.__chunks.push(Buffer.from(chunk));"],
+  [
+    "this._deferred.resolve(this._output);",
+    "this._deferred.resolve(Buffer.concat(this.__chunks || []).toString('utf8') || this._output);",
+  ],
+  ["new JSDOM(appHTML)", "new JSDOM(__ssgAsciiSafe(appHTML))"],
+  ["new JSDOM(renderedHTML)", "new JSDOM(__ssgAsciiSafe(renderedHTML))"],
+];
+
 let files = [];
 try {
   files = await readdir(DIR);
@@ -26,12 +43,22 @@ try {
   process.exit(0);
 }
 
+let patched = 0;
 for (const file of files.filter((f) => f.endsWith(".mjs"))) {
   const full = path.join(DIR, file);
-  const src = await readFile(full, "utf-8");
-  if (!src.includes(BROKEN)) continue;
-  const out = src.split(BROKEN).join(FIXED).split(BROKEN_END).join(FIXED_END);
-  await writeFile(full, out, "utf-8");
+  let src = await readFile(full, "utf-8");
+  let changed = false;
+
+  for (const [from, to] of REPLACEMENTS) {
+    if (src.includes(from)) {
+      src = src.split(from).join(to);
+      changed = true;
+    }
+  }
+  if (!changed) continue;
+
+  if (!src.includes("function __ssgAsciiSafe")) src += HELPER;
+  await writeFile(full, src, "utf-8");
   patched++;
 }
 
