@@ -110,25 +110,38 @@ function useCountUp(target: number, active: boolean, duration = 1600) {
   return value;
 }
 
+const FORMAT_ACCENTS: Record<string, string> = {
+  A4: "from-sky-500/25 to-cyan-400/10 text-sky-300 border-sky-400/30",
+  A3: "from-violet-500/25 to-fuchsia-400/10 text-violet-300 border-violet-400/30",
+  A2: "from-emerald-500/25 to-teal-400/10 text-emerald-300 border-emerald-400/30",
+  A1: "from-amber-500/25 to-orange-400/10 text-amber-300 border-amber-400/30",
+  A0: "from-rose-500/25 to-pink-400/10 text-rose-300 border-rose-400/30",
+};
+
 const FormatStat = ({
   label,
   target,
   active,
+  accent,
 }: {
   label: string;
   target: number;
   active: boolean;
+  accent: string;
 }) => {
   const value = useCountUp(target, active, 2000);
   return (
-    <div className="flex flex-col items-center md:items-start">
-      <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">{label}</span>
+    <div
+      className={`flex flex-col items-center rounded-xl border bg-gradient-to-br p-3 transition-transform duration-300 hover:-translate-y-0.5 ${accent}`}
+    >
+      <span className="text-[11px] uppercase tracking-[0.2em] opacity-90">{label}</span>
       <span className="mt-1 text-xl sm:text-2xl font-bold tracking-tight tabular-nums text-foreground">
         {Math.round(value).toLocaleString("ru-RU")}
       </span>
     </div>
   );
 };
+
 
 const ProductionLoadWidget = () => {
   const ref = useRef<HTMLDivElement>(null);
