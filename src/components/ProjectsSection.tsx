@@ -124,7 +124,7 @@ const ImageSlider = ({
           rafId.current = null;
           return targetProgress.current;
         }
-        const base = 0.05;
+        const base = 0.018;
         const proximity = Math.min(1, absDiff);
         const eased = base * (0.35 + 0.65 * proximity * proximity);
         const next = prev + diff * eased;
