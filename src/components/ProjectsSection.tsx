@@ -130,7 +130,7 @@ const ImageSlider = ({
         className="flex h-full will-change-transform"
         style={{
           transform: `translate3d(-${index * 100}%, 0, 0)`,
-          transition: "transform 1100ms cubic-bezier(0.22, 0.61, 0.36, 1)",
+          transition: "transform 2600ms cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
         {images.map((src, i) => (
