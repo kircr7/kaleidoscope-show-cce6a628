@@ -190,8 +190,9 @@ const ImageSlider = ({
           transition: dragging
             ? "none"
             : isTouch.current
-              ? "transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1)"
-              : "transform 2600ms cubic-bezier(0.16, 1, 0.3, 1)",
+              ? "transform 1040ms cubic-bezier(0.22, 0.61, 0.36, 1)"
+              : "transform 5200ms cubic-bezier(0.16, 1, 0.3, 1)",
+
         }}
       >
 
