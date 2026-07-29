@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, TouchEvent } from "react";
-import { ChevronLeft, ChevronRight, X, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
@@ -100,18 +100,10 @@ const ImageSlider = ({
   const axisLocked = useRef<"x" | "y" | null>(null);
   const isTouch = useRef(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [autoPlay, setAutoPlay] = useState(true);
 
   const hasMultiple = images.length > 1;
 
-  // Автопрокрутка: пауза при наведении/свайпе, отключается кнопкой
-  useEffect(() => {
-    if (!hasMultiple || !autoPlay || hovering || dragging) return;
-    const id = window.setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 4500);
-    return () => window.clearInterval(id);
-  }, [hasMultiple, autoPlay, hovering, dragging, images.length]);
+
 
   const go = (delta: number) => {
     setIndex((prev) => Math.max(0, Math.min(images.length - 1, prev + delta)));
@@ -229,7 +221,7 @@ const ImageSlider = ({
     }
     pendingZone.current = null;
     setHovering(false);
-    if (!autoPlay) setIndex(0);
+    setIndex(0);
   };
 
 
@@ -248,36 +240,17 @@ const ImageSlider = ({
         <button
           type="button"
           onClick={() => onImageClick(index)}
-          className="absolute inset-0 block h-full w-full cursor-zoom-in [perspective:1400px]"
+          className="absolute inset-0 block h-full w-full cursor-zoom-in"
           aria-label={`Открыть фото ${index + 1}`}
         >
-          {images.map((src, i) => {
-            const offset = i - index;
-            const active = offset === 0;
-            return (
-              <img
-                key={i}
-                src={src}
-                alt={`${altBase} — фото ${i + 1}`}
-                loading={i === 0 ? "eager" : "lazy"}
-                className="absolute inset-0 h-full w-full object-cover select-none will-change-transform [backface-visibility:hidden]"
-                style={{
-                  zIndex: active ? 2 : 1,
-                  opacity: Math.abs(offset) > 1 ? 0 : active ? 1 : 0,
-                  transformOrigin: offset < 0 ? "left center" : "right center",
-                  transform: active
-                    ? "translate3d(0,0,0) rotateY(0deg) scale(1)"
-                    : `translate3d(${offset < 0 ? "-14%" : "14%"},0,0) rotateY(${
-                        offset < 0 ? 22 : -22
-                      }deg) scale(0.96)`,
-                  transition:
-                    "transform 1600ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 1100ms ease-in-out",
-                }}
-                draggable={false}
-              />
-            );
-          })}
+          <img
+            src={images[index]}
+            alt={`${altBase} — фото ${index + 1}`}
+            className="absolute inset-0 h-full w-full object-cover select-none"
+            draggable={false}
+          />
         </button>
+
 
       ) : (
         <div
@@ -311,19 +284,7 @@ const ImageSlider = ({
         </div>
       )}
 
-      {hasMultiple && (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            setAutoPlay((v) => !v);
-          }}
-          aria-label={autoPlay ? "Остановить автопрокрутку" : "Включить автопрокрутку"}
-          className="absolute top-2 right-2 z-20 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm border border-white/15 text-white/80 flex items-center justify-center opacity-0 group-hover/slider:opacity-100 focus-visible:opacity-100 transition hover:bg-black/70"
-        >
-          {autoPlay ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-        </button>
-      )}
+
 
 
       {hasMultiple && showDots && (
