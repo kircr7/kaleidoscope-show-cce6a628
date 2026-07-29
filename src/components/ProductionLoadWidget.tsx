@@ -240,7 +240,7 @@ const ProductionLoadWidget = () => {
   const lightColor = `hsl(${hue} 58% 60%)`;
 
   return (
-    <section className="px-3 sm:px-4 py-12 sm:py-20">
+    <section id="production-load" className="px-3 sm:px-4 py-12 sm:py-20">
       <div
         ref={ref}
         className="container max-w-5xl mx-auto relative overflow-hidden rounded-2xl border border-border/60 bg-card/40 backdrop-blur-sm"
