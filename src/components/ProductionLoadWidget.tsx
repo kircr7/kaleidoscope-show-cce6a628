@@ -304,17 +304,18 @@ const ProductionLoadWidget = () => {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span
-                className="text-4xl sm:text-5xl font-bold tracking-tight tabular-nums transition-colors duration-1000"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight tabular-nums transition-colors duration-1000"
                 style={{ color: lightColor }}
               >
                 {Math.round(animatedLoad)}
-                <span className="text-xl align-top">%</span>
+                <span className="text-base sm:text-xl align-top">%</span>
               </span>
 
-              <span className="mt-1 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              <span className="mt-1 text-[9px] sm:text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 загрузка
               </span>
             </div>
+
           </div>
 
           {/* Текстовая часть */}
