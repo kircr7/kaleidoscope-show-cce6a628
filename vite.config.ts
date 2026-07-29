@@ -38,6 +38,10 @@ export default defineConfig(({ mode }) => ({
     // which breaks alt-texts and causes React hydration mismatches.
     formatting: "none",
     crittersOptions: false,
+    onPageRendered: async (route: string, html: string) => {
+      if (html.includes("\uFFFD")) console.warn(`[utf8] broken chars in ${route}`);
+      return html;
+    },
     onFinished: async () => {
       const fs = await import("node:fs/promises");
       const nodePath = await import("node:path");
