@@ -181,7 +181,7 @@ const ProductionLoadWidget = () => {
     A1: 0,
     A0: 0,
   });
-  const [slot, setSlot] = useState("--:--");
+  const [slot, setSlot] = useState<string | null>("--:--");
 
   // Инициализация по локальному времени пользователя
   useEffect(() => {
