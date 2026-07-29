@@ -221,7 +221,7 @@ const ProductionLoadWidget = () => {
   const active = inView && mounted;
   const animatedLoad = useCountUp(load, active, 1800);
 
-  const radius = 88;
+  const radius = 76;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - animatedLoad / 100);
 
