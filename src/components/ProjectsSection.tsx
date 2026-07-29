@@ -89,18 +89,11 @@ const ImageSlider = ({
   showDots = true,
 }: ImageSliderProps) => {
   const [index, setIndex] = useState(0);
-  const [progress, setProgress] = useState(0); // плавная позиция 0..images.length-1
-  const targetProgress = useRef(0);
-  const velocity = useRef(0);
-
-  const rafId = useRef<number | null>(null);
   const touchStartX = useRef<number | null>(null);
   const hasMultiple = images.length > 1;
 
   const go = (delta: number) => {
-    const next = (index + delta + images.length) % images.length;
-    setIndex(next);
-    targetProgress.current = next;
+    setIndex((prev) => (prev + delta + images.length) % images.length);
   };
 
   const onTouchStart = (e: TouchEvent) => {
@@ -113,64 +106,17 @@ const ImageSlider = ({
     touchStartX.current = null;
   };
 
-  // Плавная анимация к целевой позиции: lerp с ease-out (затухание у цели)
-  // base = базовая «жёсткость» пружины (меньше = мягче старт)
-  // По мере приближения к цели множитель уменьшается → плавное замедление
-  const startTick = () => {
-    if (rafId.current !== null) return;
-    let last = performance.now();
-    const tick = (now: number) => {
-      const dt = Math.min(64, now - last);
-      last = now;
-      setProgress((prev) => {
-        // критически задемпфированная пружина — мягкий старт и плавное торможение
-        const stiffness = 0.0008; // жёсткость (меньше = медленнее и мягче)
-        const damping = 0.72; // затухание скорости
-
-
-        const diff = targetProgress.current - prev;
-        velocity.current = (velocity.current + diff * stiffness * dt) * damping;
-        const next = prev + velocity.current * (dt / 16.67);
-        if (Math.abs(diff) < 0.0008 && Math.abs(velocity.current) < 0.0008) {
-          velocity.current = 0;
-          rafId.current = null;
-          return targetProgress.current;
-        }
-        rafId.current = requestAnimationFrame(tick);
-        return next;
-      });
-
-    };
-    rafId.current = requestAnimationFrame(tick);
-  };
-
-  useEffect(() => {
-    startTick();
-    return () => {
-      if (rafId.current !== null) {
-        cancelAnimationFrame(rafId.current);
-        rafId.current = null;
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  // Как на Avito: экран делится на зоны по числу фото, переключение — по зонам,
+  // сам слайд едет медленно и плавно через CSS-переход.
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!hasMultiple) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const ratio = Math.max(0, Math.min(0.9999, x / rect.width));
-    const target = ratio * (images.length - 1);
-    targetProgress.current = target;
-    const newIndex = Math.round(target);
-    if (newIndex !== index) setIndex(newIndex);
-    startTick();
+    const ratio = Math.max(0, Math.min(0.9999, (e.clientX - rect.left) / rect.width));
+    const zone = Math.floor(ratio * images.length);
+    if (zone !== index) setIndex(zone);
   };
 
-  const onMouseLeave = () => {
-    targetProgress.current = 0;
-    setIndex(0);
-  };
+  const onMouseLeave = () => setIndex(0);
 
   return (
     <div
@@ -182,7 +128,10 @@ const ImageSlider = ({
     >
       <div
         className="flex h-full will-change-transform"
-        style={{ transform: `translate3d(-${progress * 100}%, 0, 0)` }}
+        style={{
+          transform: `translate3d(-${index * 100}%, 0, 0)`,
+          transition: "transform 1100ms cubic-bezier(0.22, 0.61, 0.36, 1)",
+        }}
       >
         {images.map((src, i) => (
           <button
@@ -202,6 +151,7 @@ const ImageSlider = ({
           </button>
         ))}
       </div>
+
 
       {hasMultiple && showDots && (
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 pointer-events-none">
