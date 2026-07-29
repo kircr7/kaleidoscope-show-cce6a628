@@ -245,7 +245,7 @@ const ImageSlider = ({
               src={src}
               alt={`${altBase} — фото ${i + 1}`}
               loading={i === 0 ? "eager" : "lazy"}
-              className={`absolute inset-0 h-full w-full object-cover select-none transition-opacity duration-[2200ms] ease-out ${
+              className={`absolute inset-0 h-full w-full object-cover select-none transition-opacity duration-[2200ms] ease-in-out ${
                 i === index ? "opacity-100" : "opacity-0"
               }`}
               draggable={false}
