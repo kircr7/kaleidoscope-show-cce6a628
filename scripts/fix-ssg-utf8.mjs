@@ -22,6 +22,10 @@ const DIR = "node_modules/vite-react-ssg/dist/shared";
 
 const REPLACEMENTS = [
   [
+    "if (!ReactDomServer.renderToPipeableStream) {",
+    "if (true) { // forced: the streaming encoder splits multi-byte UTF-8 characters",
+  ],
+  [
     "this._output += chunk.toString();",
     "this.__chunks = this.__chunks || []; this.__chunks.push(Buffer.from(chunk));",
   ],
