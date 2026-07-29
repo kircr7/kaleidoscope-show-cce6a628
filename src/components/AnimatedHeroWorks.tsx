@@ -67,8 +67,10 @@ const AnimatedHeroWorks = () => {
     return Array.from({ length: count }).map((_, i) => {
       const angle = (i / count) * Math.PI * 2;
       const radius = i % 2 === 0 ? 70 : 50;
-      const startX = Math.cos(angle) * radius;
-      const startY = Math.sin(angle) * radius;
+      // Round to a fixed precision: Node (SSR) and the browser can differ in the
+      // last float digit, which triggers a React hydration mismatch.
+      const startX = (Math.cos(angle) * radius).toFixed(4);
+      const startY = (Math.sin(angle) * radius).toFixed(4);
 
       return {
         id: i,
