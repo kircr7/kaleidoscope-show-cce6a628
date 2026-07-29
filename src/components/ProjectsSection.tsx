@@ -100,12 +100,23 @@ const ImageSlider = ({
   const axisLocked = useRef<"x" | "y" | null>(null);
   const isTouch = useRef(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [autoPlay, setAutoPlay] = useState(true);
 
   const hasMultiple = images.length > 1;
+
+  // Автопрокрутка: пауза при наведении/свайпе, отключается кнопкой
+  useEffect(() => {
+    if (!hasMultiple || !autoPlay || hovering || dragging) return;
+    const id = window.setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 4500);
+    return () => window.clearInterval(id);
+  }, [hasMultiple, autoPlay, hovering, dragging, images.length]);
 
   const go = (delta: number) => {
     setIndex((prev) => Math.max(0, Math.min(images.length - 1, prev + delta)));
   };
+
 
   const onTouchStart = (e: TouchEvent) => {
     if (!hasMultiple) return;
