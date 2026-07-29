@@ -229,8 +229,9 @@ const ImageSlider = ({
     }
     pendingZone.current = null;
     setHovering(false);
-    setIndex(0);
+    if (!autoPlay) setIndex(0);
   };
+
 
   return (
     <div
