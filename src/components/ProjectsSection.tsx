@@ -116,21 +116,26 @@ const ImageSlider = ({
   // По мере приближения к цели множитель уменьшается → плавное замедление
   const startTick = () => {
     if (rafId.current !== null) return;
-    const tick = () => {
+    let last = performance.now();
+    const tick = (now: number) => {
+      const dt = Math.min(64, now - last);
+      last = now;
       setProgress((prev) => {
+        // критически задемпфированная пружина — мягкий старт и плавное торможение
+        const stiffness = 0.0075; // жёсткость (меньше = мягче)
+        const damping = 0.86; // затухание скорости
         const diff = targetProgress.current - prev;
-        const absDiff = Math.abs(diff);
-        if (absDiff < 0.0005) {
+        velocity.current = (velocity.current + diff * stiffness * dt) * damping;
+        const next = prev + velocity.current * (dt / 16.67);
+        if (Math.abs(diff) < 0.0008 && Math.abs(velocity.current) < 0.0008) {
+          velocity.current = 0;
           rafId.current = null;
           return targetProgress.current;
         }
-        const base = 0.018;
-        const proximity = Math.min(1, absDiff);
-        const eased = base * (0.35 + 0.65 * proximity * proximity);
-        const next = prev + diff * eased;
         rafId.current = requestAnimationFrame(tick);
         return next;
       });
+
     };
     rafId.current = requestAnimationFrame(tick);
   };
