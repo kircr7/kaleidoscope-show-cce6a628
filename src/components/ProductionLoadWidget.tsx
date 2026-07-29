@@ -107,8 +107,9 @@ const ProductionLoadWidget = () => {
   }, [inView]);
 
 
-  const animatedLoad = useCountUp(load, inView, 1800);
-  const animatedSqm = useCountUp(sqmTarget, inView, 2000);
+  const active = inView && mounted;
+  const animatedLoad = useCountUp(load, active, 1800);
+  const animatedSqm = useCountUp(sqmTarget, active, 2000);
 
   const radius = 88;
   const circumference = 2 * Math.PI * radius;
