@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
-/** Базовая загрузка: плавный рост 65% → 91% с 10:00 до 19:00 */
+/** Базовая загрузка: плавный рост 65% → 80% с 10:00 до 19:00 */
 function baseLoadForHour(h: number, m: number) {
   const t = h + m / 60;
   if (t <= 10) return 65;
-  if (t >= 19) return 91;
-  return 65 + ((t - 10) / 9) * 26;
+  if (t >= 19) return 80;
+  return 65 + ((t - 10) / 9) * 15;
 }
 
 
@@ -191,7 +191,7 @@ const ProductionLoadWidget = () => {
         const base = baseLoadForHour(now.getHours(), now.getMinutes());
         baseRef.current = base;
         const delta = Math.random() < 0.5 ? -1 : 0;
-        setLoad(Math.min(91, Math.max(65, Math.round(base) + delta)));
+        setLoad(Math.min(80, Math.max(65, Math.round(base) + delta)));
         schedule();
       }, 15000 + Math.random() * 5000);
     };
@@ -229,7 +229,7 @@ const ProductionLoadWidget = () => {
   const offset = circumference * (1 - animatedLoad / 100);
 
   // Цвет: изумрудно-зелёная гамма, слегка темнеет с ростом загрузки
-  const ratio = Math.min(1, Math.max(0, (animatedLoad - 65) / (91 - 65)));
+  const ratio = Math.min(1, Math.max(0, (animatedLoad - 65) / (80 - 65)));
   const hue = 158 - 8 * ratio;
   const mainColor = `hsl(${hue} 62% 45%)`;
   const lightColor = `hsl(${hue} 58% 60%)`;
