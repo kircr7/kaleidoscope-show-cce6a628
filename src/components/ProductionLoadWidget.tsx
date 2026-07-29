@@ -101,10 +101,11 @@ function sheetsForNow(now: Date) {
  * Ближайшее окно: текущее время + 30 минут, но только в рабочие часы 10:00–19:00.
  * Вне окна возвращаем null — значит принимаем заказы на завтра.
  */
-function nextSlot(now: Date) {
+function nextSlot(now: Date): string | "before" | "after" {
   const d = new Date(now.getTime() + 30 * 60 * 1000);
   const t = d.getHours() + d.getMinutes() / 60;
-  if (t < 10 || t > 19) return null;
+  if (t < 10) return "before";
+  if (t > 19) return "after";
   return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 }
 
@@ -355,17 +356,24 @@ const ProductionLoadWidget = () => {
 
 
               <span className="text-sm text-muted-foreground">
-                {slot ? (
+                {slot === "before" ? (
                   <>
-                    Ближайшее окно для старта печати:{" "}
-                    <span className="font-semibold text-foreground tabular-nums">{slot}</span>
+                    Сейчас нерабочее время —{" "}
+                    <span className="font-semibold text-foreground">
+                      принимаем заказы с 10 утра
+                    </span>
                   </>
-                ) : (
+                ) : slot === "after" ? (
                   <>
                     Рабочий день завершён —{" "}
                     <span className="font-semibold text-foreground">
                       принимаем заказы на завтра
                     </span>
+                  </>
+                ) : (
+                  <>
+                    Ближайшее окно для старта печати:{" "}
+                    <span className="font-semibold text-foreground tabular-nums">{slot}</span>
                   </>
                 )}
               </span>
