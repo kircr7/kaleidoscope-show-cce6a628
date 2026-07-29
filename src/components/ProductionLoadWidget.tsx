@@ -225,6 +225,12 @@ const ProductionLoadWidget = () => {
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - animatedLoad / 100);
 
+  // Цвет: 65% и ниже — зелёный, 90% и выше — красный
+  const ratio = Math.min(1, Math.max(0, (animatedLoad - 65) / (90 - 65)));
+  const hue = 145 - 145 * ratio;
+  const mainColor = `hsl(${hue} 75% 50%)`;
+  const lightColor = `hsl(${hue} 85% 65%)`;
+
   return (
     <section className="px-3 sm:px-4 py-12 sm:py-20">
       <div
@@ -239,9 +245,8 @@ const ProductionLoadWidget = () => {
             <svg viewBox="0 0 200 200" className="w-full h-full -rotate-90">
               <defs>
                 <linearGradient id="loadGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#38bdf8" />
-                  <stop offset="50%" stopColor="#a78bfa" />
-                  <stop offset="100%" stopColor="#f472b6" />
+                  <stop offset="0%" stopColor={lightColor} />
+                  <stop offset="100%" stopColor={mainColor} />
                 </linearGradient>
               </defs>
               <circle
@@ -263,14 +268,19 @@ const ProductionLoadWidget = () => {
                 strokeLinecap="round"
                 strokeDasharray={circumference}
                 strokeDashoffset={offset}
-                className="transition-[stroke-dashoffset] duration-1000 ease-out drop-shadow-[0_0_10px_rgba(56,189,248,0.5)]"
+                style={{ filter: `drop-shadow(0 0 10px ${mainColor})` }}
+                className="transition-[stroke-dashoffset] duration-1000 ease-out"
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-4xl sm:text-5xl font-bold tracking-tight tabular-nums bg-gradient-to-br from-sky-300 via-violet-300 to-pink-300 bg-clip-text text-transparent">
+              <span
+                className="text-4xl sm:text-5xl font-bold tracking-tight tabular-nums transition-colors duration-1000"
+                style={{ color: lightColor }}
+              >
                 {Math.round(animatedLoad)}
                 <span className="text-xl align-top">%</span>
               </span>
+
               <span className="mt-1 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 загрузка
               </span>
