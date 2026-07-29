@@ -11,11 +11,11 @@ function baseLoadForHour(h: number, m: number) {
 
 /** Диапазоны вечерних значений по форматам (листы) */
 const FORMATS = [
-  { key: "A4", label: "А4", min: 7000, max: 12000 },
-  { key: "A3", label: "А3", min: 2500, max: 5500 },
-  { key: "A2", label: "А2", min: 1200, max: 2000 },
-  { key: "A1", label: "А1", min: 1000, max: 1500 },
-  { key: "A0", label: "А0", min: 800, max: 1200 },
+  { key: "A4", label: "А4", min: 5600, max: 9600 },
+  { key: "A3", label: "А3", min: 2000, max: 4400 },
+  { key: "A2", label: "А2", min: 960, max: 1600 },
+  { key: "A1", label: "А1", min: 800, max: 1200 },
+  { key: "A0", label: "А0", min: 640, max: 960 },
 ] as const;
 
 /** Детерминированный псевдослучайный генератор по числовому сиду */
