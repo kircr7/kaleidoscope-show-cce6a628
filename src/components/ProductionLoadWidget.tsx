@@ -158,13 +158,14 @@ const FormatStat = ({
   const value = useCountUp(target, active, 2000);
   return (
     <div
-      className={`flex flex-col items-center rounded-xl border bg-gradient-to-br p-3 transition-transform duration-300 hover:-translate-y-0.5 ${accent}`}
+      className={`flex flex-col items-center rounded-xl border bg-gradient-to-br p-2 sm:p-3 transition-transform duration-300 hover:-translate-y-0.5 ${accent}`}
     >
-      <span className="text-[11px] uppercase tracking-[0.2em] opacity-90">{label}</span>
-      <span className="mt-1 text-xl sm:text-2xl font-bold tracking-tight tabular-nums text-foreground">
+      <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] opacity-90">{label}</span>
+      <span className="mt-1 text-base sm:text-xl md:text-2xl font-bold tracking-tight tabular-nums text-foreground">
         {Math.round(value).toLocaleString("ru-RU")}
       </span>
     </div>
+
   );
 };
 
