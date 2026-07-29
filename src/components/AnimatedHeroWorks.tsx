@@ -146,10 +146,10 @@ const AnimatedHeroWorks = () => {
             className="absolute rounded-2xl object-cover shadow-2xl"
             style={{
               width: `${img.size}px`,
-              height: `${img.size * 0.7}px`,
+              height: `${(img.size * 0.7).toFixed(2)}px`,
               '--start-x': img.startX,
               '--start-y': img.startY,
-              animation: `recedeIntoDistance ${img.duration}s linear ${img.delay}s infinite`,
+              animation: `recedeIntoDistance ${img.duration}s linear ${img.delay.toFixed(4)}s infinite`,
             } as React.CSSProperties}
           />
         ))}
