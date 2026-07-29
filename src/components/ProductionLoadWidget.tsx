@@ -51,11 +51,14 @@ function dayBlock(now: Date) {
 const ROTATING = new Set(["A2", "A1", "A0"]);
 
 /**
- * Множитель целей: каждые 2–3 дня шаг ±10% по «лесенке»
- * 1.0 → 1.1 → 1.2 → 1.3 → 1.2 → 1.1 → 1.0 ... (плавный подъём и такой же спуск).
+ * Множитель целей меняется каждый день по «лесенке»:
+ * 1.3 → 1.2 → 1.1 → 1.0 → 1.1 → 1.2 → 1.3 → ...
  */
 function targetMultiplier(now: Date) {
-  const phase = ((dayBlock(now) % 6) + 6) % 6;
+  const day = Math.floor(
+    new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 86400000
+  );
+  const phase = ((day - 20660) % 6 + 6) % 6; // сегодня (29.07.2026) = пик 1.3
   const step = phase <= 3 ? phase : 6 - phase;
   return 1 + step * 0.1;
 }
