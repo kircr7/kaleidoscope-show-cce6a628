@@ -185,7 +185,7 @@ const PriceListSection = () => {
                 className="rounded-lg text-xs sm:text-sm color-tab-trigger data-[state=active]:text-white data-[state=active]:shadow-md transition-all [&[data-state=active]]:border-0"
               >
                 <style>{`
-                  .color-tab-trigger[data-state="active"] {
+                  .color-tab-trigger[data-state=active] {
                     background: linear-gradient(135deg, hsla(280,70%,40%,0.85), hsla(330,80%,45%,0.85), hsla(20,90%,50%,0.85), hsla(50,85%,50%,0.85)) !important;
                     background-size: 300% 300% !important;
                     animation: gradient-morph 8s ease infinite !important;

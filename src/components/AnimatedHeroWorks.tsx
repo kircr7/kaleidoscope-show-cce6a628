@@ -67,8 +67,10 @@ const AnimatedHeroWorks = () => {
     return Array.from({ length: count }).map((_, i) => {
       const angle = (i / count) * Math.PI * 2;
       const radius = i % 2 === 0 ? 70 : 50;
-      const startX = Math.cos(angle) * radius;
-      const startY = Math.sin(angle) * radius;
+      // Round to a fixed precision: Node (SSR) and the browser can differ in the
+      // last float digit, which triggers a React hydration mismatch.
+      const startX = (Math.cos(angle) * radius).toFixed(4);
+      const startY = (Math.sin(angle) * radius).toFixed(4);
 
       return {
         id: i,
@@ -144,10 +146,10 @@ const AnimatedHeroWorks = () => {
             className="absolute rounded-2xl object-cover shadow-2xl"
             style={{
               width: `${img.size}px`,
-              height: `${img.size * 0.7}px`,
+              height: `${(img.size * 0.7).toFixed(2)}px`,
               '--start-x': img.startX,
               '--start-y': img.startY,
-              animation: `recedeIntoDistance ${img.duration}s linear ${img.delay}s infinite`,
+              animation: `recedeIntoDistance ${img.duration}s linear ${img.delay.toFixed(4)}s infinite`,
             } as React.CSSProperties}
           />
         ))}
