@@ -66,9 +66,10 @@ function eveningTargets(now: Date) {
 /** Доля рабочего дня (10:00 → 19:00), пройденная к текущему моменту */
 function dayProgress(now: Date) {
   const minutes = (now.getHours() - 10) * 60 + now.getMinutes();
-  const total = 9 * 60;
+  const total = 7 * 60; // 10:00 → 17:00
   return Math.min(1, Math.max(0, minutes / total));
 }
+
 
 
 /** Текущие значения по форматам: доля дня × вечерняя цель */
