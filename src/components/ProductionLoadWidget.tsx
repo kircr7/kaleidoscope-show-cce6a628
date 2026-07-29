@@ -158,13 +158,14 @@ const FormatStat = ({
   const value = useCountUp(target, active, 2000);
   return (
     <div
-      className={`flex flex-col items-center rounded-xl border bg-gradient-to-br p-3 transition-transform duration-300 hover:-translate-y-0.5 ${accent}`}
+      className={`flex flex-col items-center rounded-xl border bg-gradient-to-br p-2 sm:p-3 transition-transform duration-300 hover:-translate-y-0.5 ${accent}`}
     >
-      <span className="text-[11px] uppercase tracking-[0.2em] opacity-90">{label}</span>
-      <span className="mt-1 text-xl sm:text-2xl font-bold tracking-tight tabular-nums text-foreground">
+      <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] opacity-90">{label}</span>
+      <span className="mt-1 text-base sm:text-xl md:text-2xl font-bold tracking-tight tabular-nums text-foreground">
         {Math.round(value).toLocaleString("ru-RU")}
       </span>
     </div>
+
   );
 };
 
@@ -268,10 +269,11 @@ const ProductionLoadWidget = () => {
       >
         <div className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-sky-500/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-fuchsia-500/20 blur-3xl" />
-        <div className="grid grid-cols-1 md:grid-cols-[auto,1fr] gap-10 md:gap-16 p-8 sm:p-12 items-center relative">
+        <div className="grid grid-cols-1 md:grid-cols-[auto,1fr] gap-8 sm:gap-10 md:gap-16 p-5 sm:p-8 md:p-12 items-center relative">
           {/* Кольцевой индикатор */}
-          <div className="relative mx-auto w-[200px] h-[200px]">
+          <div className="relative mx-auto w-[150px] h-[150px] sm:w-[180px] sm:h-[180px] md:w-[200px] md:h-[200px]">
             <svg viewBox="0 0 200 200" className="w-full h-full -rotate-90 overflow-visible">
+
               <defs>
                 <linearGradient id="loadGrad" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stopColor={lightColor} />
@@ -303,26 +305,27 @@ const ProductionLoadWidget = () => {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span
-                className="text-4xl sm:text-5xl font-bold tracking-tight tabular-nums transition-colors duration-1000"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight tabular-nums transition-colors duration-1000"
                 style={{ color: lightColor }}
               >
                 {Math.round(animatedLoad)}
-                <span className="text-xl align-top">%</span>
+                <span className="text-base sm:text-xl align-top">%</span>
               </span>
 
-              <span className="mt-1 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              <span className="mt-1 text-[9px] sm:text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 загрузка
               </span>
             </div>
+
           </div>
 
           {/* Текстовая часть */}
-          <div className="space-y-8 text-center md:text-left">
+          <div className="space-y-6 sm:space-y-8 text-center md:text-left min-w-0">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] sm:tracking-[0.24em] text-muted-foreground">
                 Текущая загрузка производства
               </p>
-              <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-foreground via-sky-200 to-violet-200 bg-clip-text text-transparent">
+              <h2 className="mt-3 text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-balance bg-gradient-to-r from-foreground via-sky-200 to-violet-200 bg-clip-text text-transparent">
                 Работаем в штатном режиме и принимаем заказы
               </h2>
             </div>
@@ -331,10 +334,10 @@ const ProductionLoadWidget = () => {
 
 
             <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 Отпечатано за сегодня, листов
               </p>
-              <div className="mt-4 grid grid-cols-3 sm:grid-cols-5 gap-3">
+              <div className="mt-4 grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
                 {FORMATS.map((f) => (
                   <FormatStat
                     key={f.key}
@@ -347,15 +350,16 @@ const ProductionLoadWidget = () => {
               </div>
             </div>
 
-            <div className="inline-flex items-center gap-3 rounded-full border border-emerald-400/40 bg-gradient-to-r from-emerald-500/15 to-teal-400/10 px-4 py-2">
-              <span className="relative flex h-2 w-2">
+            <div className="inline-flex items-start sm:items-center gap-2 sm:gap-3 max-w-full rounded-2xl sm:rounded-full border border-emerald-400/40 bg-gradient-to-r from-emerald-500/15 to-teal-400/10 px-3 sm:px-4 py-2 text-left">
+              <span className="relative mt-1.5 sm:mt-0 flex h-2 w-2 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
 
 
 
-              <span className="text-sm text-muted-foreground">
+
+              <span className="text-xs sm:text-sm text-muted-foreground">
                 {slot === "before" ? (
                   <>
                     Сейчас нерабочее время —{" "}
