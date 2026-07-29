@@ -97,9 +97,14 @@ function sheetsForNow(now: Date) {
   return out;
 }
 
-/** Ближайшее окно: текущее время + 30 минут */
+/**
+ * Ближайшее окно: текущее время + 30 минут, но только в рабочие часы 10:00–19:00.
+ * Вне окна возвращаем null — значит принимаем заказы на завтра.
+ */
 function nextSlot(now: Date) {
   const d = new Date(now.getTime() + 30 * 60 * 1000);
+  const t = d.getHours() + d.getMinutes() / 60;
+  if (t < 10 || t > 19) return null;
   return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 }
 
