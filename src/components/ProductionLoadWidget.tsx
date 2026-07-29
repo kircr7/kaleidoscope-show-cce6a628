@@ -50,14 +50,24 @@ function dayBlock(now: Date) {
 /** Форматы, значения которых меняются раз в 2–3 дня */
 const ROTATING = new Set(["A2", "A1", "A0"]);
 
+/**
+ * Множитель целей: каждые 2–3 дня цель растёт на 10% (1.0 → 1.1 → 1.2 → 1.3),
+ * затем возвращается к стартовому уровню и цикл повторяется.
+ */
+function targetMultiplier(now: Date) {
+  const step = ((dayBlock(now) % 4) + 4) % 4;
+  return 1 + step * 0.1;
+}
+
 /** Вечерние цели по форматам: А4 и А3 фиксированы, А2/А1/А0 меняются раз в 2–3 дня */
 function eveningTargets(now: Date) {
   const rndRot = seeded(dayBlock(now) + 77);
   const rndFixed = seeded(4242);
+  const mult = targetMultiplier(now);
   const out: Record<string, number> = {};
   for (const f of FORMATS) {
     const rnd = ROTATING.has(f.key) ? rndRot : rndFixed;
-    const raw = f.min + rnd() * (f.max - f.min);
+    const raw = (f.min + rnd() * (f.max - f.min)) * mult;
     out[f.key] = Math.round(raw / 10) * 10;
   }
   return out;
