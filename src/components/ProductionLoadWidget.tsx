@@ -47,11 +47,16 @@ function dayBlock(now: Date) {
   return block + Math.floor(day / 3650) * 1000;
 }
 
-/** Вечерние цели по форматам для текущего блока дней */
+/** Форматы, значения которых меняются раз в 2–3 дня */
+const ROTATING = new Set(["A2", "A1", "A0"]);
+
+/** Вечерние цели по форматам: А4 и А3 фиксированы, А2/А1/А0 меняются раз в 2–3 дня */
 function eveningTargets(now: Date) {
-  const rnd = seeded(dayBlock(now) + 77);
+  const rndRot = seeded(dayBlock(now) + 77);
+  const rndFixed = seeded(4242);
   const out: Record<string, number> = {};
   for (const f of FORMATS) {
+    const rnd = ROTATING.has(f.key) ? rndRot : rndFixed;
     const raw = f.min + rnd() * (f.max - f.min);
     out[f.key] = Math.round(raw / 10) * 10;
   }
