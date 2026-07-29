@@ -242,7 +242,7 @@ const ProductionLoadWidget = () => {
         <div className="grid grid-cols-1 md:grid-cols-[auto,1fr] gap-10 md:gap-16 p-8 sm:p-12 items-center relative">
           {/* Кольцевой индикатор */}
           <div className="relative mx-auto w-[200px] h-[200px]">
-            <svg viewBox="0 0 200 200" className="w-full h-full -rotate-90">
+            <svg viewBox="0 0 200 200" className="w-full h-full -rotate-90 overflow-visible">
               <defs>
                 <linearGradient id="loadGrad" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stopColor={lightColor} />
