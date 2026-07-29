@@ -161,17 +161,62 @@ const ImageSlider = ({
 
   // Как на Avito: экран делится на зоны по числу фото, переключение — по зонам,
   // сам слайд едет медленно и плавно через CSS-переход.
+  // Смена зоны применяется с небольшой задержкой (debounce) + гистерезисом,
+  // чтобы быстрые движения мыши не вызывали дёрганый fade.
+  const zoneTimer = useRef<number | null>(null);
+  const pendingZone = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (zoneTimer.current) window.clearTimeout(zoneTimer.current);
+    };
+  }, []);
+
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!hasMultiple || isTouch.current) return;
     setHovering(true);
     const rect = e.currentTarget.getBoundingClientRect();
-    const ratio = Math.max(0, Math.min(0.9999, (e.clientX - rect.left) / rect.width));
-    const zone = Math.floor(ratio * images.length);
-    if (zone !== index) setIndex(zone);
+    const x = e.clientX - rect.left;
+    const zoneWidth = rect.width / images.length;
+    const ratio = Math.max(0, Math.min(0.9999, x / rect.width));
+    let zone = Math.floor(ratio * images.length);
+
+    // Гистерезис: у самой границы зоны остаёмся на текущем кадре
+    const offsetInZone = x - zone * zoneWidth;
+    const edge = zoneWidth * 0.18;
+    if (
+      Math.abs(zone - index) === 1 &&
+      (offsetInZone < edge || offsetInZone > zoneWidth - edge)
+    ) {
+      zone = index;
+    }
+
+    if (zone === index) {
+      pendingZone.current = null;
+      if (zoneTimer.current) {
+        window.clearTimeout(zoneTimer.current);
+        zoneTimer.current = null;
+      }
+      return;
+    }
+
+    if (pendingZone.current === zone) return;
+    pendingZone.current = zone;
+    if (zoneTimer.current) window.clearTimeout(zoneTimer.current);
+    zoneTimer.current = window.setTimeout(() => {
+      if (pendingZone.current !== null) setIndex(pendingZone.current);
+      pendingZone.current = null;
+      zoneTimer.current = null;
+    }, 120);
   };
 
   const onMouseLeave = () => {
     if (isTouch.current) return;
+    if (zoneTimer.current) {
+      window.clearTimeout(zoneTimer.current);
+      zoneTimer.current = null;
+    }
+    pendingZone.current = null;
     setHovering(false);
     setIndex(0);
   };
