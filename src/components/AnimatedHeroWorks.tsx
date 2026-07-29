@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useHydrated } from '@/hooks/use-hydrated';
 
 // =====================================================
 // 🖼️ КАРТИНКИ СЕКЦИИ "НАШИ РАБОТЫ"
@@ -32,6 +33,7 @@ const AnimatedHeroWorks = () => {
   const imageUrls = [work1, work2, work3, work4, work5, work6, work7, work8, work9, work10, work11, work12];
 
   const [wordIndex, setWordIndex] = useState(0);
+  const hydrated = useHydrated();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -57,8 +59,8 @@ const AnimatedHeroWorks = () => {
 
   const floatingImages = useMemo(() => {
     const count = 12;
-    // SSR-safe: default to desktop sizes; window check only at runtime
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+    // SSR-safe: default to desktop sizes; window check only after hydration
+    const isMobile = hydrated && typeof window !== "undefined" && window.innerWidth < 640;
     const sizes = isMobile
       ? [180, 220, 200, 250, 190, 230, 210, 260, 195, 240, 215, 225]
       : [320, 450, 380, 520, 340, 480, 400, 560, 360, 500, 420, 470];
@@ -80,7 +82,7 @@ const AnimatedHeroWorks = () => {
       };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [hydrated]);
   return (
     <section id="works" className="relative w-full bg-black overflow-hidden" style={{ minHeight: '80vh' }}>
       <style>{`
