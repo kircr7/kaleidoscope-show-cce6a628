@@ -268,10 +268,11 @@ const ProductionLoadWidget = () => {
       >
         <div className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-sky-500/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-fuchsia-500/20 blur-3xl" />
-        <div className="grid grid-cols-1 md:grid-cols-[auto,1fr] gap-10 md:gap-16 p-8 sm:p-12 items-center relative">
+        <div className="grid grid-cols-1 md:grid-cols-[auto,1fr] gap-8 sm:gap-10 md:gap-16 p-5 sm:p-8 md:p-12 items-center relative">
           {/* Кольцевой индикатор */}
-          <div className="relative mx-auto w-[200px] h-[200px]">
+          <div className="relative mx-auto w-[150px] h-[150px] sm:w-[180px] sm:h-[180px] md:w-[200px] md:h-[200px]">
             <svg viewBox="0 0 200 200" className="w-full h-full -rotate-90 overflow-visible">
+
               <defs>
                 <linearGradient id="loadGrad" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stopColor={lightColor} />
