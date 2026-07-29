@@ -17,12 +17,12 @@ interface CartItem {
 }
 
 // Wholesale threshold by format:
-// A0, A1, A2 → 10 шт; A3 → 60 шт; A4 → 100 шт. Ниже порога цена ×2.
+// A0, A1, A2 → 50 шт; A3 → 100 шт; A4 → 300 шт. Ниже порога цена ×2.
 const WHOLESALE_THRESHOLDS: Record<string, number> = {
-  A0: 10, A1: 10, A2: 10, A3: 60, A4: 100,
+  A0: 50, A1: 50, A2: 50, A3: 100, A4: 300,
 };
 const getWholesaleThreshold = (format: string) =>
-  WHOLESALE_THRESHOLDS[format] ?? 20;
+  WHOLESALE_THRESHOLDS[format] ?? 50;
 
 const getTierMultiplier = (format: string, qty: number) =>
   qty >= getWholesaleThreshold(format) ? 1 : 2;
