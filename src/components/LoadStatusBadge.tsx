@@ -26,18 +26,20 @@ const LoadStatusBadge = ({ className = "" }: { className?: string }) => {
   return (
     <a
       href="/#production-load"
-      className={`group relative inline-flex items-center rounded-full px-3 py-2 text-sm font-medium text-white/60 transition-all duration-300 hover:text-white active:scale-95 ${className}`}
+      className={`group relative flex-shrink-0 rounded-full p-[1.5px] transition-all duration-300 active:scale-95 ${className}`}
+      style={{ background: "linear-gradient(to right, #34d399, #10b981, #059669)" }}
     >
-      {/* Заливка по реальному проценту загрузки */}
-      <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-full bg-emerald-400/[0.06]">
+      <span
+        className="relative block overflow-hidden rounded-full px-4 lg:px-5 py-2.5 text-sm font-bold whitespace-nowrap text-white"
+        style={{ background: "hsl(0, 0%, 8%)" }}
+      >
+        {/* Заливка по реальному проценту загрузки */}
         <span
-          className="absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-500/40 to-emerald-400/25 transition-[width] duration-[1200ms] ease-out"
+          className="pointer-events-none absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-500/45 to-emerald-400/25 transition-[width] duration-[1200ms] ease-out"
           style={{ width: `${load}%` }}
         />
+        <span className="relative">Загруженность</span>
       </span>
-
-
-      <span className="relative whitespace-nowrap">Загруженность</span>
 
       {/* Подсказка при наведении */}
       <span className="pointer-events-none absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-lg border border-emerald-400/30 bg-[hsl(0,0%,8%)]/95 px-3 py-1.5 text-[11px] font-medium text-emerald-200 opacity-0 shadow-lg backdrop-blur transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
@@ -46,5 +48,6 @@ const LoadStatusBadge = ({ className = "" }: { className?: string }) => {
     </a>
   );
 };
+
 
 export default LoadStatusBadge;
