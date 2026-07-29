@@ -34,7 +34,9 @@ export default defineConfig(({ mode }) => ({
   },
   ssgOptions: {
     script: "async",
-    formatting: "minify",
+    // "minify" corrupts multi-byte UTF-8 (Cyrillic) in the rendered HTML,
+    // which breaks alt-texts and causes React hydration mismatches.
+    formatting: "none",
     crittersOptions: false,
     onFinished: async () => {
       const fs = await import("node:fs/promises");

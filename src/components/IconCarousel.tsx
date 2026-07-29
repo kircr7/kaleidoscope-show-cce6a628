@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { FileText, FileType, FileSpreadsheet, Image, Type, FileCode } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -61,7 +62,8 @@ const IconCarousel = ({ side }: Props) => {
   const startX = useRef(0);
   const scrollLeft = useRef(0);
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const hydrated = useHydrated();
+  const isMobile = hydrated && typeof window !== 'undefined' && window.innerWidth < 768;
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (isMobile) return;

@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 
 const NotFound = () => {
   const location = useLocation();
@@ -11,10 +11,10 @@ const NotFound = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted">
-      <Helmet>
-        <title>Страница не найдена — 404 | ПринтПРО</title>
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
+      <SEO
+        title="Страница не найдена — 404 | ПринтПРО"
+        description="Запрошенная страница не найдена. Вернитесь на главную страницу типографии ПринтПРО."
+      />
       <div className="text-center">
         <h1 className="mb-4 text-3xl sm:text-4xl font-bold">404 — Страница не найдена</h1>
         <p className="mb-4 text-base sm:text-xl text-muted-foreground">
