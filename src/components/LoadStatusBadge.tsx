@@ -26,20 +26,29 @@ const LoadStatusBadge = ({ className = "" }: { className?: string }) => {
   return (
     <a
       href="/#production-load"
-      className={`inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3 py-1.5 transition-colors hover:bg-emerald-500/20 ${className}`}
+      className={`group relative inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3 py-1.5 transition-colors hover:bg-emerald-500/20 ${className}`}
     >
       <span className="relative flex h-2 w-2 flex-shrink-0">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
       </span>
       <span className="text-[11px] font-medium text-emerald-200 whitespace-nowrap">
-        Работаем и принимаем заказы
+        Загруженность
+        {load !== null && (
+          <span className="ml-1 tabular-nums text-emerald-300/80">· {load}%</span>
+        )}
+      </span>
+
+      {/* Подсказка при наведении */}
+      <span className="pointer-events-none absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-lg border border-emerald-400/30 bg-[hsl(0,0%,8%)]/95 px-3 py-1.5 text-[11px] font-medium text-emerald-200 opacity-0 shadow-lg backdrop-blur transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        Сейчас работаем и принимаем заказы
         {load !== null && (
           <span className="ml-1 tabular-nums text-emerald-300/80">· {load}%</span>
         )}
       </span>
     </a>
   );
+
 };
 
 export default LoadStatusBadge;
