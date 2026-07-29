@@ -97,7 +97,9 @@ const ImageSlider = ({
   const lastT = useRef(0);
   const velocity = useRef(0); // px/ms
   const axisLocked = useRef<"x" | "y" | null>(null);
+  const isTouch = useRef(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
   const hasMultiple = images.length > 1;
 
   const go = (delta: number) => {
