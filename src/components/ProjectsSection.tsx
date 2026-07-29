@@ -200,7 +200,7 @@ const ImageSlider = ({
               src={src}
               alt={`${altBase} — фото ${i + 1}`}
               loading={i === 0 ? "eager" : "lazy"}
-              className={`absolute inset-0 h-full w-full object-cover select-none transition-opacity duration-1000 ease-out ${
+              className={`absolute inset-0 h-full w-full object-cover select-none transition-opacity duration-[2200ms] ease-out ${
                 i === index ? "opacity-100" : "opacity-0"
               }`}
               draggable={false}
@@ -215,7 +215,7 @@ const ImageSlider = ({
             transition: dragging
               ? "none"
               : isTouch.current
-                ? "transform 1040ms cubic-bezier(0.22, 0.61, 0.36, 1)"
+                ? "transform 1800ms cubic-bezier(0.22, 0.61, 0.36, 1)"
                 : "transform 5200ms cubic-bezier(0.16, 1, 0.3, 1)",
           }}
         >
