@@ -107,6 +107,7 @@ const ImageSlider = ({
   const onTouchStart = (e: TouchEvent) => {
     if (!hasMultiple) return;
     const t = e.touches[0];
+    isTouch.current = true;
     touchStartX.current = t.clientX;
     touchStartY.current = t.clientY;
     lastX.current = t.clientX;
@@ -115,6 +116,7 @@ const ImageSlider = ({
     axisLocked.current = null;
     setDragging(true);
   };
+
 
   const onTouchMove = (e: TouchEvent) => {
     if (touchStartX.current === null || touchStartY.current === null) return;
