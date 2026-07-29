@@ -124,8 +124,9 @@ const ImageSlider = ({
       last = now;
       setProgress((prev) => {
         // критически задемпфированная пружина — мягкий старт и плавное торможение
-        const stiffness = 0.0075; // жёсткость (меньше = мягче)
-        const damping = 0.86; // затухание скорости
+        const stiffness = 0.0022; // жёсткость (меньше = медленнее и мягче)
+        const damping = 0.80; // затухание скорости
+
         const diff = targetProgress.current - prev;
         velocity.current = (velocity.current + diff * stiffness * dt) * damping;
         const next = prev + velocity.current * (dt / 16.67);
