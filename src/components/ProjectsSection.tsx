@@ -89,21 +89,68 @@ const ImageSlider = ({
   showDots = true,
 }: ImageSliderProps) => {
   const [index, setIndex] = useState(0);
+  const [dragX, setDragX] = useState(0);
+  const [dragging, setDragging] = useState(false);
   const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const lastX = useRef(0);
+  const lastT = useRef(0);
+  const velocity = useRef(0); // px/ms
+  const axisLocked = useRef<"x" | "y" | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const hasMultiple = images.length > 1;
 
   const go = (delta: number) => {
-    setIndex((prev) => (prev + delta + images.length) % images.length);
+    setIndex((prev) => Math.max(0, Math.min(images.length - 1, prev + delta)));
   };
 
   const onTouchStart = (e: TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
+    if (!hasMultiple) return;
+    const t = e.touches[0];
+    touchStartX.current = t.clientX;
+    touchStartY.current = t.clientY;
+    lastX.current = t.clientX;
+    lastT.current = performance.now();
+    velocity.current = 0;
+    axisLocked.current = null;
+    setDragging(true);
   };
-  const onTouchEnd = (e: TouchEvent) => {
+
+  const onTouchMove = (e: TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const t = e.touches[0];
+    const dx = t.clientX - touchStartX.current;
+    const dy = t.clientY - touchStartY.current;
+
+    if (axisLocked.current === null) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      axisLocked.current = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+    }
+    if (axisLocked.current === "y") return;
+
+    const now = performance.now();
+    const dt = now - lastT.current;
+    if (dt > 0) velocity.current = (t.clientX - lastX.current) / dt;
+    lastX.current = t.clientX;
+    lastT.current = now;
+
+    // сопротивление на краях
+    const atEdge = (dx > 0 && index === 0) || (dx < 0 && index === images.length - 1);
+    setDragX(atEdge ? dx * 0.3 : dx);
+  };
+
+  const onTouchEnd = () => {
     if (touchStartX.current === null) return;
-    const diff = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(diff) > SWIPE_THRESHOLD) go(diff < 0 ? 1 : -1);
+    const width = containerRef.current?.offsetWidth || 1;
+    const dx = dragX;
+    const v = velocity.current;
+    const shouldSwipe = Math.abs(dx) > Math.min(SWIPE_THRESHOLD, width * 0.18) || Math.abs(v) > 0.4;
+    if (shouldSwipe && axisLocked.current === "x") go(dx < 0 ? 1 : -1);
     touchStartX.current = null;
+    touchStartY.current = null;
+    axisLocked.current = null;
+    setDragging(false);
+    setDragX(0);
   };
 
   // Как на Avito: экран делится на зоны по числу фото, переключение — по зонам,
@@ -120,19 +167,25 @@ const ImageSlider = ({
 
   return (
     <div
-      className={`relative ${aspect} overflow-hidden ${rounded} bg-black/40 group/slider`}
+      ref={containerRef}
+      className={`relative ${aspect} overflow-hidden ${rounded} bg-black/40 group/slider touch-pan-y select-none`}
       onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
+      onTouchCancel={onTouchEnd}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >
       <div
         className="flex h-full will-change-transform"
         style={{
-          transform: `translate3d(-${index * 100}%, 0, 0)`,
-          transition: "transform 2600ms cubic-bezier(0.16, 1, 0.3, 1)",
+          transform: `translate3d(calc(-${index * 100}% + ${dragX}px), 0, 0)`,
+          transition: dragging
+            ? "none"
+            : "transform 2600ms cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
+
         {images.map((src, i) => (
           <button
             key={i}
