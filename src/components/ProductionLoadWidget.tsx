@@ -51,11 +51,12 @@ function dayBlock(now: Date) {
 const ROTATING = new Set(["A2", "A1", "A0"]);
 
 /**
- * Множитель целей: каждые 2–3 дня цель растёт на 10% (1.0 → 1.1 → 1.2 → 1.3),
- * затем возвращается к стартовому уровню и цикл повторяется.
+ * Множитель целей: каждые 2–3 дня шаг ±10% по «лесенке»
+ * 1.0 → 1.1 → 1.2 → 1.3 → 1.2 → 1.1 → 1.0 ... (плавный подъём и такой же спуск).
  */
 function targetMultiplier(now: Date) {
-  const step = ((dayBlock(now) % 4) + 4) % 4;
+  const phase = ((dayBlock(now) % 6) + 6) % 6;
+  const step = phase <= 3 ? phase : 6 - phase;
   return 1 + step * 0.1;
 }
 
