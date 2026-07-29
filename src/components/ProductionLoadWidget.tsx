@@ -22,18 +22,24 @@ function nextSlot(now: Date) {
   return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 }
 
-/** Плавный счётчик с easing, стартует по появлению в вьюпорте */
+/** Плавный счётчик: первый раз считает от 0, далее плавно доходит от текущего значения */
 function useCountUp(target: number, active: boolean, duration = 1600) {
   const [value, setValue] = useState(0);
+  const valueRef = useRef(0);
 
   useEffect(() => {
     if (!active) return;
     let raf = 0;
+    const from = valueRef.current;
+    const delta = target - from;
+    if (Math.abs(delta) < 0.001) return;
     const start = performance.now();
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 3);
-      setValue(target * eased);
+      const next = from + delta * eased;
+      valueRef.current = next;
+      setValue(next);
       if (t < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -42,6 +48,7 @@ function useCountUp(target: number, active: boolean, duration = 1600) {
 
   return value;
 }
+
 
 const ProductionLoadWidget = () => {
   const ref = useRef<HTMLDivElement>(null);
