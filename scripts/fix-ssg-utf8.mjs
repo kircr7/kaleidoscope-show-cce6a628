@@ -1,13 +1,16 @@
 /**
- * Fixes two UTF-8 bugs in the vite-react-ssg SSG pipeline that corrupt Cyrillic
- * text in the generated static HTML (visible as "" diamonds in alt-texts and
- * as React hydration mismatches in the browser):
+ * Fixes UTF-8 corruption in the vite-react-ssg static build pipeline.
+ *
+ * Two upstream bugs mangle Cyrillic text in the generated HTML (visible as ""
+ * diamonds inside alt-texts and as React hydration mismatches in the browser):
  *
  *  1. SSR stream chunks were concatenated with `chunk.toString()` per chunk, so
  *     multi-byte characters split across chunk boundaries were destroyed.
- *  2. jsdom's parser corrupts multi-byte characters at internal chunk
- *     boundaries on large pages; we feed it ASCII-only input (numeric character
- *     references) so nothing can be split.
+ *  2. The rendered page is re-parsed with jsdom only to append preload links —
+ *     and jsdom's parser corrupts characters at its internal chunk boundaries
+ *     on large pages. We now build the preload links in an empty document and
+ *     inject them into the original HTML string, so the page HTML is never
+ *     re-parsed.
  *
  * The script patches the installed package in place, is idempotent, and runs
  * automatically before `npm run build`.
@@ -17,22 +20,28 @@ import path from "node:path";
 
 const DIR = "node_modules/vite-react-ssg/dist/shared";
 
-const HELPER = `
-function __ssgAsciiSafe(html) {
-  return typeof html === "string"
-    ? html.replace(/[\\u0080-\\uFFFF]/g, (c) => "&#x" + c.charCodeAt(0).toString(16) + ";")
-    : html;
-}
-`;
-
 const REPLACEMENTS = [
-  ["this._output += chunk.toString();", "this.__chunks = this.__chunks || []; this.__chunks.push(Buffer.from(chunk));"],
+  [
+    "if (!ReactDomServer.renderToPipeableStream) {",
+    "if (true) { // forced: the streaming encoder splits multi-byte UTF-8 characters",
+  ],
+  [
+    "this._output += chunk.toString();",
+    "this.__chunks = this.__chunks || []; this.__chunks.push(Buffer.from(chunk));",
+  ],
   [
     "this._deferred.resolve(this._output);",
     "this._deferred.resolve(Buffer.concat(this.__chunks || []).toString('utf8') || this._output);",
   ],
-  ["new JSDOM(appHTML)", "new JSDOM(__ssgAsciiSafe(appHTML))"],
-  ["new JSDOM(renderedHTML)", "new JSDOM(__ssgAsciiSafe(renderedHTML))"],
+  [
+    `const jsdom = new JSDOM(renderedHTML);
+        renderPreloadLinks(jsdom.window.document, assets);
+        const html = jsdom.serialize();`,
+    `const __linkDom = new JSDOM("<!doctype html><html><head></head><body></body></html>");
+        renderPreloadLinks(__linkDom.window.document, assets);
+        const __links = __linkDom.window.document.head.innerHTML;
+        const html = __links ? renderedHTML.replace("</head>", __links + "</head>") : renderedHTML;`,
+  ],
 ];
 
 let files = [];
@@ -57,7 +66,6 @@ for (const file of files.filter((f) => f.endsWith(".mjs"))) {
   }
   if (!changed) continue;
 
-  if (!src.includes("function __ssgAsciiSafe")) src += HELPER;
   await writeFile(full, src, "utf-8");
   patched++;
 }
