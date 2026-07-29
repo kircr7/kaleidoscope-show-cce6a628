@@ -91,6 +91,7 @@ const ImageSlider = ({
   const [index, setIndex] = useState(0);
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
+  const [hovering, setHovering] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
   const lastX = useRef(0);
@@ -110,6 +111,7 @@ const ImageSlider = ({
     if (!hasMultiple) return;
     const t = e.touches[0];
     isTouch.current = true;
+    setHovering(false);
     touchStartX.current = t.clientX;
     touchStartY.current = t.clientY;
     lastX.current = t.clientX;
@@ -161,6 +163,7 @@ const ImageSlider = ({
   // сам слайд едет медленно и плавно через CSS-переход.
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!hasMultiple || isTouch.current) return;
+    setHovering(true);
     const rect = e.currentTarget.getBoundingClientRect();
     const ratio = Math.max(0, Math.min(0.9999, (e.clientX - rect.left) / rect.width));
     const zone = Math.floor(ratio * images.length);
@@ -169,6 +172,7 @@ const ImageSlider = ({
 
   const onMouseLeave = () => {
     if (isTouch.current) return;
+    setHovering(false);
     setIndex(0);
   };
 
@@ -183,38 +187,57 @@ const ImageSlider = ({
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >
-      <div
-        className="flex h-full will-change-transform"
-        style={{
-          transform: `translate3d(calc(-${index * 100}% + ${dragX}px), 0, 0)`,
-          transition: dragging
-            ? "none"
-            : isTouch.current
-              ? "transform 1040ms cubic-bezier(0.22, 0.61, 0.36, 1)"
-              : "transform 5200ms cubic-bezier(0.16, 1, 0.3, 1)",
-
-        }}
-      >
-
-
-        {images.map((src, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => onImageClick(i)}
-            className="w-full h-full flex-shrink-0 block cursor-zoom-in"
-            aria-label={`Открыть фото ${i + 1}`}
-          >
+      {hovering ? (
+        <button
+          type="button"
+          onClick={() => onImageClick(index)}
+          className="absolute inset-0 block h-full w-full cursor-zoom-in"
+          aria-label={`Открыть фото ${index + 1}`}
+        >
+          {images.map((src, i) => (
             <img
+              key={i}
               src={src}
               alt={`${altBase} — фото ${i + 1}`}
-              loading="lazy"
-              className="w-full h-full object-cover pointer-events-none select-none"
+              loading={i === 0 ? "eager" : "lazy"}
+              className={`absolute inset-0 h-full w-full object-cover select-none transition-opacity duration-1000 ease-out ${
+                i === index ? "opacity-100" : "opacity-0"
+              }`}
               draggable={false}
             />
-          </button>
-        ))}
-      </div>
+          ))}
+        </button>
+      ) : (
+        <div
+          className="flex h-full will-change-transform"
+          style={{
+            transform: `translate3d(calc(-${index * 100}% + ${dragX}px), 0, 0)`,
+            transition: dragging
+              ? "none"
+              : isTouch.current
+                ? "transform 1040ms cubic-bezier(0.22, 0.61, 0.36, 1)"
+                : "transform 5200ms cubic-bezier(0.16, 1, 0.3, 1)",
+          }}
+        >
+          {images.map((src, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => onImageClick(i)}
+              className="w-full h-full flex-shrink-0 block cursor-zoom-in"
+              aria-label={`Открыть фото ${i + 1}`}
+            >
+              <img
+                src={src}
+                alt={`${altBase} — фото ${i + 1}`}
+                loading="lazy"
+                className="w-full h-full object-cover pointer-events-none select-none"
+                draggable={false}
+              />
+            </button>
+          ))}
+        </div>
+      )}
 
 
       {hasMultiple && showDots && (
