@@ -160,14 +160,17 @@ const ImageSlider = ({
   // Как на Avito: экран делится на зоны по числу фото, переключение — по зонам,
   // сам слайд едет медленно и плавно через CSS-переход.
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!hasMultiple) return;
+    if (!hasMultiple || isTouch.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const ratio = Math.max(0, Math.min(0.9999, (e.clientX - rect.left) / rect.width));
     const zone = Math.floor(ratio * images.length);
     if (zone !== index) setIndex(zone);
   };
 
-  const onMouseLeave = () => setIndex(0);
+  const onMouseLeave = () => {
+    if (isTouch.current) return;
+    setIndex(0);
+  };
 
   return (
     <div
@@ -186,9 +189,12 @@ const ImageSlider = ({
           transform: `translate3d(calc(-${index * 100}% + ${dragX}px), 0, 0)`,
           transition: dragging
             ? "none"
-            : "transform 2600ms cubic-bezier(0.16, 1, 0.3, 1)",
+            : isTouch.current
+              ? "transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1)"
+              : "transform 2600ms cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
+
 
         {images.map((src, i) => (
           <button
