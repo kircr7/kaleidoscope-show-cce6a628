@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
-/** Базовая загрузка в зависимости от текущего часа */
+/** Базовая загрузка: плавный рост 65% → 91% с 10:00 до 19:00 */
 function baseLoadForHour(h: number, m: number) {
   const t = h + m / 60;
-  if (t < 8) return 45;
-  if (t < 12) return 60 + ((t - 8) / 4) * 5; // 60 → 65
-  if (t < 16) return 65 + ((t - 12) / 4) * 15; // 65 → 80
-  if (t < 20) return 80 + ((t - 16) / 4) * 10; // 80 → 90
-  return 88;
+  if (t <= 10) return 65;
+  if (t >= 19) return 91;
+  return 65 + ((t - 10) / 9) * 26;
 }
+
 
 /** Диапазоны вечерних значений по форматам (листы) */
 const FORMATS = [
