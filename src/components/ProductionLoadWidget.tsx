@@ -10,10 +10,71 @@ function baseLoadForHour(h: number, m: number) {
   return 88;
 }
 
-/** Отпечатано за сегодня: минуты с 8:00 × 2.5 */
-function sqmForNow(now: Date) {
+/** Диапазоны вечерних значений по форматам (листы) */
+const FORMATS = [
+  { key: "A4", label: "А4", min: 7000, max: 12000 },
+  { key: "A3", label: "А3", min: 2500, max: 5500 },
+  { key: "A2", label: "А2", min: 1200, max: 2000 },
+  { key: "A1", label: "А1", min: 1000, max: 1500 },
+  { key: "A0", label: "А0", min: 800, max: 1200 },
+] as const;
+
+/** Детерминированный псевдослучайный генератор по числовому сиду */
+function seeded(seed: number) {
+  let s = (seed * 2654435761) % 2147483647;
+  if (s <= 0) s += 2147483646;
+  return () => {
+    s = (s * 16807) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
+/**
+ * Блок дней: значения меняются местами раз в 2–3 дня.
+ * Считаем номер дня от эпохи и группируем в блоки переменной длины.
+ */
+function dayBlock(now: Date) {
+  const day = Math.floor(
+    new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 86400000
+  );
+  // блоки по 2 или 3 дня, чередование зависит от самого дня
+  let block = 0;
+  let cursor = 0;
+  const rnd = seeded(1234);
+  while (cursor <= day % 3650) {
+    cursor += rnd() < 0.5 ? 2 : 3;
+    block++;
+  }
+  return block + Math.floor(day / 3650) * 1000;
+}
+
+/** Вечерние цели по форматам для текущего блока дней */
+function eveningTargets(now: Date) {
+  const rnd = seeded(dayBlock(now) + 77);
+  const out: Record<string, number> = {};
+  for (const f of FORMATS) {
+    const raw = f.min + rnd() * (f.max - f.min);
+    out[f.key] = Math.round(raw / 10) * 10;
+  }
+  return out;
+}
+
+/** Доля рабочего дня (8:00 → 20:00), пройденная к текущему моменту */
+function dayProgress(now: Date) {
   const minutes = (now.getHours() - 8) * 60 + now.getMinutes();
-  return Math.max(0, Math.round(minutes * 2.5));
+  const total = 12 * 60;
+  return Math.min(1, Math.max(0, minutes / total));
+}
+
+/** Текущие значения по форматам: доля дня × вечерняя цель */
+function sheetsForNow(now: Date) {
+  const targets = eveningTargets(now);
+  const p = dayProgress(now);
+  const out: Record<string, number> = {};
+  for (const f of FORMATS) {
+    out[f.key] = Math.round((targets[f.key] * p) / 10) * 10;
+  }
+  return out;
 }
 
 /** Ближайшее окно: текущее время + 30 минут */
@@ -49,6 +110,25 @@ function useCountUp(target: number, active: boolean, duration = 1600) {
   return value;
 }
 
+const FormatStat = ({
+  label,
+  target,
+  active,
+}: {
+  label: string;
+  target: number;
+  active: boolean;
+}) => {
+  const value = useCountUp(target, active, 2000);
+  return (
+    <div className="flex flex-col items-center md:items-start">
+      <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">{label}</span>
+      <span className="mt-1 text-xl sm:text-2xl font-bold tracking-tight tabular-nums text-foreground">
+        {Math.round(value).toLocaleString("ru-RU")}
+      </span>
+    </div>
+  );
+};
 
 const ProductionLoadWidget = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -56,16 +136,22 @@ const ProductionLoadWidget = () => {
   const [mounted, setMounted] = useState(false);
   const baseRef = useRef(75);
   const [load, setLoad] = useState(75);
-  const [sqmTarget, setSqmTarget] = useState(0);
+  const [sheets, setSheets] = useState<Record<string, number>>({
+    A4: 0,
+    A3: 0,
+    A2: 0,
+    A1: 0,
+    A0: 0,
+  });
   const [slot, setSlot] = useState("--:--");
 
-  // Инициализация по локальному времени пользователя (после монтирования — без SSR-рассинхрона)
+  // Инициализация по локальному времени пользователя
   useEffect(() => {
     const now = new Date();
     const base = baseLoadForHour(now.getHours(), now.getMinutes());
     baseRef.current = base;
     setLoad(base);
-    setSqmTarget(sqmForNow(now));
+    setSheets(sheetsForNow(now));
     setSlot(nextSlot(now));
     setMounted(true);
   }, []);
@@ -98,13 +184,19 @@ const ProductionLoadWidget = () => {
     return () => clearTimeout(timeout);
   }, [inView]);
 
-  // Медленный рост отпечатанных м² и обновление окна печати
+  // Медленный рост количества листов и обновление окна печати
   useEffect(() => {
     if (!inView) return;
     let timeout: ReturnType<typeof setTimeout>;
     const schedule = () => {
       timeout = setTimeout(() => {
-        setSqmTarget((prev) => prev + 1 + Math.round(Math.random()));
+        setSheets((prev) => ({
+          A4: prev.A4 + 6 + Math.round(Math.random() * 8),
+          A3: prev.A3 + 3 + Math.round(Math.random() * 4),
+          A2: prev.A2 + 1 + Math.round(Math.random() * 2),
+          A1: prev.A1 + 1 + Math.round(Math.random() * 2),
+          A0: prev.A0 + Math.round(Math.random()),
+        }));
         setSlot(nextSlot(new Date()));
         schedule();
       }, 40000 + Math.random() * 20000);
@@ -113,10 +205,8 @@ const ProductionLoadWidget = () => {
     return () => clearTimeout(timeout);
   }, [inView]);
 
-
   const active = inView && mounted;
   const animatedLoad = useCountUp(load, active, 1800);
-  const animatedSqm = useCountUp(sqmTarget, active, 2000);
 
   const radius = 88;
   const circumference = 2 * Math.PI * radius;
@@ -178,24 +268,19 @@ const ProductionLoadWidget = () => {
 
             <div className="h-px w-full bg-border/60" />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-                  Отпечатано за сегодня
-                </p>
-                <p className="mt-2 text-3xl font-bold tracking-tight tabular-nums text-foreground">
-                  {Math.round(animatedSqm).toLocaleString("ru-RU")}
-                  <span className="ml-1.5 text-base font-medium text-muted-foreground">м²</span>
-                </p>
-              </div>
-
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-                  Формат работ
-                </p>
-                <p className="mt-2 text-3xl font-bold tracking-tight text-foreground">
-                  А0<span className="text-muted-foreground">–</span>А4
-                </p>
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                Отпечатано за сегодня, листов
+              </p>
+              <div className="mt-4 grid grid-cols-3 sm:grid-cols-5 gap-5">
+                {FORMATS.map((f) => (
+                  <FormatStat
+                    key={f.key}
+                    label={f.label}
+                    target={sheets[f.key] ?? 0}
+                    active={active}
+                  />
+                ))}
               </div>
             </div>
 
