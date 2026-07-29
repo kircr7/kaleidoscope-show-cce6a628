@@ -132,6 +132,7 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
+          <LoadStatusBadge />
           <div className="w-12 h-px bg-white/10" />
           <a href="tel:+79851547772" className="text-sm text-white/30 font-medium">
             +7 (985) 154-77-72
