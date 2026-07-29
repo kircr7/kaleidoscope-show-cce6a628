@@ -358,7 +358,7 @@ const ProductionLoadWidget = () => {
 
 
 
-              <span className="text-sm text-muted-foreground">
+              <span className="text-xs sm:text-sm text-muted-foreground">
                 {slot === "before" ? (
                   <>
                     Сейчас нерабочее время —{" "}
