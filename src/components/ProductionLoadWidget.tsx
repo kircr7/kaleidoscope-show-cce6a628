@@ -1,8 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 
-const TARGET_LOAD = 82;
-const TARGET_SQM = 1450;
-const NEXT_SLOT = "14:30";
+/** Базовая загрузка в зависимости от текущего часа */
+function baseLoadForHour(h: number, m: number) {
+  const t = h + m / 60;
+  if (t < 8) return 45;
+  if (t < 12) return 60 + ((t - 8) / 4) * 5; // 60 → 65
+  if (t < 16) return 65 + ((t - 12) / 4) * 15; // 65 → 80
+  if (t < 20) return 80 + ((t - 16) / 4) * 10; // 80 → 90
+  return 88;
+}
+
+/** Отпечатано за сегодня: минуты с 8:00 × 2.5 */
+function sqmForNow(now: Date) {
+  const minutes = (now.getHours() - 8) * 60 + now.getMinutes();
+  return Math.max(0, Math.round(minutes * 2.5));
+}
+
+/** Ближайшее окно: текущее время + 30 минут */
+function nextSlot(now: Date) {
+  const d = new Date(now.getTime() + 30 * 60 * 1000);
+  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+}
 
 /** Плавный счётчик с easing, стартует по появлению в вьюпорте */
 function useCountUp(target: number, active: boolean, duration = 1600) {
@@ -28,8 +46,22 @@ function useCountUp(target: number, active: boolean, duration = 1600) {
 const ProductionLoadWidget = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
-  const [load, setLoad] = useState(TARGET_LOAD);
-  const [sqmTarget, setSqmTarget] = useState(TARGET_SQM);
+  const [mounted, setMounted] = useState(false);
+  const baseRef = useRef(75);
+  const [load, setLoad] = useState(75);
+  const [sqmTarget, setSqmTarget] = useState(0);
+  const [slot, setSlot] = useState("--:--");
+
+  // Инициализация по локальному времени пользователя (после монтирования — без SSR-рассинхрона)
+  useEffect(() => {
+    const now = new Date();
+    const base = baseLoadForHour(now.getHours(), now.getMinutes());
+    baseRef.current = base;
+    setLoad(base);
+    setSqmTarget(sqmForNow(now));
+    setSlot(nextSlot(now));
+    setMounted(true);
+  }, []);
 
   // Появление в вьюпорте
   useEffect(() => {
@@ -43,34 +75,41 @@ const ProductionLoadWidget = () => {
     return () => io.disconnect();
   }, []);
 
-  // «Живая» загрузка: ±1–2% раз в 15–30 сек
+  // «Живая» загрузка: ±1–3% от базового значения раз в 15–20 сек
   useEffect(() => {
     if (!inView) return;
     let timeout: ReturnType<typeof setTimeout>;
     const schedule = () => {
       timeout = setTimeout(() => {
-        setLoad((prev) => {
-          const delta = (Math.random() < 0.5 ? -1 : 1) * (Math.random() < 0.5 ? 1 : 2);
-          return Math.min(94, Math.max(68, prev + delta));
-        });
+        const base = baseRef.current;
+        const delta = (Math.random() < 0.5 ? -1 : 1) * (1 + Math.floor(Math.random() * 3));
+        setLoad(Math.min(base + 3, Math.max(base - 3, base + delta)));
         schedule();
-      }, 15000 + Math.random() * 15000);
+      }, 15000 + Math.random() * 5000);
     };
     schedule();
     return () => clearTimeout(timeout);
   }, [inView]);
 
-  // Медленный рост отпечатанных м²
+  // Медленный рост отпечатанных м² и обновление окна печати
   useEffect(() => {
     if (!inView) return;
-    const id = setInterval(() => {
-      setSqmTarget((prev) => prev + Math.round(1 + Math.random() * 4));
-    }, 9000);
-    return () => clearInterval(id);
+    let timeout: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      timeout = setTimeout(() => {
+        setSqmTarget((prev) => prev + 1 + Math.round(Math.random()));
+        setSlot(nextSlot(new Date()));
+        schedule();
+      }, 40000 + Math.random() * 20000);
+    };
+    schedule();
+    return () => clearTimeout(timeout);
   }, [inView]);
 
-  const animatedLoad = useCountUp(load, inView, 1800);
-  const animatedSqm = useCountUp(sqmTarget, inView, 2000);
+
+  const active = inView && mounted;
+  const animatedLoad = useCountUp(load, active, 1800);
+  const animatedSqm = useCountUp(sqmTarget, active, 2000);
 
   const radius = 88;
   const circumference = 2 * Math.PI * radius;
@@ -160,7 +199,7 @@ const ProductionLoadWidget = () => {
               </span>
               <span className="text-sm text-muted-foreground">
                 Ближайшее окно для старта печати:{" "}
-                <span className="font-semibold text-foreground tabular-nums">{NEXT_SLOT}</span>
+                <span className="font-semibold text-foreground tabular-nums">{slot}</span>
               </span>
             </div>
           </div>
