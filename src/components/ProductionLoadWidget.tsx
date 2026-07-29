@@ -297,7 +297,7 @@ const ProductionLoadWidget = () => {
                 Текущая загрузка производства
               </p>
               <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-foreground via-sky-200 to-violet-200 bg-clip-text text-transparent">
-                Производство работает в штатном режиме
+                Работаем в штатном режиме и принимаем заказы
               </h2>
             </div>
 
