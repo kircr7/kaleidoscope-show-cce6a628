@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, TouchEvent } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Pause, Play } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
