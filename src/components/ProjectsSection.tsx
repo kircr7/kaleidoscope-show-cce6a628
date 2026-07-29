@@ -236,22 +236,37 @@ const ImageSlider = ({
         <button
           type="button"
           onClick={() => onImageClick(index)}
-          className="absolute inset-0 block h-full w-full cursor-zoom-in"
+          className="absolute inset-0 block h-full w-full cursor-zoom-in [perspective:1400px]"
           aria-label={`Открыть фото ${index + 1}`}
         >
-          {images.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt={`${altBase} — фото ${i + 1}`}
-              loading={i === 0 ? "eager" : "lazy"}
-              className={`absolute inset-0 h-full w-full object-cover select-none transition-opacity duration-[2200ms] ease-in-out ${
-                i === index ? "opacity-100" : "opacity-0"
-              }`}
-              draggable={false}
-            />
-          ))}
+          {images.map((src, i) => {
+            const offset = i - index;
+            const active = offset === 0;
+            return (
+              <img
+                key={i}
+                src={src}
+                alt={`${altBase} — фото ${i + 1}`}
+                loading={i === 0 ? "eager" : "lazy"}
+                className="absolute inset-0 h-full w-full object-cover select-none will-change-transform [backface-visibility:hidden]"
+                style={{
+                  zIndex: active ? 2 : 1,
+                  opacity: Math.abs(offset) > 1 ? 0 : active ? 1 : 0,
+                  transformOrigin: offset < 0 ? "left center" : "right center",
+                  transform: active
+                    ? "translate3d(0,0,0) rotateY(0deg) scale(1)"
+                    : `translate3d(${offset < 0 ? "-14%" : "14%"},0,0) rotateY(${
+                        offset < 0 ? 22 : -22
+                      }deg) scale(0.96)`,
+                  transition:
+                    "transform 1600ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 1100ms ease-in-out",
+                }}
+                draggable={false}
+              />
+            );
+          })}
         </button>
+
       ) : (
         <div
           className="flex h-full will-change-transform"
