@@ -271,7 +271,7 @@ const ProductionLoadWidget = () => {
                 strokeLinecap="round"
                 strokeDasharray={circumference}
                 strokeDashoffset={offset}
-                style={{ filter: `drop-shadow(0 0 10px ${mainColor})` }}
+                style={{ filter: `drop-shadow(0 0 6px ${mainColor}80)` }}
                 className="transition-[stroke-dashoffset] duration-1000 ease-out"
               />
             </svg>
