@@ -132,7 +132,10 @@ const Index = () => {
 
       <ServicesSection />
 
+      <ProductionLoadWidget />
+
       <ProjectsSection />
+
 
       <AnimatedHeroWorks />
 
