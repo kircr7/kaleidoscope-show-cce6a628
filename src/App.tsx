@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import CookieBanner from "./components/CookieBanner";
 import FloatingTelegram from "./components/FloatingTelegram";
+import FloatingLoadButton from "./components/FloatingLoadButton";
 import { useMetrika } from "./hooks/use-metrika";
 
 const queryClient = new QueryClient();
@@ -65,6 +66,7 @@ const App = () => {
         <Outlet />
         <CookieBanner />
         <FloatingTelegram />
+        <FloatingLoadButton />
       </TooltipProvider>
     </QueryClientProvider>
   );
