@@ -319,12 +319,12 @@ const ProductionLoadWidget = () => {
           </div>
 
           {/* Текстовая часть */}
-          <div className="space-y-8 text-center md:text-left">
+          <div className="space-y-6 sm:space-y-8 text-center md:text-left min-w-0">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] sm:tracking-[0.24em] text-muted-foreground">
                 Текущая загрузка производства
               </p>
-              <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-foreground via-sky-200 to-violet-200 bg-clip-text text-transparent">
+              <h2 className="mt-3 text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-balance bg-gradient-to-r from-foreground via-sky-200 to-violet-200 bg-clip-text text-transparent">
                 Работаем в штатном режиме и принимаем заказы
               </h2>
             </div>
@@ -333,10 +333,10 @@ const ProductionLoadWidget = () => {
 
 
             <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 Отпечатано за сегодня, листов
               </p>
-              <div className="mt-4 grid grid-cols-3 sm:grid-cols-5 gap-3">
+              <div className="mt-4 grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
                 {FORMATS.map((f) => (
                   <FormatStat
                     key={f.key}
@@ -349,11 +349,12 @@ const ProductionLoadWidget = () => {
               </div>
             </div>
 
-            <div className="inline-flex items-center gap-3 rounded-full border border-emerald-400/40 bg-gradient-to-r from-emerald-500/15 to-teal-400/10 px-4 py-2">
-              <span className="relative flex h-2 w-2">
+            <div className="inline-flex items-start sm:items-center gap-2 sm:gap-3 max-w-full rounded-2xl sm:rounded-full border border-emerald-400/40 bg-gradient-to-r from-emerald-500/15 to-teal-400/10 px-3 sm:px-4 py-2 text-left">
+              <span className="relative mt-1.5 sm:mt-0 flex h-2 w-2 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
+
 
 
 
