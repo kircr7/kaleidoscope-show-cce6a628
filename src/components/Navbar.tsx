@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo.svg';
+import LoadStatusBadge from './LoadStatusBadge';
 
 const Navbar = () => {
   const navigate = useNavigate();
