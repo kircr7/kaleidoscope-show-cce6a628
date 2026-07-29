@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, TouchEvent } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Pause, Play } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
@@ -100,12 +100,23 @@ const ImageSlider = ({
   const axisLocked = useRef<"x" | "y" | null>(null);
   const isTouch = useRef(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [autoPlay, setAutoPlay] = useState(true);
 
   const hasMultiple = images.length > 1;
+
+  // Автопрокрутка: пауза при наведении/свайпе, отключается кнопкой
+  useEffect(() => {
+    if (!hasMultiple || !autoPlay || hovering || dragging) return;
+    const id = window.setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 4500);
+    return () => window.clearInterval(id);
+  }, [hasMultiple, autoPlay, hovering, dragging, images.length]);
 
   const go = (delta: number) => {
     setIndex((prev) => Math.max(0, Math.min(images.length - 1, prev + delta)));
   };
+
 
   const onTouchStart = (e: TouchEvent) => {
     if (!hasMultiple) return;
@@ -218,8 +229,9 @@ const ImageSlider = ({
     }
     pendingZone.current = null;
     setHovering(false);
-    setIndex(0);
+    if (!autoPlay) setIndex(0);
   };
+
 
   return (
     <div
@@ -297,6 +309,20 @@ const ImageSlider = ({
             </button>
           ))}
         </div>
+      )}
+
+      {hasMultiple && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setAutoPlay((v) => !v);
+          }}
+          aria-label={autoPlay ? "Остановить автопрокрутку" : "Включить автопрокрутку"}
+          className="absolute top-2 right-2 z-20 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm border border-white/15 text-white/80 flex items-center justify-center opacity-0 group-hover/slider:opacity-100 focus-visible:opacity-100 transition hover:bg-black/70"
+        >
+          {autoPlay ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+        </button>
       )}
 
 
