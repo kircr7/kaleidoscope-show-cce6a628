@@ -46,8 +46,22 @@ function useCountUp(target: number, active: boolean, duration = 1600) {
 const ProductionLoadWidget = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
-  const [load, setLoad] = useState(TARGET_LOAD);
-  const [sqmTarget, setSqmTarget] = useState(TARGET_SQM);
+  const [mounted, setMounted] = useState(false);
+  const baseRef = useRef(75);
+  const [load, setLoad] = useState(75);
+  const [sqmTarget, setSqmTarget] = useState(0);
+  const [slot, setSlot] = useState("--:--");
+
+  // Инициализация по локальному времени пользователя (после монтирования — без SSR-рассинхрона)
+  useEffect(() => {
+    const now = new Date();
+    const base = baseLoadForHour(now.getHours(), now.getMinutes());
+    baseRef.current = base;
+    setLoad(base);
+    setSqmTarget(sqmForNow(now));
+    setSlot(nextSlot(now));
+    setMounted(true);
+  }, []);
 
   // Появление в вьюпорте
   useEffect(() => {
@@ -61,31 +75,37 @@ const ProductionLoadWidget = () => {
     return () => io.disconnect();
   }, []);
 
-  // «Живая» загрузка: ±1–2% раз в 15–30 сек
+  // «Живая» загрузка: ±1–3% от базового значения раз в 15–20 сек
   useEffect(() => {
     if (!inView) return;
     let timeout: ReturnType<typeof setTimeout>;
     const schedule = () => {
       timeout = setTimeout(() => {
-        setLoad((prev) => {
-          const delta = (Math.random() < 0.5 ? -1 : 1) * (Math.random() < 0.5 ? 1 : 2);
-          return Math.min(94, Math.max(68, prev + delta));
-        });
+        const base = baseRef.current;
+        const delta = (Math.random() < 0.5 ? -1 : 1) * (1 + Math.floor(Math.random() * 3));
+        setLoad(Math.min(base + 3, Math.max(base - 3, base + delta)));
         schedule();
-      }, 15000 + Math.random() * 15000);
+      }, 15000 + Math.random() * 5000);
     };
     schedule();
     return () => clearTimeout(timeout);
   }, [inView]);
 
-  // Медленный рост отпечатанных м²
+  // Медленный рост отпечатанных м² и обновление окна печати
   useEffect(() => {
     if (!inView) return;
-    const id = setInterval(() => {
-      setSqmTarget((prev) => prev + Math.round(1 + Math.random() * 4));
-    }, 9000);
-    return () => clearInterval(id);
+    let timeout: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      timeout = setTimeout(() => {
+        setSqmTarget((prev) => prev + 1 + Math.round(Math.random()));
+        setSlot(nextSlot(new Date()));
+        schedule();
+      }, 40000 + Math.random() * 20000);
+    };
+    schedule();
+    return () => clearTimeout(timeout);
   }, [inView]);
+
 
   const animatedLoad = useCountUp(load, inView, 1800);
   const animatedSqm = useCountUp(sqmTarget, inView, 2000);
