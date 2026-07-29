@@ -181,21 +181,24 @@ const ProductionLoadWidget = () => {
     return () => io.disconnect();
   }, []);
 
-  // «Живая» загрузка: ±1–3% от базового значения раз в 15–20 сек
+  // «Живая» загрузка: небольшие колебания ±1% вокруг базового значения текущего часа
   useEffect(() => {
     if (!inView) return;
     let timeout: ReturnType<typeof setTimeout>;
     const schedule = () => {
       timeout = setTimeout(() => {
-        const base = baseRef.current;
-        const delta = (Math.random() < 0.5 ? -1 : 1) * (1 + Math.floor(Math.random() * 3));
-        setLoad(Math.min(base + 3, Math.max(base - 3, base + delta)));
+        const now = new Date();
+        const base = baseLoadForHour(now.getHours(), now.getMinutes());
+        baseRef.current = base;
+        const delta = Math.random() < 0.5 ? -1 : 0;
+        setLoad(Math.min(91, Math.max(65, Math.round(base) + delta)));
         schedule();
       }, 15000 + Math.random() * 5000);
     };
     schedule();
     return () => clearTimeout(timeout);
   }, [inView]);
+
 
   // Медленный рост количества листов и обновление окна печати
   useEffect(() => {
