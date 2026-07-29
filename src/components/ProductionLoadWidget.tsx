@@ -327,10 +327,7 @@ const ProductionLoadWidget = () => {
             </div>
 
             <div className="inline-flex items-center gap-3 rounded-full border border-emerald-400/40 bg-gradient-to-r from-emerald-500/15 to-teal-400/10 px-4 py-2">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
+
 
               <span className="text-sm text-muted-foreground">
                 Ближайшее окно для старта печати:{" "}
