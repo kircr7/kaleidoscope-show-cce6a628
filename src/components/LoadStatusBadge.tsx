@@ -26,17 +26,18 @@ const LoadStatusBadge = ({ className = "" }: { className?: string }) => {
   return (
     <a
       href="/#production-load"
-      className={`group relative inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3 py-1.5 transition-colors hover:bg-emerald-500/20 ${className}`}
+      className={`group relative inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-white/50 transition-all duration-300 hover:bg-white/[0.06] hover:text-white active:scale-95 ${className}`}
     >
       <span className="relative flex h-2 w-2 flex-shrink-0">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
       </span>
-      <span className="text-[11px] font-medium text-emerald-200 whitespace-nowrap">
+      <span className="whitespace-nowrap">
         Загруженность
         {load !== null && (
-          <span className="ml-1 tabular-nums text-emerald-300/80">· {load}%</span>
+          <span className="ml-1 tabular-nums">· {load}%</span>
         )}
+
       </span>
 
       {/* Подсказка при наведении */}
