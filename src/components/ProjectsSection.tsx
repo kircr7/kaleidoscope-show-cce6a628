@@ -53,26 +53,99 @@ import folding4 from "@/assets/folding-4.webp";
 
 interface Project {
   images: string[];
+  alts: string[];
   title: string;
   tags: string[];
-  altBase: string;
 }
 
 const projects: Project[] = [
-  { images: [projDoc2, projDoc3, projDoc4, projDoc1, projDoc5, projDoc6, projDoc7], title: "Печать проектной документации", tags: ["А1", "Фальцовка"], altBase: "Печать проектной документации А1 с фальцовкой — распечатать проектную документацию" },
-  { images: [workDoc1, workDoc2, workDoc3, workDoc4, workDoc5], title: "Печать рабочей документации", tags: ["А0", "ЧБ"], altBase: "Печать рабочей документации А0 чб — распечатать рабочую документацию (рабочку)" },
-  { images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6], title: "Исполнительная документация", tags: ["А3", "Брошюровка"], altBase: "Печать исполнительной документации А3 с брошюровкой — распечатать исполнительную" },
-  { images: [drawings1, drawings2, drawings3, drawings4, drawings5, drawings6, drawings7], title: "Печать чертежей", tags: ["А1", "Цвет"], altBase: "Цветная печать чертежа А1 — распечатать чертеж в типографии" },
-  { images: [binding1, binding2, binding3, binding4, binding5, binding6, binding7, binding8], title: "Брошюровка на пластиковую пружину", tags: ["А4", "Пружина"], altBase: "Брошюровка документации А4 на пластиковую пружину — печать А4 чб и цвет" },
-  { images: [folding1, folding2, folding3, folding4], title: "Фальцовка чертежей", tags: ["А0", "Фальцовка"], altBase: "Фальцовка чертежа А0 по ГОСТ — печать А0 и фальцовка" },
+  {
+    images: [projDoc2, projDoc3, projDoc4, projDoc1, projDoc5, projDoc6, projDoc7],
+    alts: [
+      "Сшитый том проектной документации формата А3",
+      "Процесс автоматической фальцовки широкоформатного чертежа А1",
+      "Стопка сложенных листов генплана на рабочем столе",
+      "Развернутый комплект проектных листов формата А1",
+      "Титульный лист тома проектной документации крупным планом",
+      "Архитектурное решение на листе формата А2",
+      "Свернутые в рулон проектные чертежи после плоттера",
+    ],
+    title: "Печать проектной документации",
+    tags: ["А1", "Фальцовка"],
+  },
+  {
+    images: [workDoc1, workDoc2, workDoc3, workDoc4, workDoc5],
+    alts: [
+      "Черно-белый рабочий чертеж формата А0 на столе",
+      "Разворот тома рабочей документации с узлами",
+      "Стопка рабочих чертежей, сложенных по ГОСТ",
+      "Проверка масштаба на распечатанном рабочем листе",
+      "Комплект рабочей документации, готовый к передаче",
+    ],
+    title: "Печать рабочей документации",
+    tags: ["А0", "ЧБ"],
+  },
+  {
+    images: [execDoc1, execDoc2, execDoc3, execDoc4, execDoc5, execDoc6],
+    alts: [
+      "Комплект исполнительной документации для сдачи заказчику",
+      "Сборка актов скрытых работ в единый том",
+      "Том исполнительной документации с жёсткой обложкой",
+      "Исполнительная схема с подписями и печатью",
+      "Журнал производства работ в общем комплекте",
+      "Прошитый комплект исполнительных листов формата А3",
+    ],
+    title: "Исполнительная документация",
+    tags: ["А3", "Брошюровка"],
+  },
+  {
+    images: [drawings1, drawings2, drawings3, drawings4, drawings5, drawings6, drawings7],
+    alts: [
+      "Вывод цветного машиностроительного чертежа из плоттера",
+      "Черно-белый архитектурный план А0",
+      "Цветной генплан участка после широкоформатной печати",
+      "Детальный узел на инженерном чертеже крупным планом",
+      "Схема электроснабжения на листе формата А1",
+      "Рулон свежих чертежей рядом с плоттером",
+      "Разрез здания на широкоформатном листе",
+    ],
+    title: "Печать чертежей",
+    tags: ["А1", "Цвет"],
+  },
+  {
+    images: [binding1, binding2, binding3, binding4, binding5, binding6, binding7, binding8],
+    alts: [
+      "Брошюровка раздела АР на пластиковую пружину",
+      "Пробивка отверстий в листах А4 под пружину",
+      "Том на пластиковой пружине в развернутом виде",
+      "Прозрачная обложка сборного тома документации",
+      "Несколько сброшюрованных томов в стопке",
+      "Установка пружины на том рабочей документации",
+      "Готовый брошюрованный комплект чертежей А4",
+      "Том на пружине рядом с брошюровочной машиной",
+    ],
+    title: "Брошюровка на пластиковую пружину",
+    tags: ["А4", "Пружина"],
+  },
+  {
+    images: [folding1, folding2, folding3, folding4],
+    alts: [
+      "Складывание чертежа А0 под формат А4 по ГОСТ",
+      "Фальцовочная машина с листом формата А1",
+      "Чертеж, сложенный гармошкой, на рабочем столе",
+      "Стопка сложенных чертежей с титульными рамками",
+    ],
+    title: "Фальцовка чертежей",
+    tags: ["А0", "Фальцовка"],
+  },
 ];
 
 const SWIPE_THRESHOLD = 40;
 
 interface ImageSliderProps {
   images: string[];
+  alts: string[];
   title: string;
-  altBase: string;
   onImageClick: (index: number) => void;
   rounded?: string;
   aspect?: string;
@@ -81,8 +154,8 @@ interface ImageSliderProps {
 
 const ImageSlider = ({
   images,
+  alts,
   title,
-  altBase,
   onImageClick,
   rounded = "",
   aspect = "aspect-[4/3]",
@@ -245,7 +318,7 @@ const ImageSlider = ({
         >
           <img
             src={images[index]}
-            alt={`${altBase} — фото ${index + 1}`}
+            alt={alts[index]}
             className="absolute inset-0 h-full w-full object-cover select-none"
             draggable={false}
           />
@@ -274,7 +347,7 @@ const ImageSlider = ({
             >
               <img
                 src={src}
-                alt={`${altBase} — фото ${i + 1}`}
+                alt={alts[i]}
                 loading="lazy"
                 className="w-full h-full object-cover pointer-events-none select-none"
                 draggable={false}
@@ -359,7 +432,7 @@ const Lightbox = ({ project, startIndex, onClose }: LightboxProps) => {
           >
             <img
               src={project.images[index]}
-              alt={`${project.altBase} — фото ${index + 1}`}
+              alt={project.alts[index]}
               className="w-full max-h-[85vh] object-contain"
             />
 
@@ -411,8 +484,8 @@ const ProjectCard = ({
   >
     <ImageSlider
       images={project.images}
+      alts={project.alts}
       title={project.title}
-      altBase={project.altBase}
       onImageClick={(i) => onOpen(project, i)}
       aspect="aspect-[4/3]"
     />
