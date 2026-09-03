@@ -144,8 +144,8 @@ const SWIPE_THRESHOLD = 40;
 
 interface ImageSliderProps {
   images: string[];
+  alts: string[];
   title: string;
-  altBase: string;
   onImageClick: (index: number) => void;
   rounded?: string;
   aspect?: string;
@@ -154,8 +154,8 @@ interface ImageSliderProps {
 
 const ImageSlider = ({
   images,
+  alts,
   title,
-  altBase,
   onImageClick,
   rounded = "",
   aspect = "aspect-[4/3]",
@@ -318,7 +318,7 @@ const ImageSlider = ({
         >
           <img
             src={images[index]}
-            alt={`${altBase} — фото ${index + 1}`}
+            alt={alts[index]}
             className="absolute inset-0 h-full w-full object-cover select-none"
             draggable={false}
           />
@@ -347,7 +347,7 @@ const ImageSlider = ({
             >
               <img
                 src={src}
-                alt={`${altBase} — фото ${i + 1}`}
+                alt={alts[i]}
                 loading="lazy"
                 className="w-full h-full object-cover pointer-events-none select-none"
                 draggable={false}
@@ -432,7 +432,7 @@ const Lightbox = ({ project, startIndex, onClose }: LightboxProps) => {
           >
             <img
               src={project.images[index]}
-              alt={`${project.altBase} — фото ${index + 1}`}
+              alt={project.alts[index]}
               className="w-full max-h-[85vh] object-contain"
             />
 
@@ -484,8 +484,8 @@ const ProjectCard = ({
   >
     <ImageSlider
       images={project.images}
+      alts={project.alts}
       title={project.title}
-      altBase={project.altBase}
       onImageClick={(i) => onOpen(project, i)}
       aspect="aspect-[4/3]"
     />
