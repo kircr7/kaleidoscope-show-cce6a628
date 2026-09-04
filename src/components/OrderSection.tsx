@@ -893,6 +893,7 @@ const OrderSection = () => {
                               required
                               name="customer_email"
                               type="email"
+                              aria-label="Ваш email для ответа"
                               placeholder="Ваш email для ответа"
                               value={customer.email}
                               onChange={e => setCustomer({ ...customer, email: e.target.value })}
@@ -903,6 +904,7 @@ const OrderSection = () => {
                           <div className="relative">
                             <textarea
                               required
+                              aria-label="Опишите задание: уточнения по печати, пожелания, сроки"
                               placeholder="Опишите задание: уточнения по печати, пожелания, сроки и т.д. *"
                               value={orderTask}
                               onChange={e => setOrderTask(e.target.value)}
