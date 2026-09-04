@@ -22,7 +22,7 @@ const WHOLESALE_THRESHOLDS: Record<string, number> = {
   A0: 20, A1: 20, A2: 20, A3: 100, A4: 300,
 };
 const getWholesaleThreshold = (format: string) =>
-  WHOLESALE_THRESHOLDS[format] ?? 50;
+  WHOLESALE_THRESHOLDS[format] ?? 20;
 
 const getTierMultiplier = (format: string, qty: number) =>
   qty >= getWholesaleThreshold(format) ? 1 : 2;
