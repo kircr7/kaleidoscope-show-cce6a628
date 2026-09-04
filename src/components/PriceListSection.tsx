@@ -2,21 +2,21 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 // Розница = базовая цена × 2 (тираж ниже порога).
-// Опт = базовая цена. Порог: А0–А2 — от 50 шт, А3 — от 100 шт, А4 — от 300 шт.
+// Опт = базовая цена. Порог: А0–А2 — от 20 шт, А3 — от 100 шт, А4 — от 300 шт.
 const bwPrices = [
   { format: "A4", size: "210×297 мм", threshold: 300, retail: "10 ₽", wholesale: "5 ₽" },
   { format: "A3", size: "297×420 мм", threshold: 100, retail: "28 ₽", wholesale: "14 ₽" },
-  { format: "A2", size: "420×594 мм", threshold: 50, retail: "60 ₽", wholesale: "30 ₽" },
-  { format: "A1", size: "594×841 мм", threshold: 50, retail: "100 ₽", wholesale: "50 ₽" },
-  { format: "A0", size: "841×1189 мм", threshold: 50, retail: "200 ₽", wholesale: "100 ₽" },
+  { format: "A2", size: "420×594 мм", threshold: 20, retail: "60 ₽", wholesale: "30 ₽" },
+  { format: "A1", size: "594×841 мм", threshold: 20, retail: "100 ₽", wholesale: "50 ₽" },
+  { format: "A0", size: "841×1189 мм", threshold: 20, retail: "200 ₽", wholesale: "100 ₽" },
 ];
 
 const colorPrices = [
   { format: "A4", size: "210×297 мм", threshold: 300, retail: "20 ₽", wholesale: "10 ₽" },
   { format: "A3", size: "297×420 мм", threshold: 100, retail: "48 ₽", wholesale: "24 ₽" },
-  { format: "A2", size: "420×594 мм", threshold: 50, retail: "80 ₽", wholesale: "40 ₽" },
-  { format: "A1", size: "594×841 мм", threshold: 50, retail: "140 ₽", wholesale: "70 ₽" },
-  { format: "A0", size: "841×1189 мм", threshold: 50, retail: "220 ₽", wholesale: "110 ₽" },
+  { format: "A2", size: "420×594 мм", threshold: 20, retail: "80 ₽", wholesale: "40 ₽" },
+  { format: "A1", size: "594×841 мм", threshold: 20, retail: "140 ₽", wholesale: "70 ₽" },
+  { format: "A0", size: "841×1189 мм", threshold: 20, retail: "220 ₽", wholesale: "110 ₽" },
 ];
 
 const scanPrices = [
