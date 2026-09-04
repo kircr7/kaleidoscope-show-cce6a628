@@ -364,10 +364,11 @@ const OrderSection = () => {
                     <form ref={fileFormRef} onSubmit={sendFiles} encType="multipart/form-data" className="space-y-3">
                       <div className="relative">
                         <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
-                         <input
-                           type="text"
-                           name="cloud_link"
-                           placeholder="Ссылка на файлы для печати (Яндекс.Диск, Облако)"
+                          <input
+                            type="text"
+                            name="cloud_link"
+                            aria-label="Ссылка на файлы для печати (Яндекс.Диск, Облако)"
+                            placeholder="Ссылка на файлы для печати (Яндекс.Диск, Облако)"
                            value={fileLink}
                            onChange={e => setFileLink(e.target.value)}
                            className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
@@ -381,10 +382,11 @@ const OrderSection = () => {
                             <div className="relative">
                               <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
                               <input
-                                required
-                                name="customer_name"
-                                placeholder="Ваше имя"
-                                value={fileCustomer.name}
+                                 required
+                                 name="customer_name"
+                                 aria-label="Ваше имя"
+                                 placeholder="Ваше имя"
+                                 value={fileCustomer.name}
                                 onChange={e => setFileCustomer({ ...fileCustomer, name: e.target.value })}
                                 className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
                                 style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
@@ -393,11 +395,12 @@ const OrderSection = () => {
                             <div className="relative">
                               <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
                               <input
-                                required
-                                name="customer_phone"
-                                type="tel"
-                                placeholder="+7 (___) ___-__-__"
-                                value={fileCustomer.phone}
+                                 required
+                                 name="customer_phone"
+                                 type="tel"
+                                 aria-label="Ваш номер телефона"
+                                 placeholder="+7 (___) ___-__-__"
+                                 value={fileCustomer.phone}
                                 onChange={e => {
                                   let digits = e.target.value.replace(/\D/g, '');
                                   if (digits.startsWith('8')) digits = '7' + digits.slice(1);
@@ -419,23 +422,25 @@ const OrderSection = () => {
                           </div>
                           <div className="relative">
                             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0,0%,50%)' }} />
-                            <input
-                              required
-                              name="customer_email"
-                              type="email"
-                              placeholder="Ваш email для ответа"
-                              value={fileCustomer.email}
+                             <input
+                               required
+                               name="customer_email"
+                               type="email"
+                               aria-label="Ваш email для ответа"
+                               placeholder="Ваш email для ответа"
+                               value={fileCustomer.email}
                               onChange={e => setFileCustomer({ ...fileCustomer, email: e.target.value })}
                               className="w-full pl-11 p-3.5 rounded-2xl outline-none text-sm text-white placeholder:opacity-40 transition-all duration-200 hover:border-[hsl(266,92%,58%)] focus:border-[hsl(266,92%,58%)] hover:bg-[hsla(240,15%,18%,0.9)]"
                               style={{ backgroundColor: 'hsla(240,15%,15%,0.8)', border: '1px solid hsl(240,9%,17%)' }}
                             />
                           </div>
                           <div className="relative">
-                            <textarea
-                              name="order_details"
-                              required
-                              placeholder="Опишите задание: что нужно напечатать, формат, количество, цветность, фальцовка, сроки и т.д. *"
-                              value={fileTask}
+                             <textarea
+                               name="order_details"
+                               required
+                               aria-label="Опишите задание: формат, количество, цветность, фальцовка, сроки"
+                               placeholder="Опишите задание: что нужно напечатать, формат, количество, цветность, фальцовка, сроки и т.д. *"
+                               value={fileTask}
                               onChange={e => setFileTask(e.target.value)}
                               rows={4}
                               maxLength={2000}
@@ -660,6 +665,7 @@ const OrderSection = () => {
                         type="number"
                         min={1}
                         max={9999}
+                        aria-label="Количество копий"
                         value={quantity === 0 ? '' : quantity}
                         onChange={(e) => {
                           const raw = e.target.value;
@@ -786,11 +792,12 @@ const OrderSection = () => {
                                     >
                                       <Minus className="w-3 h-3 transition-all duration-150 text-[hsl(0,0%,60%)] group-hover/minus:text-[hsl(0,100%,62%)] group-hover/minus:[filter:drop-shadow(0_0_3px_hsl(0_100%_55%/0.9))] group-active/minus:text-[hsl(0,100%,55%)]" />
                                     </button>
-                                    <input
-                                      type="number"
-                                      min={1}
-                                      max={9999}
-                                      value={item.quantity === 0 ? '' : item.quantity}
+                                     <input
+                                       type="number"
+                                       min={1}
+                                       max={9999}
+                                       aria-label={`Количество: ${item.label}`}
+                                       value={item.quantity === 0 ? '' : item.quantity}
                                       onChange={(e) => {
                                         const raw = e.target.value;
                                         if (raw === '') { setItemQuantity(item.id, 0, true); return; }
@@ -840,6 +847,7 @@ const OrderSection = () => {
                               <input
                                 required
                                 name="customer_name"
+                                aria-label="Ваше имя"
                                 placeholder="Ваше имя"
                                 value={customer.name}
                                 onChange={e => setCustomer({ ...customer, name: e.target.value })}
@@ -853,6 +861,7 @@ const OrderSection = () => {
                                 required
                                 name="customer_phone"
                                 type="tel"
+                                aria-label="Ваш номер телефона"
                                 placeholder="+7 (___) ___-__-__"
                                 value={customer.phone}
                                 onChange={e => {
