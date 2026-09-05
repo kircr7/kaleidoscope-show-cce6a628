@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 // Розница = базовая цена × 2 (тираж ниже порога).
-// Опт = базовая цена. Порог: А0–А2 — от 20 шт, А3 — от 100 шт, А4 — от 300 шт.
+// Опт = базовая цена. Порог: А4 — от 300 шт, А3 — от 100 шт, А2–А0 — от 20 шт.
 const bwPrices = [
   { format: "A4", size: "210×297 мм", threshold: 300, retail: "10 ₽", wholesale: "5 ₽" },
   { format: "A3", size: "297×420 мм", threshold: 100, retail: "28 ₽", wholesale: "14 ₽" },
