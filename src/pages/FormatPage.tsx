@@ -1,18 +1,11 @@
-import { useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import OrderSection from "@/components/OrderSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import NotFound from "@/pages/NotFound";
-import { formats } from "@/data/formats";
+import type { FormatData } from "@/data/formats";
 import { Check } from "lucide-react";
 
-const FormatPage = () => {
-  const { format: slug } = useParams();
-  const data = formats.find((f) => f.slug === slug);
-
-  if (!data) return <NotFound />;
-
+const FormatPage = ({ data }: { data: FormatData }) => {
   const canonicalPath = `/pechat-${data.slug}`;
 
   return (
