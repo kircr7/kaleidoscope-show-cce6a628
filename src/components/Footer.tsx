@@ -115,8 +115,8 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Блок 3: Карта */}
-          <div className="md:col-span-5 space-y-5">
+          {/* Блок 4: Карта */}
+          <div className="md:col-span-3 space-y-5">
             <h4 className="text-base font-semibold text-[hsl(var(--foreground))]">Мы на карте</h4>
             <div
               className="relative rounded-xl overflow-hidden border border-[hsl(var(--border))] cursor-grab"
