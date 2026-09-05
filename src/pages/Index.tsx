@@ -140,7 +140,28 @@ const Index = () => {
       <AnimatedHeroWorks />
 
       <OrderSection />
-      <PriceListSection />
+
+      {/* Price teaser */}
+      <section className="py-16 sm:py-24 px-3 sm:px-4">
+        <div className="container max-w-2xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+            Прайс-лист
+          </h2>
+          <p className="mt-3 text-muted-foreground text-sm sm:text-base">
+            Ч/б и цветная печать А0–А4 от 5 ₽ за лист, сканирование, фальцовка и брошюровка.
+          </p>
+          <Link
+            to="/price"
+            className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white transition-transform active:scale-95"
+            style={{
+              background: "linear-gradient(to right, hsla(195,80%,45%,0.9), hsla(220,80%,50%,0.9), hsla(330,80%,50%,0.9))",
+              backgroundSize: "200% 200%",
+            }}
+          >
+            Посмотреть полный прайс-лист
+          </Link>
+        </div>
+      </section>
       <Footer />
       
     </div>
