@@ -13,6 +13,10 @@ export const routes: RouteRecord[] = [
         lazy: () => import("./pages/Index").then((m) => ({ Component: m.default })),
       },
       {
+        path: "price",
+        lazy: () => import("./pages/Price").then((m) => ({ Component: m.default })),
+      },
+      {
         path: "blog",
         lazy: () => import("./pages/Blog").then((m) => ({ Component: m.default })),
       },

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/fix-ssg-utf8.mjs && vite-react-ssg build",
+    "build": "node scripts/fix-ssg-utf8.mjs && vite-react-ssg build && node scripts/fix-dist-meta.mjs",
     "build:spa": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",

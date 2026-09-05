@@ -154,19 +154,18 @@ const ServiceCard = ({ item }: { item: typeof services[0] }) => {
   );
 };
 
-const PriceListSection = () => {
-
-
+const PriceListSection = ({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) => {
+  const Heading = headingAs;
 
   return (
     <section id="pricelist" className="py-16 sm:py-24 px-3 sm:px-4">
       <div className="container max-w-4xl mx-auto">
-        <h2
+        <Heading
           className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-foreground text-center mb-10 sm:mb-14 opacity-0"
           style={{ animation: "reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 100ms forwards" }}
         >
-          Прайс-лист
-        </h2>
+          {headingAs === "h1" ? "Стоимость печати чертежей и проектной документации" : "Прайс-лист"}
+        </Heading>
 
         <div
           className="opacity-0"
