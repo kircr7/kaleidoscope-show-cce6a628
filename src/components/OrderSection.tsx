@@ -16,10 +16,10 @@ interface CartItem {
   isColor?: boolean;
 }
 
-// Wholesale threshold by format:
-// A0, A1, A2 → 20 шт; A3 → 100 шт; A4 → 300 шт. Ниже порога цена ×2.
+// Wholesale threshold by format (A4 → A0):
+// A4 → 300 шт; A3 → 100 шт; A2, A1, A0 → 20 шт. Ниже порога цена ×2.
 const WHOLESALE_THRESHOLDS: Record<string, number> = {
-  A0: 20, A1: 20, A2: 20, A3: 100, A4: 300,
+  A4: 300, A3: 100, A2: 20, A1: 20, A0: 20,
 };
 const getWholesaleThreshold = (format: string) =>
   WHOLESALE_THRESHOLDS[format] ?? 20;
