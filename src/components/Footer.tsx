@@ -70,7 +70,29 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Блок 2: Контакты */}
+          {/* Блок 2: Форматы печати */}
+          <div className="md:col-span-2 space-y-5">
+            <h4 className="text-base font-semibold text-[hsl(var(--foreground))]">Форматы печати</h4>
+            <ul className="space-y-3 text-sm">
+              {[
+                { href: "/pechat-a0", label: "Печать А0" },
+                { href: "/pechat-a1", label: "Печать А1" },
+                { href: "/pechat-a2", label: "Печать А2" },
+                { href: "/pechat-a3", label: "Печать А3" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Блок 3: Контакты */}
           <div className="md:col-span-3 space-y-5">
             <h4 className="text-base font-semibold text-[hsl(var(--foreground))]">Наши контакты</h4>
             <div className="space-y-4">
@@ -93,8 +115,8 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Блок 3: Карта */}
-          <div className="md:col-span-5 space-y-5">
+          {/* Блок 4: Карта */}
+          <div className="md:col-span-3 space-y-5">
             <h4 className="text-base font-semibold text-[hsl(var(--foreground))]">Мы на карте</h4>
             <div
               className="relative rounded-xl overflow-hidden border border-[hsl(var(--border))] cursor-grab"

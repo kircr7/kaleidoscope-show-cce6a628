@@ -62,6 +62,10 @@ export default defineConfig(({ mode }) => ({
       const entries: Entry[] = [
         { loc: `${SITE_URL}/`, lastmod: today, changefreq: "weekly", priority: "1.0" },
         { loc: `${SITE_URL}/price`, lastmod: today, changefreq: "weekly", priority: "0.9" },
+        { loc: `${SITE_URL}/pechat-a0`, lastmod: today, changefreq: "weekly", priority: "0.9" },
+        { loc: `${SITE_URL}/pechat-a1`, lastmod: today, changefreq: "weekly", priority: "0.9" },
+        { loc: `${SITE_URL}/pechat-a2`, lastmod: today, changefreq: "weekly", priority: "0.9" },
+        { loc: `${SITE_URL}/pechat-a3`, lastmod: today, changefreq: "weekly", priority: "0.9" },
         { loc: `${SITE_URL}/blog`, lastmod: today, changefreq: "weekly", priority: "0.8" },
         ...allPosts.map((post) => ({
           loc: `${SITE_URL}/blog/${post.slug}`,

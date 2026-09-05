@@ -2,6 +2,8 @@ import type { RouteRecord } from "vite-react-ssg";
 import App from "./App";
 import { articles } from "./data/articles";
 import { blogPosts } from "./data/blogPosts";
+import { formats } from "./data/formats";
+import FormatPage from "./pages/FormatPage";
 
 export const routes: RouteRecord[] = [
   {
@@ -16,6 +18,10 @@ export const routes: RouteRecord[] = [
         path: "price",
         lazy: () => import("./pages/Price").then((m) => ({ Component: m.default })),
       },
+      ...formats.map((data) => ({
+        path: `pechat-${data.slug}`,
+        element: <FormatPage data={data} />,
+      })),
       {
         path: "blog",
         lazy: () => import("./pages/Blog").then((m) => ({ Component: m.default })),
