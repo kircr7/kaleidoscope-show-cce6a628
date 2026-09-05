@@ -7,6 +7,7 @@ import OrderSection from "@/components/OrderSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import ServicesSection from "@/components/ServicesSection";
+import GuaranteesReviews from "@/components/GuaranteesReviews";
 
 import ProjectsSection from "@/components/ProjectsSection";
 import ProductionLoadWidget from "@/components/ProductionLoadWidget";
