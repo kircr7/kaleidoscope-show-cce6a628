@@ -151,6 +151,9 @@ const Footer = () => {
             <p>ИНН: 245907557883 · ОГРНИП: 326246800000141</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 text-center">
+            <a href="/price" className="text-xs text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors">
+              Цены
+            </a>
             <a href="/blog" className="text-xs text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors">
               Блог
             </a>

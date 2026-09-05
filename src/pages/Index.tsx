@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import CarouselSection from "@/components/CarouselSection";
 import Navbar from "@/components/Navbar";
 import AnimatedHeroWorks from "@/components/AnimatedHeroWorks";
@@ -7,7 +7,7 @@ import OrderSection from "@/components/OrderSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import ServicesSection from "@/components/ServicesSection";
-import PriceListSection from "@/components/PriceListSection";
+
 import ProjectsSection from "@/components/ProjectsSection";
 import ProductionLoadWidget from "@/components/ProductionLoadWidget";
 import { Crosshair, FileCheck, Clock } from "lucide-react";
