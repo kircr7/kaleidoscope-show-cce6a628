@@ -32,7 +32,7 @@ for await (const file of walk("dist")) {
   let html = await readFile(file, "utf-8");
   const before = html;
 
-  html = removeLast(html, /<title>[^<]*<\/title>/g);
+  html = removeLast(html, /<title[^>]*>[^<]*<\/title>/g);
   html = removeLast(html, /<meta name="description"[^>]*\/?>/g);
 
   // Canonical links rendered by helmet land inside the body — move to <head>
