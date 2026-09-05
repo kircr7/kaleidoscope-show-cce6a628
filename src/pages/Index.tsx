@@ -62,7 +62,7 @@ const Index = () => {
             "@type": "OfferCatalog",
             name: "Услуги инженерной печати",
             itemListElement: [
-              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Печать чертежей А0–А4" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Печать чертежей А4–А0" } },
               { "@type": "Offer", itemOffered: { "@type": "Service", name: "Печать проектной документации" } },
               { "@type": "Offer", itemOffered: { "@type": "Service", name: "Печать рабочей документации" } },
               { "@type": "Offer", itemOffered: { "@type": "Service", name: "Печать исполнительной документации" } },
@@ -148,7 +148,7 @@ const Index = () => {
             Прайс-лист
           </h2>
           <p className="mt-3 text-muted-foreground text-sm sm:text-base">
-            Ч/б и цветная печать А0–А4 от 5 ₽ за лист, сканирование, фальцовка и брошюровка.
+            Ч/б и цветная печать А4–А0 от 5 ₽ за лист, сканирование, фальцовка и брошюровка.
           </p>
           <Link
             to="/price"
