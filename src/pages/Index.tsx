@@ -137,6 +137,7 @@ const Index = () => {
 
       <ProjectsSection />
 
+      <GuaranteesReviews />
 
       <AnimatedHeroWorks />
 
